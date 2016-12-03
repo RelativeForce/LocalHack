@@ -4,7 +4,7 @@ public class Screen {
 	
 	private int width;
 	private int height;
-	private final int[][] pixels;
+	private int[][] pixels;
 	
 	/**
 	 * 
@@ -23,13 +23,16 @@ public class Screen {
 	 */
 	public int[] getPixels(){
 		
+		setColor(0xff);
+		
+		int c = 0;
 		int[] p = new int[width*height];
 		
 		for(int i = 0; i < height; i++){
 			
 			for(int j = 0; j < width; j++){
 				
-				p[j + i*width] = pixels[j][i];
+				p[c++] = pixels[j][i];
 			}
 		}
 		
@@ -39,16 +42,27 @@ public class Screen {
 		
 		for(int i = 0; i < go.height; i++){
 			
-			if(0 <= y + i + go.height && y + i + go.height < height){
+			if(0 <= y + i && y + i < height){
 				
 				for(int j = 0; j < go.width; j++){
 					
-					if(0 <= x + j + go.width && x + j + go.width < width){
+					if(0 <= x + j && x + j < width){
 					
 						pixels[j + x][i + y] = go.getPixels()[j][i] != null ?
 								go.getPixels()[j][i] : pixels[j + x][i + y];
+						
 					}
 				}
+			}
+		}
+	}
+	public void setColor(int color){
+		
+		for(int i = 0; i < height; i++){
+			
+			for(int j = 0; j < width; j++){
+				
+				pixels[j][i] = color;
 			}
 		}
 	}

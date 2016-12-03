@@ -60,18 +60,20 @@ public class Display extends Canvas{
 			
 		}else{
 			
-			int temp[] = s.getPixels();
+			int[] temp = s.getPixels();
 			
-			if(temp.length <= pixels.length){
+			if(temp.length == pixels.length){
 				
 				for(int i = 0; i < temp.length; i++){
 					
 					pixels[i] = temp[i];
 				}
+					
 				
 				Graphics g = bs.getDrawGraphics();
 				g.fillRect(0, 0, getWidth(), getHeight());
-				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+				g.drawImage(image, 0, 0, null);
+				
 				g.dispose();
 				bs.show();
 			}
