@@ -1,11 +1,12 @@
 package entities;
 
+import Graphics.*;
+
 public class Entity {
 
 	private int x;
 	private int y;
-	// private Image image;
-	// private HitBox hitBox;
+	private GraphicalObject object;
 
 	public void setX(int x) {
 		if (x >= 0) {
@@ -26,24 +27,14 @@ public class Entity {
 	public int getY() {
 		return y;
 	}
-	
-	
-	/*
-	 * public void setImage(int width, int height){
-	 * 		image = new Image(width, height); 
-	 * }
-	 * public void setHitBox(int width, int height){
-	 * 		hitBox = new hitBox(width, height);
-	 * }
-	 * 
-	 * public Image getImage(){ 
-	 * 		if(image != null){
-	 * 			return image; 
-	 * 		}else{
-	 * 			return null;
-	 * 		}
-	 * 
-	 * public HitBox getHitBox(){ return hitBox; }
-	 */
+
+	public void setGraphicalObject(int width, int height) {
+		object = new GraphicalObject(width, height);
+		object.setColor(8000);
+	}
+
+	public GraphicalObject getGraphicalObject() {
+		return object;
+	}
 
 }

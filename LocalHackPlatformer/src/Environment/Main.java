@@ -65,9 +65,10 @@ public class Main {
 						e.printStackTrace();
 					}
 					for(Entity entity: entities){
-						// Screen.draw(x, y, entity.getImage());
+						screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
 					}
 					display.render(screen);
+					screen.clear();
 				}
 				
 			}

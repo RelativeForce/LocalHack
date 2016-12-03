@@ -14,20 +14,14 @@ public class Rectangle extends Entity {
 		} else {
 			setY(0);
 		}
-
 		
-		
-		/*
-		 * setImage(width, height);
-		 * setHitBox(width, height);
-		 * 
-		 */
+		setGraphicalObject(width, height);
 
 	}
 
 	public void changeSize(int width, int height) {
 
-		// redefine image
+		setGraphicalObject(width, height);
 
 	}
 
