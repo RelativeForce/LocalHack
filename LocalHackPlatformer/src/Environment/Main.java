@@ -1,8 +1,9 @@
 package Environment;
 
-import entities.Entity;
+import entities.*;
 import Graphics.*;
 import Logic.*;
+import java.util.ArrayList;
 
 public class Main {
 	
@@ -11,9 +12,10 @@ public class Main {
 	private static boolean run;
 	private static Display display;
 	private static Screen screen;
-	private static Entity[] entities;
+	private static ArrayList<Entity> entities;
 
 	public static void main(String[] args) {
+		entities = new ArrayList<Entity>();
 		run = true;
 		display = new Display( 100, 100, "Platformer");
 		screen = new Screen(100,100);
@@ -21,7 +23,8 @@ public class Main {
 			display.render(screen);
 		}
 		
-		
+		Rectangle wall = new Rectangle(10,10,10,10);
+		entities.add(wall);
 		
 		
 		// Thread initialisation
