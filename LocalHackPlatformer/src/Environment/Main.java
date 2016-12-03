@@ -12,15 +12,14 @@ public class Main {
 	private static boolean run;
 	private static Display display;
 	private static Screen screen;
-	private static ArrayList<Entity> entities;
+	public static Player player;
+	public static ArrayList<Entity> components;
+	public static ArrayList<Entity> enemies;
 
 	public static void main(String[] args) {
-		
-		Player player = new Player(20, 20, 20, 20);
-		player.play();
-		
-		/*
-		entities = new ArrayList<Entity>();
+
+		components = new ArrayList<Entity>();
+		enemies = new ArrayList<Entity>();
 		run = true;
 		display = new Display(1000, 500, "Platformer");
 		screen = new Screen(1000,500);
@@ -29,8 +28,9 @@ public class Main {
 			display.render(screen);
 		}
 		
-		Rectangle wall = new Rectangle(10,100,300,20);
-		entities.add(wall);
+		Rectangle floor = new Rectangle(0,450,1000,20);
+		components.add(floor);
+		player = new Player(20, 20, 20, 20);
 		
 		
 		// Thread initialisation
@@ -38,7 +38,7 @@ public class Main {
 		initaliseDisplayThread();
 		logicThread.start();
 		displayThread.start();
-		*/
+		
 	}
 	
 	private static void initaliseLogicThread(){
@@ -69,6 +69,12 @@ public class Main {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					
+					ArrayList<Entity> entities = new ArrayList<Entity>();
+					entities.addAll(components);
+					entities.addAll(enemies);
+					entities.add(player.getEntity());
+					
 					for(Entity entity: entities){
 						screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
 					}

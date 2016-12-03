@@ -1,28 +1,49 @@
 package Logic;
 
+import Environment.Constants;
+import Environment.Main;
 import entities.Entity;
 import entities.Rectangle;
 
 public class Player {
 
-	Entity playerEntity;
+	private Entity playerEntity;
+	private int ySpeed;
 
 	public Player(int x, int y, int width, int height) {
 
 		playerEntity = new Rectangle(x, y, width, height);
+		ySpeed = 0;
 
 	}
 
-	public void play() {
+	public void gravity() {
 
-		Entity wall = new Rectangle(50, 20, 20, 20);
-		Entity nextPlayerEntity = new Rectangle(playerEntity.getX() + 11, playerEntity.getY(),
-				playerEntity.getGraphicalObject().width, playerEntity.getGraphicalObject().height);
+		int x = playerEntity.getX();
+		int y = playerEntity.getY();
+		
+		ySpeed = ySpeed + Constants.GRAVITY;
 
-		boolean hitDetected = HitDetection.detectHit(playerEntity, nextPlayerEntity, wall);
-
-		System.out.print(hitDetected);
+		if (!checkCollision(x, y + ySpeed)) {
+			playerEntity.setY( y + ySpeed);
+		}
 
 	}
 
+	private boolean checkCollision(int nextX, int nextY) {
+
+		Entity nextPlayerEntity = new Rectangle(nextX, nextY, playerEntity.getGraphicalObject().width,
+				playerEntity.getGraphicalObject().height);
+
+		for (Entity component : Main.components) {
+			if (HitDetection.detectHit(playerEntity, nextPlayerEntity, component)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Entity getEntity() {
+		return playerEntity;
+	}
 }
