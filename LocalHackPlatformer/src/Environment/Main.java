@@ -24,7 +24,7 @@ public class Main {
 			display.render(screen);
 		}
 		
-		Rectangle wall = new Rectangle(10,100,10,300);
+		Rectangle wall = new Rectangle(10,100,300,20);
 		entities.add(wall);
 		
 		
@@ -63,6 +63,9 @@ public class Main {
 						sleep(100);
 					} catch (Exception e) {
 						e.printStackTrace();
+					}
+					for(Entity entity: entities){
+						// Screen.draw(x, y, entity.getImage());
 					}
 					display.render(screen);
 				}

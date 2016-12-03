@@ -26,8 +26,22 @@ public class Entity {
 	public int getY() {
 		return y;
 	}
+	
+	
 	/*
-	 * public Image getImage(){ return image; }
+	 * public void setImage(int width, int height){
+	 * 		image = new Image(width, height); 
+	 * }
+	 * public void setHitBox(int width, int height){
+	 * 		hitBox = new hitBox(width, height);
+	 * }
+	 * 
+	 * public Image getImage(){ 
+	 * 		if(image != null){
+	 * 			return image; 
+	 * 		}else{
+	 * 			return null;
+	 * 		}
 	 * 
 	 * public HitBox getHitBox(){ return hitBox; }
 	 */
