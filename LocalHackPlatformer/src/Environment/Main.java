@@ -15,6 +15,11 @@ public class Main {
 	private static ArrayList<Entity> entities;
 
 	public static void main(String[] args) {
+		
+		Player player = new Player(20, 20, 20, 20);
+		player.play();
+		
+		/*
 		entities = new ArrayList<Entity>();
 		run = true;
 		display = new Display(1000, 500, "Platformer");
@@ -33,7 +38,7 @@ public class Main {
 		initaliseDisplayThread();
 		logicThread.start();
 		displayThread.start();
-		
+		*/
 	}
 	
 	private static void initaliseLogicThread(){
