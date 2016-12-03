@@ -10,8 +10,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		
-		
+		Display display = new Display( 100, 100, "Platformer");
+		display.render();
 		
 		// Thread initialisation
 		initaliseLogicThread();

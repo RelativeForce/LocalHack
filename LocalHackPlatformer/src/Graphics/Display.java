@@ -15,6 +15,10 @@ import javax.swing.JFrame;
  */
 public class Display extends Canvas{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private BufferedImage image;
 	
