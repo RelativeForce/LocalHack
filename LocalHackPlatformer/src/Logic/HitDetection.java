@@ -143,6 +143,28 @@ public class HitDetection {
 		
 		return -1;
 	}
-
-
+	/*
+	private static int check(int[][] grid){
+		for (int i = 0; i < grid.length; i++){
+			for (int j = 0; i < grid[0].length; i++){
+				boolean perimeter = false;
+				if (grid[i][j] != 0) {
+					if (i == 0) {
+						perimeter = true;
+					}
+					else if (j == 0) {
+						perimeter = true;
+					}
+					else if (i == (grid.length - 1)) {
+						perimeter = true;
+					}
+					else if (j == grid[0].length - 1) {
+						perimeter = true;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+		*/
 }
