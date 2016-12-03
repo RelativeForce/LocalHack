@@ -7,11 +7,17 @@ public class Main {
 	
 	private static Thread logicThread;
 	private static Thread displayThread;
+	private static boolean run;
+	private static Display display;
 
 	public static void main(String[] args) {
+		run = true;
+		display = new Display( 100, 100, "Platformer");
+		for(int i = 0; i < 3; i++){
+			display.render();
+		}
 		
-		Display display = new Display( 100, 100, "Platformer");
-		display.render();
+		
 		
 		// Thread initialisation
 		initaliseLogicThread();
@@ -42,7 +48,15 @@ public class Main {
 			@Override
 			public void run(){
 				
-				
+				while(run){
+					
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					display.render();
+				}
 				
 			}
 		};

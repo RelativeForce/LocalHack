@@ -54,11 +54,12 @@ public class Display extends Canvas{
 		
 		BufferStrategy bs = getBufferStrategy();
 		
-		if(bs != null){
+		if(bs == null){
 			
 			createBufferStrategy(3);
 			
 		}else{
+			
 			
 			
 			
