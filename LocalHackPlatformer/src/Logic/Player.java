@@ -26,7 +26,10 @@ public class Player {
 
 		if (!checkCollision(x, y + ySpeed)) {
 			playerEntity.setY(y + ySpeed);
+		}else{
+			ySpeed = 0;
 		}
+		
 
 	}
 
