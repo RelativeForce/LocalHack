@@ -45,8 +45,8 @@ public class Screen {
 					
 					if(0 <= x + j + go.width && x + j + go.width < width){
 					
-						pixels[j + x][i + y] = go.getPixels()[i][j] != null ?
-								go.getPixels()[i][j] : pixels[j + x][i + y];
+						pixels[j + x][i + y] = go.getPixels()[j][i] != null ?
+								go.getPixels()[j][i] : pixels[j + x][i + y];
 					}
 				}
 			}
