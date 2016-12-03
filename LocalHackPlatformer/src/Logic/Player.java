@@ -12,7 +12,7 @@ public class Player {
 
 	public Player(int x, int y, int width, int height) {
 
-		playerEntity = new Rectangle(x, y, width, height);
+		playerEntity = new Rectangle(x, y, width, height, 0xffff0000);
 		ySpeed = 0;
 
 	}
@@ -57,7 +57,7 @@ public class Player {
 	private boolean checkCollision(int nextX, int nextY) {
 
 		Entity nextPlayerEntity = new Rectangle(nextX, nextY, playerEntity.getGraphicalObject().width,
-				playerEntity.getGraphicalObject().height);
+				playerEntity.getGraphicalObject().height, 0xffff0000);
 
 		for (Entity component : Main.components) {
 			if (HitDetection.detectHit(playerEntity, nextPlayerEntity, component)) {

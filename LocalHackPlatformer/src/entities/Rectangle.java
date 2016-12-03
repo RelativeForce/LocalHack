@@ -2,7 +2,7 @@ package entities;
 
 public class Rectangle extends Entity {
 
-	public Rectangle(int x, int y, int width, int height) {
+	public Rectangle(int x, int y, int width, int height, Integer color) {
 
 		if (x >= 0) {
 			setX(x);
@@ -15,13 +15,13 @@ public class Rectangle extends Entity {
 			setY(0);
 		}
 		
-		setGraphicalObject(width, height);
+		setGraphicalObject(width, height, color);
 
 	}
 
-	public void changeSize(int width, int height) {
+	public void changeSize(int width, int height, Integer color) {
 
-		setGraphicalObject(width, height);
+		setGraphicalObject(width, height, color);
 
 	}
 

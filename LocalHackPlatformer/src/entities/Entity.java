@@ -28,9 +28,8 @@ public class Entity {
 		return y;
 	}
 
-	public void setGraphicalObject(int width, int height) {
-		object = new GraphicalObject(width, height);
-		object.setColor(0xff0000ff);
+	public void setGraphicalObject(int width, int height, Integer color) {
+		object = new GraphicalObject(width, height, color);
 	}
 
 	public GraphicalObject getGraphicalObject() {

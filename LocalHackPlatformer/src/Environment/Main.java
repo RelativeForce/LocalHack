@@ -28,8 +28,13 @@ public class Main {
 			display.render(screen);
 		}
 
-		Rectangle floor = new Rectangle(0, 450, 1000, 20);
+		Rectangle floor = new Rectangle(0, 450, 1000, 20, 0xff0000ff);
 		components.add(floor);
+		
+		Rectangle floor1 = new Rectangle(200, 350, 500, 20, 0xff0000ff);
+		components.add(floor1);
+		
+		
 		player = new Player(20, 20, 20, 20);
 
 		// Thread initialisation

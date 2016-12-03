@@ -6,12 +6,13 @@ public class GraphicalObject {
 	public final int height;
 	private Integer[][] pixels;
 	
-	public GraphicalObject(int width, int height){
+	public GraphicalObject(int width, int height, Integer color){
 		
 		pixels = new Integer[width][height];
 		
 		this.width = width;
 		this.height = height;
+		setColor(color);
 	}
 	public void setColor(Integer color){
 		
