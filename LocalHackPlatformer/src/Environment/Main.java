@@ -39,14 +39,14 @@ public class Main {
 		addEnemies();
 		
 		// Thread initialisation
-		initaliseLogicThread();
-		initaliseDisplayThread();
+		logicThread();
+		displayThread();
 		logicThread.start();
 		displayThread.start();
 
 	}
 
-	private static void initaliseLogicThread() {
+	private static void logicThread() {
 
 		logicThread = new Thread() {
 
@@ -67,7 +67,7 @@ public class Main {
 
 	}
 
-	private static void initaliseDisplayThread() {
+	private static void displayThread() {
 
 		displayThread = new Thread() {
 
