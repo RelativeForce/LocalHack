@@ -13,7 +13,7 @@ public class GraphicalObject {
 		this.width = width;
 		this.height = height;
 	}
-	public void setColor(int color){
+	public void setColor(Integer color){
 		
 		for(int i = 0; i < height; i++){
 			
@@ -22,6 +22,10 @@ public class GraphicalObject {
 				pixels[j][i] = color;
 			}
 		}
+	}
+	public void setColor(Integer color, int x, int y){
+		
+		pixels[x][y] = color;
 	}
 	public Integer[][] getPixels(){
 		
