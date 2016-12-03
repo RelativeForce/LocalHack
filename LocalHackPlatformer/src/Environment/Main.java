@@ -17,13 +17,14 @@ public class Main {
 	public static void main(String[] args) {
 		entities = new ArrayList<Entity>();
 		run = true;
-		display = new Display( 100, 100, "Platformer");
-		screen = new Screen(100,100);
+		display = new Display(1000, 500, "Platformer");
+		screen = new Screen(1000,500);
+		
 		for(int i = 0; i < 3; i++){
 			display.render(screen);
 		}
 		
-		Rectangle wall = new Rectangle(10,10,10,10);
+		Rectangle wall = new Rectangle(10,100,10,300);
 		entities.add(wall);
 		
 		
@@ -59,8 +60,8 @@ public class Main {
 				while(run){
 					
 					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
+						sleep(100);
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					display.render(screen);
