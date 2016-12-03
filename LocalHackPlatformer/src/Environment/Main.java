@@ -10,13 +10,15 @@ public class Main {
 	private static Thread displayThread;
 	private static boolean run;
 	private static Display display;
+	private static Screen screen;
 	private static Entity[] entities;
 
 	public static void main(String[] args) {
 		run = true;
 		display = new Display( 100, 100, "Platformer");
+		screen = new Screen(100,100);
 		for(int i = 0; i < 3; i++){
-			display.render();
+			display.render(screen);
 		}
 		
 		
@@ -58,7 +60,7 @@ public class Main {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					display.render();
+					display.render(screen);
 				}
 				
 			}
