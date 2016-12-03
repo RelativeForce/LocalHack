@@ -72,8 +72,7 @@ public class Display extends Canvas{
 				
 				Graphics g = bs.getDrawGraphics();
 				g.fillRect(0, 0, getWidth(), getHeight());
-				g.drawImage(image, 0, 0, null);
-				
+				g.drawImage(image, 0 ,0 , getWidth(), getHeight(), null);
 				g.dispose();
 				bs.show();
 			}

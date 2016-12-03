@@ -23,7 +23,7 @@ public class Screen {
 	 */
 	public int[] getPixels(){
 		
-		setColor(0xff);
+		//setColor(0xff0000ff);
 		
 		int c = 0;
 		int[] p = new int[width*height];

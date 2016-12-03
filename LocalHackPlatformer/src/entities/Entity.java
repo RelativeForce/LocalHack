@@ -30,7 +30,7 @@ public class Entity {
 
 	public void setGraphicalObject(int width, int height) {
 		object = new GraphicalObject(width, height);
-		object.setColor(8000);
+		object.setColor(0xff0000ff);
 	}
 
 	public GraphicalObject getGraphicalObject() {
