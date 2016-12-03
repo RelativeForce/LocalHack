@@ -9,15 +9,18 @@ import java.util.ArrayList;
 
 public class Main {
 
-	private static Thread logicThread;
-	private static Thread displayThread;
-	private static boolean run;
-	private static Display display;
-	private static Screen screen;
+	// Static
+	public static boolean run;
 	public static Player player;
 	public static ArrayList<Entity> components;
 	public static ArrayList<Entity> enemies;
-
+	
+	// Private
+	private static Thread logicThread;
+	private static Thread displayThread;
+	private static Display display;
+	private static Screen screen;
+	
 	public static void main(String[] args) {
 
 		components = new ArrayList<Entity>();
@@ -33,6 +36,7 @@ public class Main {
 		player = new Player(20, 20, 20, 20);
 
 		addComponents();
+		addEnemies();
 		
 		// Thread initialisation
 		initaliseLogicThread();
@@ -56,6 +60,7 @@ public class Main {
 						e.printStackTrace();
 					}
 					player.gravity();
+					player.checkForDeath();
 				}
 			}
 		};
@@ -110,5 +115,12 @@ public class Main {
 		
 		Rectangle lv3 = new Rectangle(450, 100, 50, 50, Color.CYAN.getRGB());
 		components.add(lv3);
+	}
+	
+	private static void addEnemies(){
+		
+		Rectangle em1 = new Rectangle(100, 300, 50, 50, Color.green.getRGB());
+		enemies.add(em1);
+		
 	}
 }

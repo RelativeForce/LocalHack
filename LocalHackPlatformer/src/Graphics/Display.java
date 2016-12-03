@@ -20,9 +20,6 @@ import Environment.Main;
  */
 public class Display extends Canvas implements KeyListener {
 
-	/**
-	 * 
-	 */
 	private int[] pixels;
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -52,9 +49,6 @@ public class Display extends Canvas implements KeyListener {
 		frame.setVisible(true);
 	}
 
-	/**
-	 * 
-	 */
 	public void render(Screen s) {
 
 		BufferStrategy bs = getBufferStrategy();
@@ -85,15 +79,15 @@ public class Display extends Canvas implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			Main.player.jump();
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			Main.player.move(10);
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			Main.player.move(-10);
+		if (!Main.player.isDead) {
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+				Main.player.jump();
+			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				Main.player.move(10);
+			} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+				Main.player.move(-10);
+			}
 		}
-
 	}
 
 	@Override
