@@ -18,6 +18,7 @@ public class Display extends Canvas{
 	/**
 	 * 
 	 */
+	private int[] pixels;
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private BufferedImage image;
@@ -30,9 +31,13 @@ public class Display extends Canvas{
 	 */
 	public Display(int width, int height, String title){
 		
+		
 		super.setMinimumSize(new Dimension(width, height));
 		super.setPreferredSize(new Dimension(width, height));
 		super.setMaximumSize(new Dimension(width, height));
+		
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		
 		
 		//Create frame
 		frame = new JFrame(title);
@@ -54,9 +59,12 @@ public class Display extends Canvas{
 			
 		}else{
 			
-			Graphics g = getGraphics();
-			g.drawImage(image, 0, 0, null);
+			
+			
+			Graphics g = bs.getDrawGraphics();
+			g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			g.dispose();
+			bs.show();
 		}
 	}
 }
