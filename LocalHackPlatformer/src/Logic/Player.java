@@ -44,6 +44,16 @@ public class Player {
 
 	}
 
+	public void jump(){
+
+		gravity();
+		if(ySpeed == 0){
+			ySpeed = -20;
+		}
+		
+		
+	}
+	
 	private boolean checkCollision(int nextX, int nextY) {
 
 		Entity nextPlayerEntity = new Rectangle(nextX, nextY, playerEntity.getGraphicalObject().width,
