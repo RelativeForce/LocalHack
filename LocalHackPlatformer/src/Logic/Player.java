@@ -21,11 +21,22 @@ public class Player {
 
 		int x = playerEntity.getX();
 		int y = playerEntity.getY();
-		
+
 		ySpeed = ySpeed + Constants.GRAVITY;
 
 		if (!checkCollision(x, y + ySpeed)) {
-			playerEntity.setY( y + ySpeed);
+			playerEntity.setY(y + ySpeed);
+		}
+
+	}
+
+	public void move(int changeInX) {
+
+		int x = playerEntity.getX();
+		int y = playerEntity.getY();
+
+		if (!checkCollision(x + changeInX, y)) {
+			playerEntity.setX(x + changeInX);
 		}
 
 	}

@@ -48,7 +48,7 @@ public class Main {
 			@Override
 			public void run(){
 				
-				
+				player.gravity();
 				
 			}
 		};
