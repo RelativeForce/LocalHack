@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
@@ -37,7 +38,7 @@ public class Display extends Canvas{
 		super.setMaximumSize(new Dimension(width, height));
 		
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		
+		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 		
 		//Create frame
 		frame = new JFrame(title);
