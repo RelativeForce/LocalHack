@@ -16,5 +16,6 @@ public class Rectangle extends Entity {
 		
 		// redefine image
 		
+		
 	}
 }
