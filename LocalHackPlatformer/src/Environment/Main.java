@@ -3,6 +3,8 @@ package Environment;
 import entities.*;
 import Graphics.*;
 import Logic.*;
+
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Main {
@@ -27,16 +29,11 @@ public class Main {
 		for (int i = 0; i < 3; i++) {
 			display.render(screen);
 		}
-
-		Rectangle floor = new Rectangle(0, 450, 1000, 20, 0xff0000ff);
-		components.add(floor);
-		
-		Rectangle floor1 = new Rectangle(200, 350, 500, 20, 0xff0000ff);
-		components.add(floor1);
-		
 		
 		player = new Player(20, 20, 20, 20);
 
+		addComponents();
+		
 		// Thread initialisation
 		initaliseLogicThread();
 		initaliseDisplayThread();
@@ -97,4 +94,21 @@ public class Main {
 
 	}
 
+	private static void addComponents(){
+		
+		Rectangle floor = new Rectangle(0, 450, 1000, 50, Color.BLUE.getRGB());
+		components.add(floor);
+		
+		Rectangle lv1 = new Rectangle(200, 350, 500, 50, Color.BLUE.getRGB());
+		components.add(lv1);
+		
+		Rectangle lv1a = new Rectangle(200, 350, 50, 100, Color.BLUE.getRGB());
+		components.add(lv1a);
+		
+		Rectangle lv2 = new Rectangle(325, 250, 250, 50, Color.BLUE.getRGB());
+		components.add(lv2);
+		
+		Rectangle lv3 = new Rectangle(450, 100, 50, 50, Color.CYAN.getRGB());
+		components.add(lv3);
+	}
 }

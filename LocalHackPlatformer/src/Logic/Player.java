@@ -1,5 +1,7 @@
 package Logic;
 
+import java.awt.Color;
+
 import Environment.Constants;
 import Environment.Main;
 import entities.Entity;
@@ -9,11 +11,13 @@ public class Player {
 
 	private Entity playerEntity;
 	private int ySpeed;
+	private int xSpeed;
 
 	public Player(int x, int y, int width, int height) {
 
-		playerEntity = new Rectangle(x, y, width, height, 0xffff0000);
+		playerEntity = new Rectangle(x, y, width, height, Color.RED.getRGB());
 		ySpeed = 0;
+		xSpeed = 0;
 
 	}
 
@@ -24,10 +28,12 @@ public class Player {
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
-		if (!checkCollision(x, y + ySpeed)) {
+		if (!checkCollision(x + xSpeed, y + ySpeed)) {
 			playerEntity.setY(y + ySpeed);
+			playerEntity.setX(x + xSpeed);
 		}else{
 			ySpeed = 0;
+			xSpeed = 0;
 		}
 		
 
@@ -40,6 +46,7 @@ public class Player {
 
 		if (!checkCollision(x + changeInX, y)) {
 			playerEntity.setX(x + changeInX);
+			xSpeed = changeInX / 5;
 		}
 
 	}
