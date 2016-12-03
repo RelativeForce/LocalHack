@@ -50,7 +50,7 @@ public class Display extends Canvas{
 	/**
 	 * 
 	 */
-	public void render(){
+	public void render(Screen s){
 		
 		BufferStrategy bs = getBufferStrategy();
 		
@@ -60,13 +60,17 @@ public class Display extends Canvas{
 			
 		}else{
 			
+			int temp[] = s.getPixels();
 			
+			if(temp.length <= pixels.length){
+				
+				pixels = temp;
 			
-			
-			Graphics g = bs.getDrawGraphics();
-			g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-			g.dispose();
-			bs.show();
+				Graphics g = bs.getDrawGraphics();
+				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+				g.dispose();
+				bs.show();
+			}
 		}
 	}
 }
