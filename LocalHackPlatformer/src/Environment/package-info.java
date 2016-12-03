@@ -5,4 +5,4 @@
  * @author Joshua_Eddy
  *
  */
-package Environment;
+package environment;

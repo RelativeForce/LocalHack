@@ -1,4 +1,4 @@
-package Directions;
+package directions;
 
 public class DownLeft implements Direction{
 

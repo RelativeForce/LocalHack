@@ -1,8 +1,9 @@
-package Logic;
+package logic;
 
 import java.awt.Rectangle;
-import Directions.*;
+
 import Graphics.*;
+import directions.*;
 
 public class HitDetection {
 	

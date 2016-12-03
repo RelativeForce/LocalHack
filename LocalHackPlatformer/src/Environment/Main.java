@@ -1,6 +1,7 @@
-package Environment;
+package environment;
 
-import Logic.*;
+import entities.Entity;
+import logic.*;
 import Graphics.*;
 
 public class Main {
@@ -9,6 +10,7 @@ public class Main {
 	private static Thread displayThread;
 	private static boolean run;
 	private static Display display;
+	private static Entity[] entities;
 
 	public static void main(String[] args) {
 		run = true;
