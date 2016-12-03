@@ -6,4 +6,4 @@
  * @email eddyjic@aston.ac.uk
  *
  */
-package logic;
+package Logic;

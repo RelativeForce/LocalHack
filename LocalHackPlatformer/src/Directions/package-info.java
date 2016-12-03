@@ -5,4 +5,4 @@
  * @author Joshua
  *
  */
-package directions;
+package Directions;

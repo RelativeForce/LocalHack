@@ -1,8 +1,8 @@
-package environment;
+package Environment;
 
 import entities.Entity;
-import logic.*;
 import Graphics.*;
+import Logic.*;
 
 public class Main {
 	
@@ -18,6 +18,7 @@ public class Main {
 		for(int i = 0; i < 3; i++){
 			display.render();
 		}
+		
 		
 		
 		
