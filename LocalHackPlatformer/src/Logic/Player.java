@@ -49,7 +49,7 @@ public class Player {
 
 		if (!checkCollision(x + changeInX, y, Main.components)) {
 			playerEntity.setX(x + changeInX);
-			xSpeed = changeInX / 5;
+			xSpeed = changeInX / Constants.FRICTION;
 		}
 
 	}
@@ -58,7 +58,7 @@ public class Player {
 
 		gravity();
 		if(ySpeed == 0){
-			ySpeed = -20;
+			ySpeed = -Constants.JUMP_HEIGHT;
 		}
 		
 		
