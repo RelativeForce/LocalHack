@@ -34,11 +34,10 @@ public class Player {
 		if (!checkCollision(x + xSpeed, y + ySpeed, Level.components)) {
 			playerEntity.setY(y + ySpeed);
 			playerEntity.setX(x + xSpeed);
-		}else{
+		} else {
 			ySpeed = 0;
 			xSpeed = 0;
 		}
-		
 
 	}
 
@@ -47,37 +46,40 @@ public class Player {
 		int x = playerEntity.getX();
 		int y = playerEntity.getY();
 
-		if (!checkCollision(x + changeInX, y, Level.components)) {
+		if (!checkCollision(x + changeInX, y, Level.components)
+				&& playerEntity.getX() >= 0
+				&& playerEntity.getX() <= Constants.WINDOW_WIDTH - Constants.MOVE_DISTANCE){
+
 			playerEntity.setX(x + changeInX);
 			xSpeed = changeInX / Constants.FRICTION;
 		}
 
 	}
 
-	public void jump(){
+	public void jump() {
 
 		gravity();
-		if(ySpeed == 0){
+		if (ySpeed == 0) {
 			ySpeed = -Constants.JUMP_HEIGHT;
 		}
-		
-		
+
 	}
-	
-	public void checkForDeath(){
-		
+
+	public void checkForDeath() {
+
 		int x = playerEntity.getX();
 		int y = playerEntity.getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
 		if (checkCollision(x + xSpeed, y + ySpeed, Level.enemies)) {
-			playerEntity = new Rectangle(x, y, playerEntity.getGraphicalObject().width, playerEntity.getGraphicalObject().height, Color.WHITE.getRGB());
+			playerEntity = new Rectangle(x, y, playerEntity.getGraphicalObject().width,
+					playerEntity.getGraphicalObject().height, Color.WHITE.getRGB());
 			isDead = true;
 		}
-		
+
 	}
-	
+
 	private boolean checkCollision(int nextX, int nextY, ArrayList<Entity> list) {
 
 		Entity nextPlayerEntity = new Rectangle(nextX, nextY, playerEntity.getGraphicalObject().width,

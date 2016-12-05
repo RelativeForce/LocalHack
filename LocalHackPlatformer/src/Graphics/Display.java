@@ -11,6 +11,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import Environment.Constants;
 import Environment.Main;
 
 /**
@@ -83,9 +84,9 @@ public class Display extends Canvas implements KeyListener {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				Main.player.jump();
 			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				Main.player.move(10);
+				Main.player.move(Constants.MOVE_DISTANCE);
 			} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				Main.player.move(-10);
+				Main.player.move(-Constants.MOVE_DISTANCE);
 			}
 		}
 	}

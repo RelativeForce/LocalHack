@@ -9,15 +9,15 @@ public class Entity {
 	private GraphicalObject object;
 
 	public void setX(int x) {
-		if (x >= 0) {
+		
 			this.x = x;
-		}
+		
 	}
 
 	public void setY(int y) {
-		if (y >= 0) {
+		
 			this.y = y;
-		}
+		
 	}
 
 	public int getX() {

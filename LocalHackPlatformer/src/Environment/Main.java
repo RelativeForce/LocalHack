@@ -81,11 +81,17 @@ public class Main {
 
 	private static void logic() {
 		int playerX = player.getEntity().getX();
-		if(playerX < Constants.WINDOW_PADDING && Level.levelStartX <= 0){
-			level.moveLevel(-20);
-		}else if(playerX > Constants.WINDOW_WIDTH - Constants.WINDOW_PADDING && Level.levelStartX >= Constants.WINDOW_WIDTH-Level.levelLength){
-			level.moveLevel(20);
+		int moveDistance = 0;
+		if(playerX < Constants.WINDOW_PADDING && Level.levelStartX < 0){
+			moveDistance = Constants.MOVE_DISTANCE;
+		}else if(playerX > Constants.WINDOW_WIDTH - Constants.WINDOW_PADDING && Level.levelStartX > -Level.levelLength ){
+			moveDistance = -Constants.MOVE_DISTANCE;
 		}
+		if(moveDistance != 0){
+			level.moveLevel(moveDistance);
+			player.move(moveDistance);
+		}
+		
 		player.gravity();
 		player.checkForDeath();
 	}
