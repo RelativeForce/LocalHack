@@ -30,11 +30,14 @@ public class Player {
 		int y = playerEntity.getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
+		int nextX = x + xSpeed;
+		int nextY = y + ySpeed;
 
-		if (!checkCollision(x + xSpeed, y + ySpeed, Level.components)) {
+		if (!checkCollision(nextX, nextY, Level.components)) {
 			playerEntity.setY(y + ySpeed);
 			playerEntity.setX(x + xSpeed);
 		} else {
+
 			ySpeed = 0;
 			xSpeed = 0;
 		}
@@ -59,10 +62,41 @@ public class Player {
 				Main.level.moveLevel(-changeInX);
 
 			} else {
+
 				playerEntity.setX(nextX);
 			}
 
 			xSpeed = changeInX / Constants.FRICTION;
+		} else {
+
+		/*	
+			boolean initalIsGreater;
+			if (x <= nextX) {
+				initalIsGreater = false;
+			} else {
+				initalIsGreater = true;
+			}
+
+			boolean hasCollided = false;
+			
+			int xInc; 
+			if (initalIsGreater) {
+				xInc = -1;
+			} else {
+				xInc = 1;
+			}
+
+			while (initalIsGreater ? (x >= nextX) : (x <= nextX) && !hasCollided) {
+
+				if (!checkCollision(x + xInc, y, Level.components)) {
+					x += xInc;
+				} else {
+					hasCollided = true;
+				}
+
+			}
+			playerEntity.setX(x);
+*/
 		}
 
 	}
@@ -107,4 +141,5 @@ public class Player {
 	public Entity getEntity() {
 		return playerEntity;
 	}
+
 }
