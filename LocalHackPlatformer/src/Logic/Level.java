@@ -11,12 +11,13 @@ public class Level {
 	public static ArrayList<Entity> components;
 	public static ArrayList<Entity> enemies;
 	public static int levelLength;
+	public static int levelStartX;
 
 	public Level(){
 		
 		components = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
-		
+		levelStartX = 0;
 		loadLevel(1);
 		
 	}
@@ -34,6 +35,7 @@ public class Level {
 		
 		move(components, changeInX);
 		move(enemies, changeInX);
+		levelStartX += changeInX;
 		
 	}
 	

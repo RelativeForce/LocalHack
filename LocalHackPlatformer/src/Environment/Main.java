@@ -10,7 +10,7 @@ public class Main {
 	// Static
 	public static boolean run;
 	public static Player player;
-public static Level level;
+	public static Level level;
 
 
 	// Private
@@ -81,7 +81,11 @@ public static Level level;
 
 	private static void logic() {
 		int playerX = player.getEntity().getX();
-		//if(playerX <)
+		if(playerX < Constants.WINDOW_PADDING && Level.levelStartX <= 0){
+			level.moveLevel(-20);
+		}else if(playerX > Constants.WINDOW_WIDTH - Constants.WINDOW_PADDING && Level.levelStartX >= Constants.WINDOW_WIDTH-Level.levelLength){
+			level.moveLevel(20);
+		}
 		player.gravity();
 		player.checkForDeath();
 	}
