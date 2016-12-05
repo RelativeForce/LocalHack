@@ -10,14 +10,14 @@ public class Level {
 	
 	public static ArrayList<Entity> components;
 	public static ArrayList<Entity> enemies;
-	public static int levelLength;
-	public static int levelStartX;
+	public static int Length;
+	public static int StartX;
 
 	public Level(){
 		
 		components = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
-		levelStartX = 0;
+		StartX = 0;
 		loadLevel(1);
 		
 	}
@@ -26,8 +26,10 @@ public class Level {
 
 		File currentDirectory = new File(System.getProperty("user.dir"));
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
+		levelloader.getLevel(levelNumber, "levelDetails");
 		components.addAll(levelloader.getLevel(levelNumber, "component"));
 		enemies.addAll(levelloader.getLevel(levelNumber, "enemy"));
+		
 
 	}
 	
@@ -35,7 +37,7 @@ public class Level {
 		
 		move(components, changeInX);
 		move(enemies, changeInX);
-		levelStartX += changeInX;
+		StartX += changeInX;
 		
 	}
 	

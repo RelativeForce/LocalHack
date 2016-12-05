@@ -65,7 +65,7 @@ public class LevelLoader {
 			
 			
 			if(type.equals("levelDetails") && entityType.equals("levelDetails")){
-				Level.levelLength = Integer.parseInt(details[1]);
+				Level.Length = Integer.parseInt(details[1]);
 			}
 			else if (type.equals("component") && entityType.equals("component")) {
 				if (shape.equals("rectangle")) {

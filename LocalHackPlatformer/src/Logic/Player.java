@@ -46,11 +46,22 @@ public class Player {
 		int x = playerEntity.getX();
 		int y = playerEntity.getY();
 
-		if (!checkCollision(x + changeInX, y, Level.components)
-				&& playerEntity.getX() >= 0
-				&& playerEntity.getX() <= Constants.WINDOW_WIDTH - Constants.MOVE_DISTANCE){
+		int nextX = x + changeInX;
 
-			playerEntity.setX(x + changeInX);
+		if (!checkCollision(nextX, y, Level.components) && nextX >= 0
+				&& nextX <= Constants.WINDOW_WIDTH - playerEntity.getGraphicalObject().width) {
+
+			if (nextX < Constants.WINDOW_PADDING && Level.StartX < 0) {
+				Main.level.moveLevel(-changeInX);
+
+			} else if (nextX > Constants.WINDOW_WIDTH - Constants.WINDOW_PADDING
+					&& Level.StartX > -Level.Length + Constants.WINDOW_WIDTH) {
+				Main.level.moveLevel(-changeInX);
+
+			} else {
+				playerEntity.setX(nextX);
+			}
+
 			xSpeed = changeInX / Constants.FRICTION;
 		}
 

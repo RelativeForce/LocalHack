@@ -22,8 +22,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		run = true;
-		display = new Display(1000, 500, "Platformer");
-		screen = new Screen(1000, 500);
+		display = new Display(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, "Platformer");
+		screen = new Screen(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
 		for (int i = 0; i < 3; i++) {
 			display.render(screen);
@@ -79,19 +79,7 @@ public class Main {
 		};
 	}
 
-	private static void logic() {
-		int playerX = player.getEntity().getX();
-		int moveDistance = 0;
-		if(playerX < Constants.WINDOW_PADDING && Level.levelStartX < 0){
-			moveDistance = Constants.MOVE_DISTANCE;
-		}else if(playerX > Constants.WINDOW_WIDTH - Constants.WINDOW_PADDING && Level.levelStartX > -Level.levelLength ){
-			moveDistance = -Constants.MOVE_DISTANCE;
-		}
-		if(moveDistance != 0){
-			level.moveLevel(moveDistance);
-			player.move(moveDistance);
-		}
-		
+	private static void logic() {	
 		player.gravity();
 		player.checkForDeath();
 	}
