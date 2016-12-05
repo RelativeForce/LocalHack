@@ -10,6 +10,7 @@ public class Level {
 	
 	public static ArrayList<Entity> components;
 	public static ArrayList<Entity> enemies;
+	public static int levelLength;
 
 	public Level(){
 		

@@ -1,6 +1,8 @@
 package Environment;
 
 import java.util.Scanner;
+
+import Logic.Level;
 import entities.Entity;
 import entities.Rectangle;
 import java.awt.Color;
@@ -61,7 +63,11 @@ public class LevelLoader {
 			String type = details[0];
 			String shape = details[1];
 			
-			if (type.equals("component") && entityType.equals("component")) {
+			
+			if(type.equals("levelDetails") && entityType.equals("levelDetails")){
+				Level.levelLength = Integer.parseInt(details[1]);
+			}
+			else if (type.equals("component") && entityType.equals("component")) {
 				if (shape.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
 				}
@@ -111,4 +117,5 @@ public class LevelLoader {
 		
 	}
 	
+
 }

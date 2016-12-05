@@ -10,7 +10,8 @@ public class Main {
 	// Static
 	public static boolean run;
 	public static Player player;
-	public static Level level;
+public static Level level;
+
 
 	// Private
 	private static Thread logicThread;
@@ -79,6 +80,8 @@ public class Main {
 	}
 
 	private static void logic() {
+		int playerX = player.getEntity().getX();
+		//if(playerX <)
 		player.gravity();
 		player.checkForDeath();
 	}
