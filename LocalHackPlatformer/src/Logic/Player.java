@@ -31,7 +31,7 @@ public class Player {
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
-		if (!checkCollision(x + xSpeed, y + ySpeed, Main.components)) {
+		if (!checkCollision(x + xSpeed, y + ySpeed, Level.components)) {
 			playerEntity.setY(y + ySpeed);
 			playerEntity.setX(x + xSpeed);
 		}else{
@@ -47,7 +47,7 @@ public class Player {
 		int x = playerEntity.getX();
 		int y = playerEntity.getY();
 
-		if (!checkCollision(x + changeInX, y, Main.components)) {
+		if (!checkCollision(x + changeInX, y, Level.components)) {
 			playerEntity.setX(x + changeInX);
 			xSpeed = changeInX / Constants.FRICTION;
 		}
@@ -71,7 +71,7 @@ public class Player {
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
-		if (checkCollision(x + xSpeed, y + ySpeed, Main.enemies)) {
+		if (checkCollision(x + xSpeed, y + ySpeed, Level.enemies)) {
 			playerEntity = new Rectangle(x, y, playerEntity.getGraphicalObject().width, playerEntity.getGraphicalObject().height, Color.WHITE.getRGB());
 			isDead = true;
 		}

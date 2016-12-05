@@ -11,8 +11,7 @@ public class Main {
 	// Static
 	public static boolean run;
 	public static Player player;
-	public static ArrayList<Entity> components;
-	public static ArrayList<Entity> enemies;
+	public static Level level;
 
 	// Private
 	private static Thread logicThread;
@@ -22,8 +21,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		components = new ArrayList<Entity>();
-		enemies = new ArrayList<Entity>();
+		
 		run = true;
 		display = new Display(1000, 500, "Platformer");
 		screen = new Screen(1000, 500);
@@ -33,8 +31,8 @@ public class Main {
 		}
 
 		player = new Player(20, 20, 20, 20);
-
-		loadLevel(1);
+		level = new Level();
+		
 
 		// Thread initialisation
 		logicThread();
@@ -81,8 +79,8 @@ public class Main {
 					}
 
 					ArrayList<Entity> entities = new ArrayList<Entity>();
-					entities.addAll(components);
-					entities.addAll(enemies);
+					entities.addAll(Level.components);
+					entities.addAll(Level.enemies);
 					entities.add(player.getEntity());
 
 					for (Entity entity : entities) {
@@ -97,12 +95,5 @@ public class Main {
 
 	}
 
-	private static void loadLevel(int levelNumber) {
-
-		File currentDirectory = new File(System.getProperty("user.dir"));
-		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
-		components.addAll(levelloader.getLevel(levelNumber, "component"));
-		enemies.addAll(levelloader.getLevel(levelNumber, "enemy"));
-
-	}
+	
 }
