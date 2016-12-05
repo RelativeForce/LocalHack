@@ -3,9 +3,10 @@ package Environment;
 import java.util.Scanner;
 import entities.Entity;
 import entities.Rectangle;
-
 import java.awt.Color;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 /**
@@ -31,14 +32,19 @@ public class LevelLoader {
 		Scanner scnr = null;
 		for (File level : directory) {
 			if (level.getPath().contains(fileName)) {
-				scnr = new Scanner(level.getPath());
+				
+				try {
+					scnr = new Scanner(level);
+				} catch (FileNotFoundException e) {
+					
+				}
 			}
 		}
 		return scnr;
 
 	}
 
-	public Entity[] getLevel(int levelNum) {
+	public ArrayList<Entity> getLevel(int levelNum) {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -62,7 +68,7 @@ public class LevelLoader {
 
 		}
 
-		return (Entity[]) entities.toArray();
+		return entities;
 	}
 
 	private Entity addRectangle(String[] details) {

@@ -5,6 +5,7 @@ import Graphics.*;
 import Logic.*;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
@@ -22,7 +23,7 @@ public class Main {
 	private static Screen screen;
 	
 	public static void main(String[] args) {
-
+		
 		components = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
 		run = true;
@@ -34,11 +35,11 @@ public class Main {
 		}
 		
 		player = new Player(20, 20, 20, 20);
-
+		
 		addComponents();
 		addEnemies();
 		
-		// Thread initialisation
+		//Thread initialisation
 		logicThread();
 		displayThread();
 		logicThread.start();
@@ -101,20 +102,10 @@ public class Main {
 
 	private static void addComponents(){
 		
-		Rectangle floor = new Rectangle(0, 450, 1000, 50, Color.BLUE.getRGB());
-		components.add(floor);
+		File currentDirectory = new File(System.getProperty("user.dir"));
+		LevelLoader ll = new LevelLoader(currentDirectory.getPath());
+		components.addAll(ll.getLevel(1));
 		
-		Rectangle lv1 = new Rectangle(200, 350, 500, 50, Color.BLUE.getRGB());
-		components.add(lv1);
-		
-		Rectangle lv1a = new Rectangle(200, 350, 50, 100, Color.BLUE.getRGB());
-		components.add(lv1a);
-		
-		Rectangle lv2 = new Rectangle(325, 250, 250, 50, Color.BLUE.getRGB());
-		components.add(lv2);
-		
-		Rectangle lv3 = new Rectangle(450, 100, 50, 50, Color.CYAN.getRGB());
-		components.add(lv3);
 	}
 	
 	private static void addEnemies(){
