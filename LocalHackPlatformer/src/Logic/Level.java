@@ -20,7 +20,7 @@ public class Level {
 		
 	}
 	
-	public static void loadLevel(int levelNumber) {
+	public void loadLevel(int levelNumber) {
 
 		File currentDirectory = new File(System.getProperty("user.dir"));
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
@@ -29,5 +29,19 @@ public class Level {
 
 	}
 	
+	public void moveLevel(int changeInX){
+		
+		move(components, changeInX);
+		move(enemies, changeInX);
+		
+	}
+	
+	private void move(ArrayList<Entity> entities, int changeInX){
+		
+		for(Entity entity : entities){
+			entity.setX(entity.getX() + changeInX);;
+		}
+		
+	}
 	
 }

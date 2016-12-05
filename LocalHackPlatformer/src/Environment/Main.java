@@ -3,7 +3,6 @@ package Environment;
 import entities.*;
 import Graphics.*;
 import Logic.*;
-import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
@@ -21,7 +20,6 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		
 		run = true;
 		display = new Display(1000, 500, "Platformer");
 		screen = new Screen(1000, 500);
@@ -32,7 +30,6 @@ public class Main {
 
 		player = new Player(20, 20, 20, 20);
 		level = new Level();
-		
 
 		// Thread initialisation
 		logicThread();
@@ -55,12 +52,10 @@ public class Main {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					player.gravity();
-					player.checkForDeath();
+					logic();
 				}
 			}
 		};
-
 	}
 
 	private static void displayThread() {
@@ -77,23 +72,27 @@ public class Main {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-
-					ArrayList<Entity> entities = new ArrayList<Entity>();
-					entities.addAll(Level.components);
-					entities.addAll(Level.enemies);
-					entities.add(player.getEntity());
-
-					for (Entity entity : entities) {
-						screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
-					}
-					display.render(screen);
-					screen.clear();
+					display();
 				}
-
 			}
 		};
-
 	}
 
-	
+	private static void logic() {
+		player.gravity();
+		player.checkForDeath();
+	}
+
+	private static void display() {
+		ArrayList<Entity> entities = new ArrayList<Entity>();
+		entities.addAll(Level.components);
+		entities.addAll(Level.enemies);
+		entities.add(player.getEntity());
+
+		for (Entity entity : entities) {
+			screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
+		}
+		display.render(screen);
+		screen.clear();
+	}
 }
