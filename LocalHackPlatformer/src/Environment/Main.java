@@ -3,8 +3,6 @@ package Environment;
 import entities.*;
 import Graphics.*;
 import Logic.*;
-
-import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -15,15 +13,15 @@ public class Main {
 	public static Player player;
 	public static ArrayList<Entity> components;
 	public static ArrayList<Entity> enemies;
-	
+
 	// Private
 	private static Thread logicThread;
 	private static Thread displayThread;
 	private static Display display;
 	private static Screen screen;
-	
+
 	public static void main(String[] args) {
-		
+
 		components = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
 		run = true;
@@ -33,13 +31,12 @@ public class Main {
 		for (int i = 0; i < 3; i++) {
 			display.render(screen);
 		}
-		
+
 		player = new Player(20, 20, 20, 20);
-		
-		addComponents();
-		addEnemies();
-		
-		//Thread initialisation
+
+		loadLevel(1);
+
+		// Thread initialisation
 		logicThread();
 		displayThread();
 		logicThread.start();
@@ -100,18 +97,12 @@ public class Main {
 
 	}
 
-	private static void addComponents(){
-		
+	private static void loadLevel(int levelNumber) {
+
 		File currentDirectory = new File(System.getProperty("user.dir"));
-		LevelLoader ll = new LevelLoader(currentDirectory.getPath());
-		components.addAll(ll.getLevel(1));
-		
-	}
-	
-	private static void addEnemies(){
-		
-		Rectangle em1 = new Rectangle(100, 300, 50, 50, Color.green.getRGB());
-		enemies.add(em1);
-		
+		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
+		components.addAll(levelloader.getLevel(levelNumber, "component"));
+		enemies.addAll(levelloader.getLevel(levelNumber, "enemy"));
+
 	}
 }

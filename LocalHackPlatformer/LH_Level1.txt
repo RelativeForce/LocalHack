@@ -1,5 +1,6 @@
-Rectangle,0,450,1000,50,blue
-Rectangle,200,350,500,50,blue
-Rectangle,200,350,50,100,blue
-Rectangle,325,250,250,50,blue
-Rectangle,450,100,50,50,blue
+component,rectangle,0,450,1000,50,blue
+component,rectangle,200,350,500,50,blue
+component,rectangle,200,350,50,100,blue
+component,rectangle,325,250,250,50,blue
+component,rectangle,450,100,50,50,blue
+enemy,rectangle,100,300,50,50,green

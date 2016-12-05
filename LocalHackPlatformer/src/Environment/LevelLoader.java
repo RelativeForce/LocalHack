@@ -5,8 +5,6 @@ import entities.Entity;
 import entities.Rectangle;
 import java.awt.Color;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 /**
@@ -32,11 +30,11 @@ public class LevelLoader {
 		Scanner scnr = null;
 		for (File level : directory) {
 			if (level.getPath().contains(fileName)) {
-				
+
 				try {
 					scnr = new Scanner(level);
-				} catch (FileNotFoundException e) {
-					
+				} catch (Exception e) {
+
 				}
 			}
 		}
@@ -44,7 +42,7 @@ public class LevelLoader {
 
 	}
 
-	public ArrayList<Entity> getLevel(int levelNum) {
+	public ArrayList<Entity> getLevel(int levelNum, String entityType) {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -61,25 +59,37 @@ public class LevelLoader {
 			String[] details = line.split(",");
 
 			String type = details[0];
-
-			if (type.equals("Rectangle")) {
-				entities.add(addRectangle(details));
+			String shape = details[1];
+			
+			if (type.equals("component") && entityType.equals("component")) {
+				if (shape.equals("rectangle")) {
+					entities.add(addRectangle(details, 2));
+				}
+			}else if(type.equals("enemy") && entityType.equals("enemy")){
+				if (shape.equals("rectangle")) {
+					entities.add(addRectangle(details, 2));
+				}
 			}
-
 		}
-
 		return entities;
 	}
 
-	private Entity addRectangle(String[] details) {
+	private Entity addRectangle(String[] details, int firstDetail) {
 
-		int x = Integer.parseInt(details[1]);
-		int y = Integer.parseInt(details[2]);
-		int width = Integer.parseInt(details[3]);
-		int height = Integer.parseInt(details[4]);
+		int x = Integer.parseInt(details[firstDetail]);
+		int y = Integer.parseInt(details[firstDetail + 1]);
+		int width = Integer.parseInt(details[firstDetail + 2]);
+		int height = Integer.parseInt(details[firstDetail + 3]);
+		Color color = getColor(details[firstDetail + 4]);
 
+		Rectangle rect = new Rectangle(x, y, width, height, color.getRGB());
+		return rect;
+	}
+
+	private Color getColor(String colorStr){
+		
 		Color color;
-		switch (details[5]) {
+		switch (colorStr) {
 		case "yellow":
 			color = Color.yellow;
 			break;
@@ -97,9 +107,8 @@ public class LevelLoader {
 			break;
 
 		}
-
-		Rectangle rect = new Rectangle(x, y, width, height, color.getRGB());
-		return rect;
+		return color;
+		
 	}
-
+	
 }
