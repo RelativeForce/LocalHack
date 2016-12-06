@@ -1,17 +1,20 @@
 package Logic;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import Environment.Constants;
 import Environment.Main;
 
-public class KeyBoardListener {
+public class KeyBoardListener implements KeyListener {
 
 	private KeyEvent[] activeKeys;
 
 	public KeyBoardListener(int rollOver) {
 		activeKeys = new KeyEvent[rollOver];
 	}
-
+	
+	
 	public boolean isActive(KeyEvent key) {
 
 		for (KeyEvent k : activeKeys) {
@@ -26,7 +29,7 @@ public class KeyBoardListener {
 
 		return false;
 	}
-
+	@Override
 	public void keyPressed(KeyEvent k) {
 
 		if (!isActive(k) && isValid(k)) {
@@ -35,30 +38,32 @@ public class KeyBoardListener {
 				KeyEvent currentKey = activeKeys[i];
 
 				if (currentKey == null) {
-					//System.out.println("key added");
+					
 					activeKeys[i] = k;
 					break;
 				}
 			}
 		}
 	}
-
+	@Override
 	public void keyReleased(KeyEvent k) {
-
+		
 		for (int i = 0; i < activeKeys.length; i++) {
+			
 			KeyEvent currentKey = activeKeys[i];
 
 			if (currentKey != null) {
 				if (currentKey.getKeyCode() == k.getKeyCode()) {
-
+					
+					
+					
 					activeKeys[i] = null;
 					break;
 				}
 			}
 		}
-
 	}
-
+	@Override
 	public void keyTyped(KeyEvent k) {
 
 	}

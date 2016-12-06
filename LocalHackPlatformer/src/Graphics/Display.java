@@ -16,7 +16,7 @@ import Logic.KeyBoardListener;;
  * @author John_Berg
  *
  */
-public class Display extends Canvas implements KeyListener{
+public class Display extends Canvas {
 
 	private int[] pixels;
 	private static final long serialVersionUID = 1L;
@@ -46,7 +46,7 @@ public class Display extends Canvas implements KeyListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setFocusable(true);
 		frame.setVisible(true);
-		this.addKeyListener(this);
+		this.addKeyListener(kbl);
 	}
 
 	public void render(Screen s) {
@@ -76,22 +76,8 @@ public class Display extends Canvas implements KeyListener{
 			}
 		}
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		kbl.keyPressed(e);
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		kbl.keyReleased(e);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		kbl.keyTyped(e);
-	}
 	public void handleKeys(){
+		
 		kbl.handleEnvents();
 	}
 }
