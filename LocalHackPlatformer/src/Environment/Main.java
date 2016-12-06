@@ -12,7 +12,6 @@ public class Main {
 	public static Player player;
 	public static Level level;
 
-
 	// Private
 	private static Thread logicThread;
 	private static Thread displayThread;
@@ -22,6 +21,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		run = true;
+
 		display = new Display(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, "Platformer");
 		screen = new Screen(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 
@@ -79,7 +79,8 @@ public class Main {
 		};
 	}
 
-	private static void logic() {	
+	private static void logic() {
+		display.handleKeys();
 		player.gravity();
 		player.checkForDeath();
 	}

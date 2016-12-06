@@ -8,23 +8,21 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-
 import javax.swing.JFrame;
-
-import Environment.Constants;
-import Environment.Main;
+import Logic.KeyBoardListener;;
 
 /**
  * 
  * @author John_Berg
  *
  */
-public class Display extends Canvas implements KeyListener {
+public class Display extends Canvas implements KeyListener{
 
 	private int[] pixels;
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private BufferedImage image;
+	private KeyBoardListener kbl;
 
 	/**
 	 * 
@@ -34,11 +32,10 @@ public class Display extends Canvas implements KeyListener {
 	 */
 	public Display(int width, int height, String title) {
 
-		this.addKeyListener(this);
 		super.setMinimumSize(new Dimension(width, height));
 		super.setPreferredSize(new Dimension(width, height));
 		super.setMaximumSize(new Dimension(width, height));
-
+		kbl =  new KeyBoardListener(5);
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
@@ -47,7 +44,9 @@ public class Display extends Canvas implements KeyListener {
 		frame.add(this);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setFocusable(true);
 		frame.setVisible(true);
+		this.addKeyListener(this);
 	}
 
 	public void render(Screen s) {
@@ -80,26 +79,19 @@ public class Display extends Canvas implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (!Main.player.isDead) {
-			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-				Main.player.jump();
-			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				Main.player.move(Constants.MOVE_DISTANCE);
-			} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				Main.player.move(-Constants.MOVE_DISTANCE);
-			}
-		}
+		kbl.keyPressed(e);
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void keyReleased(KeyEvent e) {
+		kbl.keyReleased(e);
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void keyTyped(KeyEvent e) {
+		kbl.keyTyped(e);
+	}
+	public void handleKeys(){
+		kbl.handleEnvents();
 	}
 }
