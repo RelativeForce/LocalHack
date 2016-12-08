@@ -14,7 +14,7 @@ public class Rectangle extends Entity {
 		} else {
 			setY(0);
 		}
-		
+		setColor(color);
 		setGraphicalObject(width, height, color);
 
 	}

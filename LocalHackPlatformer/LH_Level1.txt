@@ -1,15 +1,5 @@
 levelDetails,4000
-component,rectangle,0,450,4000,50,black
-component,floor,0,450,4000,50,black,orange,25,25
-component,rectangle,1,451,23,23,orange
-component,rectangle,26,451,23,23,orange
-component,rectangle,51,451,23,23,orange
-component,rectangle,76,451,23,23,orange
-component,rectangle,101,451,23,23,orange
-component,rectangle,126,451,23,23,orange
-component,rectangle,151,451,23,23,orange
-component,rectangle,176,451,23,23,orange
-component,rectangle,201,451,23,23,orange
+component,floor,0,450,4000,50,black,blue,25,25
 component,rectangle,200,350,500,50,blue
 component,rectangle,200,350,50,100,blue
 component,rectangle,325,250,250,50,blue

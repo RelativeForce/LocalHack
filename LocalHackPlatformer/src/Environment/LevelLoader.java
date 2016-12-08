@@ -72,9 +72,9 @@ public class LevelLoader {
 				if (shape.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
 				}
-				//if (shape.equals("floor")) {
-					//entities.add(addFloor(details, 2));
-				//}
+				if (shape.equals("floor")) {
+					entities.add(addFloor(details, 2));
+				}
 			}else if(type.equals("enemy") && entityType.equals("enemy")){
 				if (shape.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
@@ -109,8 +109,6 @@ public class LevelLoader {
 		
 		
 		Floor floor = new Floor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB());
-		
-		
 		
 		return floor;
 	}

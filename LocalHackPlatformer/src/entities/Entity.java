@@ -6,6 +6,7 @@ public class Entity {
 
 	private int x;
 	private int y;
+	private Integer color;
 	private GraphicalObject object;
 
 	public void setX(int x) {
@@ -28,6 +29,14 @@ public class Entity {
 		return y;
 	}
 
+	public void setColor(Integer color){
+		this.color = color;
+	}
+	
+	public Integer getColor(){
+		return color;
+	}
+	
 	public void setGraphicalObject(int width, int height, Integer color) {
 		object = new GraphicalObject(width, height, color);
 	}
