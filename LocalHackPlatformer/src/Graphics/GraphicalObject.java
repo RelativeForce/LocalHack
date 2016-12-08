@@ -1,5 +1,7 @@
 package Graphics;
 
+import entities.Entity;
+
 public class GraphicalObject {
 	
 	public final int width;
@@ -14,6 +16,21 @@ public class GraphicalObject {
 		this.height = height;
 		setColor(color);
 	}
+	
+	public GraphicalObject(int width, int height, Entity[] entitys){
+		
+		pixels = new Integer[width][height];
+		this.width = width;
+		this.height = height;
+		complexObject(entitys);
+		
+	}
+	private void complexObject(Entity[] entitys){
+		
+		
+		
+	}
+	
 	public void setColor(Integer color){
 		
 		for(int i = 0; i < height; i++){

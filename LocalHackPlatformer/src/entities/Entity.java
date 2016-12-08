@@ -31,6 +31,9 @@ public class Entity {
 	public void setGraphicalObject(int width, int height, Integer color) {
 		object = new GraphicalObject(width, height, color);
 	}
+	public void setGraphicalObject(int width, int height, Entity[] entities){
+		object = new GraphicalObject(width, height, entities);
+	}
 
 	public GraphicalObject getGraphicalObject() {
 		return object;
