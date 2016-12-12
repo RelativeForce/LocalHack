@@ -1,10 +1,7 @@
 package Directions;
 
-public interface Direction {
+public enum Direction {
 
-	public int getX();
-	public int getY();
-	public boolean checkEquals(Direction direction);
 	
-	//updated
+	
 }
