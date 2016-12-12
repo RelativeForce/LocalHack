@@ -85,6 +85,10 @@ public class Main {
 
 	private static void logic() {
 
+		if(player.isDead && deathScreen.isFullScreen){
+			start();
+		}
+		
 		display.handleKeys();
 		player.gravity();
 		player.checkForDeath();

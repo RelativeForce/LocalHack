@@ -86,7 +86,7 @@ public class KeyBoardListener implements KeyListener {
 				} else {
 
 					if (currentKey.getKeyCode() == KeyEvent.VK_ENTER && Main.deathScreen.isFullScreen) {
-						Main.start();
+						
 					}
 				}
 
