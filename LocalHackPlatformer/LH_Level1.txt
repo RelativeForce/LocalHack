@@ -8,7 +8,8 @@ component,rectangle,1250,350,50,50,blue
 component,rectangle,1350,225,200,50,blue
 component,floor,1600,450,300,50,black,brown,25,25
 enemy,rectangle,100,100,50,50,green
-component,rectangle,1950,400,100,100,blue
-component,rectangle,2050,300,50,50,blue
-component,rectangle,2150,250,100,50,blue
-component,rectangle,2200,100,300,50,blue
+component,rectangle,1950,350,100,100,blue
+component,rectangle,2100,300,50,50,blue
+component,rectangle,2200,200,100,50,blue
+component,rectangle,2350,100,300,50,blue
+component,floor,2450,450,300,50,black,brown,25,25
