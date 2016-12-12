@@ -132,6 +132,9 @@ public class LevelLoader {
 		case "orange":
 			color = Color.orange;
 			break;
+		case "brown":
+			color = Color.decode("#F4A460");
+			break;
 		default:
 			color = Color.black;
 			break;

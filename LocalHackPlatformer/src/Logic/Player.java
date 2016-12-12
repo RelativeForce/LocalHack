@@ -116,6 +116,10 @@ public class Player {
 		int y = playerEntity.getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
+		
+		if(y > Constants.WINDOW_HEIGHT){
+			isDead = true;
+		}
 
 		if (checkCollision(x + xSpeed, y + ySpeed, Level.enemies)) {
 			playerEntity = new Rectangle(x, y, playerEntity.getGraphicalObject().width,

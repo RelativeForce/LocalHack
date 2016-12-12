@@ -20,6 +20,7 @@ public class Grunt implements Enemy{
 	public Point move() {
 
 		// David This is where you write your stuff
+		//self.note ( will need : collison values for all entities,players movement commands(with negative)
 		
 		return null;
 	}

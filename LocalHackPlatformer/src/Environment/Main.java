@@ -3,6 +3,8 @@ package Environment;
 import entities.*;
 import Graphics.*;
 import Logic.*;
+
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Main {
@@ -80,19 +82,27 @@ public class Main {
 	}
 
 	private static void logic() {
+
 		display.handleKeys();
 		player.gravity();
 		player.checkForDeath();
+
 	}
 
 	private static void display() {
 		ArrayList<Entity> entities = new ArrayList<Entity>();
-		entities.addAll(Level.components);
-		entities.addAll(Level.enemies);
-		entities.add(player.getEntity());
+		if (!player.isDead) {
+			entities.addAll(Level.components);
+			entities.addAll(Level.enemies);
+			entities.add(player.getEntity());
 
-		for (Entity entity : entities) {
-			screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
+			for (Entity entity : entities) {
+				screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
+			}
+		} else {
+			Rectangle deathScreen = new Rectangle(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT,
+					Color.RED.getRGB());
+			screen.addGraphicalObject(deathScreen.getGraphicalObject(), deathScreen.getX(), deathScreen.getY());
 		}
 		display.render(screen);
 		screen.clear();

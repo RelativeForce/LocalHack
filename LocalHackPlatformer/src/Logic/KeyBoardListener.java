@@ -69,13 +69,11 @@ public class KeyBoardListener implements KeyListener {
 	}
 
 	public void handleEnvents() {
-		// System.out.println("checking keys");
 		for (int i = 0; i < activeKeys.length; i++) {
 			KeyEvent currentKey = activeKeys[i];
 			if (!Main.player.isDead && currentKey != null) {
 
 				if (currentKey.getKeyCode() == KeyEvent.VK_SPACE) {
-					//System.out.println("jump");
 					Main.player.jump();
 
 				} else if (currentKey.getKeyCode() == KeyEvent.VK_RIGHT) {
