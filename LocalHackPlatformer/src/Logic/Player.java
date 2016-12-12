@@ -11,7 +11,7 @@ import entities.Rectangle;
 public class Player {
 
 	private Entity playerEntity;
-	private int ySpeed;
+	private double ySpeed;
 	private int xSpeed;
 	public boolean isDead;
 
@@ -31,10 +31,10 @@ public class Player {
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 		int nextX = x + xSpeed;
-		int nextY = y + ySpeed;
+		int nextY = y + (int) ySpeed;
 
 		if (!checkCollision(nextX, nextY, Level.components)) {
-			playerEntity.setY(y + ySpeed);
+			playerEntity.setY(y + (int) ySpeed);
 			playerEntity.setX(x + xSpeed);
 		} else {
 
@@ -90,7 +90,7 @@ public class Player {
 			isDead = true;
 		}
 
-		if (checkCollision(x + xSpeed, y + ySpeed, Level.enemies)) {
+		if (checkCollision(x + xSpeed, y + (int) ySpeed, Level.enemies)) {
 			playerEntity = new Rectangle(x, y, playerEntity.getGraphicalObject().width,
 					playerEntity.getGraphicalObject().height, Color.WHITE.getRGB());
 			isDead = true;
