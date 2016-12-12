@@ -13,12 +13,12 @@ public class Level {
 	public static int Length;
 	public static int StartX;
 
-	public Level(){
+	public Level(int levelNumber){
 		
 		components = new ArrayList<Entity>();
 		enemies = new ArrayList<Entity>();
 		StartX = 0;
-		loadLevel(1);
+		loadLevel(levelNumber);
 		
 	}
 	

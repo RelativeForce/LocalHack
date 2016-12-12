@@ -67,38 +67,7 @@ public class Player {
 			}
 
 			xSpeed = changeInX / Constants.FRICTION;
-		} else {
-
-		/*	
-			boolean initalIsGreater;
-			if (x <= nextX) {
-				initalIsGreater = false;
-			} else {
-				initalIsGreater = true;
-			}
-
-			boolean hasCollided = false;
-			
-			int xInc; 
-			if (initalIsGreater) {
-				xInc = -1;
-			} else {
-				xInc = 1;
-			}
-
-			while (initalIsGreater ? (x >= nextX) : (x <= nextX) && !hasCollided) {
-
-				if (!checkCollision(x + xInc, y, Level.components)) {
-					x += xInc;
-				} else {
-					hasCollided = true;
-				}
-
-			}
-			playerEntity.setX(x);
-*/
 		}
-
 	}
 
 	public void jump() {

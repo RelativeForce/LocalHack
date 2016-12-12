@@ -3,7 +3,6 @@ package Environment;
 import entities.*;
 import Graphics.*;
 import Logic.*;
-import java.awt.Color;
 import java.util.ArrayList;
 
 public class Main {
@@ -12,13 +11,15 @@ public class Main {
 	public static boolean run;
 	public static Player player;
 	public static Level level;
+	public static DeathScreen deathScreen;
 
 	// Private
 	private static Thread logicThread;
 	private static Thread displayThread;
 	private static Display display;
 	private static Screen screen;
-	private static DeathScreen deathScreen;
+	
+	private static int currentLevelNumber;
 
 	public static void main(String[] args) {
 
@@ -31,9 +32,10 @@ public class Main {
 			display.render(screen);
 		}
 
-		player = new Player(20, 20, 20, 20);
-		level = new Level();
+		
+		currentLevelNumber = 1;
 		deathScreen = new DeathScreen();
+		start();
 
 		// Thread initialisation
 		logicThread();
@@ -91,20 +93,37 @@ public class Main {
 	}
 
 	private static void display() {
-		ArrayList<Entity> entities = new ArrayList<Entity>();
 		
-			entities.addAll(Level.components);
-			entities.addAll(Level.enemies);
-			entities.add(player.getEntity());
+		ArrayList<Entity> entities = new ArrayList<Entity>();
 
-			for (Entity entity : entities) {
-				screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
-			}
+		entities.addAll(Level.components);
+		entities.addAll(Level.enemies);
+		entities.add(player.getEntity());
+
+		for (Entity entity : entities) {
+			screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
+		}
+		
 		if (player.isDead) {
 			deathScreen.increment();
-			screen.addGraphicalObject(deathScreen.getEntity().getGraphicalObject(), deathScreen.getEntity().getX(), deathScreen.getEntity().getY());
 		}
+		
+		if(deathScreen.getEntity().getGraphicalObject().height > 0 && !player.isDead){
+			deathScreen.decrement();
+		}
+		screen.addGraphicalObject(deathScreen.getEntity().getGraphicalObject(), deathScreen.getEntity().getX(),
+				deathScreen.getEntity().getY());
+		
 		display.render(screen);
 		screen.clear();
 	}
+
+	public static void start() {
+		
+		player = new Player(20, 20, 20, 20);
+
+		level = new Level(currentLevelNumber);
+
+	}
+	
 }
