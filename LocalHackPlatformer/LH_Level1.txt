@@ -14,5 +14,7 @@ component,rectangle,2200,200,100,50,blue
 component,rectangle,2350,100,300,50,blue
 component,floor,2700,450,300,50,black,brown,25,25
 component,rectangle,3075,400,50,50,blue
-component,rectangle,3150,375,50,50,blue
-component,rectangle,3225,350,50,100,blue
+component,rectangle,3200,375,50,50,blue
+component,rectangle,3325,350,50,100,blue
+component,floor,3400,450,300,50,black,brown,25,25
+objective,door,3425,450,60,100,brown,2

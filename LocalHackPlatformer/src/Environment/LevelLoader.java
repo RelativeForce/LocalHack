@@ -1,11 +1,8 @@
 package Environment;
 
 import java.util.Scanner;
-
 import Logic.Level;
-import entities.Entity;
-import entities.Floor;
-import entities.Rectangle;
+import entities.*;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -62,26 +59,43 @@ public class LevelLoader {
 			String[] details = line.split(",");
 
 			String type = details[0];
-			String shape = details[1];
-			
-			
-			if(type.equals("levelDetails") && entityType.equals("levelDetails")){
+			String detail1 = details[1];
+
+			if (type.equals("levelDetails") && entityType.equals("levelDetails")) {
 				Level.Length = Integer.parseInt(details[1]);
-			}
-			else if (type.equals("component") && entityType.equals("component")) {
-				if (shape.equals("rectangle")) {
+			} else if (type.equals("component") && entityType.equals("component")) {
+				if (detail1.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
 				}
-				if (shape.equals("floor")) {
+				if (detail1.equals("floor")) {
 					entities.add(addFloor(details, 2));
 				}
-			}else if(type.equals("enemy") && entityType.equals("enemy")){
-				if (shape.equals("rectangle")) {
+			} else if (type.equals("enemy") && entityType.equals("enemy")) {
+				if (detail1.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
 				}
+			} else if (type.equals("objective")) {
+				if (detail1.equals("door")) {
+					entities.add(addDoor(details, 2));
+				}
 			}
+
 		}
 		return entities;
+	}
+
+	private Entity addDoor(String[] details, int firstDetail) {
+
+		int x = Integer.parseInt(details[firstDetail]);
+		int y = Integer.parseInt(details[firstDetail + 1]);
+		int width = Integer.parseInt(details[firstDetail + 2]);
+		int height = Integer.parseInt(details[firstDetail + 3]);
+		Color color = getColor(details[firstDetail + 4]);
+		int levelLink = Integer.parseInt(details[firstDetail + 5]);
+
+		Door door = new Door(x, y, width, height, levelLink, color.getRGB());
+
+		return door;
 	}
 
 	private Entity addRectangle(String[] details, int firstDetail) {
@@ -96,8 +110,8 @@ public class LevelLoader {
 		return rect;
 	}
 
-	private Entity addFloor(String[] details, int firstDetail){
-		
+	private Entity addFloor(String[] details, int firstDetail) {
+
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
 		int width = Integer.parseInt(details[firstDetail + 2]);
@@ -105,16 +119,15 @@ public class LevelLoader {
 		Color borderColor = getColor(details[firstDetail + 4]);
 		Color boxColor = getColor(details[firstDetail + 5]);
 		int boxWidth = Integer.parseInt(details[firstDetail + 6]);
-		int boxHeight = Integer.parseInt(details[firstDetail + 7]);		
-		
-		
+		int boxHeight = Integer.parseInt(details[firstDetail + 7]);
+
 		Floor floor = new Floor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB());
-		
+
 		return floor;
 	}
-	
-	private Color getColor(String colorStr){
-		
+
+	private Color getColor(String colorStr) {
+
 		Color color;
 		switch (colorStr) {
 		case "yellow":
@@ -141,8 +154,7 @@ public class LevelLoader {
 
 		}
 		return color;
-		
+
 	}
-	
 
 }
