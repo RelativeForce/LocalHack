@@ -4,5 +4,7 @@ component,rectangle,200,350,50,100,blue
 component,rectangle,300,250,500,50,blue
 component,rectangle,850,150,250,50,blue
 component,rectangle,1150,400,50,50,blue
-component,rectangle,1200,350,50,50,blue
+component,rectangle,1250,350,50,50,blue
+component,rectangle,1350,200,200,50,blue
+component,floor,1600,450,300,50,black,brown,25,25
 enemy,rectangle,100,100,50,50,green
