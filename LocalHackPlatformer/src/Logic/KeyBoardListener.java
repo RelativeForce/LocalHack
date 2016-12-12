@@ -108,7 +108,6 @@ public class KeyBoardListener implements KeyListener {
 		default:
 			return false;
 		}
-		// System.out.println("is valid");
 		return true;
 	}
 }

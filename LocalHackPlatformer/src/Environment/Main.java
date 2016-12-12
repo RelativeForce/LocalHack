@@ -18,7 +18,6 @@ public class Main {
 	private static Thread displayThread;
 	private static Display display;
 	private static Screen screen;
-	
 	private static int currentLevelNumber;
 
 	public static void main(String[] args) {
