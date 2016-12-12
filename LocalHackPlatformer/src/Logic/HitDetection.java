@@ -19,35 +19,36 @@ public class HitDetection {
 		Integer[][] pixels = object.getGraphicalObject().getPixels();
 		int width = object.getGraphicalObject().width;
 		int height = object.getGraphicalObject().height;
-		boolean isLeftPerimeter = true;
 
 		for (int rowNum = 0; rowNum < height; rowNum++) {
 			for (int x = 0; x < width; x++) {
 
-				if (isLeftPerimeter) {
-					if ((pixels[x][rowNum] != null && x == 0)) {
+				if ((pixels[x][rowNum] != null && x == 0)) {
+					perimeter[rowNum][0] = x;
+					break;
+				}
+				if (x > 0) {
+					if (pixels[x - 1][rowNum] == null) {
 						perimeter[rowNum][0] = x;
-						isLeftPerimeter = false;
-					}
-					if (x > 0) {
-						if (pixels[x - 1][rowNum] == null) {
-							perimeter[rowNum][0] = x;
-							isLeftPerimeter = false;
-						}
-					}
-				} else if (!isLeftPerimeter) {
-					if (pixels[x][rowNum] != null && x == (width - 1)) {
-						perimeter[rowNum][1] = x;
-						isLeftPerimeter = true;
-					}
-					if (x < width - 1) {
-						if (pixels[x + 1][rowNum] == null) {
-							perimeter[rowNum][1] = x;
-							isLeftPerimeter = true;
-						}
+						break;
 					}
 				}
 
+			}
+		}
+
+		for (int rowNum = 0; rowNum < height; rowNum++) {
+			for (int x = width - 1; x >= 0; x--) {
+				if (pixels[x][rowNum] != null && x == (width - 1)) {
+					perimeter[rowNum][1] = x;
+					break;
+				}
+				if (x < width - 1) {
+					if (pixels[x + 1][rowNum] == null) {
+						perimeter[rowNum][1] = x;
+						break;
+					}
+				}
 			}
 		}
 
@@ -64,27 +65,29 @@ public class HitDetection {
 
 		for (int colNum = 0; colNum < width; colNum++) {
 			for (int y = 0; y < height; y++) {
-				if (isTopPerimeter) {
-					if ((pixels != null && y == 0)) {
+
+				if ((pixels != null && y == 0)) {
+					perimeter[colNum][0] = y;
+					break;
+				}
+				if (y > 0) {
+					if (pixels[colNum][y + 1] == null) {
 						perimeter[colNum][0] = y;
-						isTopPerimeter = false;
+						break;
 					}
-					if (y > 0) {
-						if (pixels[colNum][y + 1] == null) {
-							perimeter[colNum][0] = y;
-							isTopPerimeter = false;
-						}
-					}
-				} else if (!isTopPerimeter) {
-					if (pixels[colNum][y] != null && y == (height - 1)) {
+				}
+			}
+		}
+		for (int colNum = 0; colNum < width; colNum++) {
+			for (int y = height - 1; y >= 0; y--) {
+				if (pixels[colNum][y] != null && y == (height - 1)) {
+					perimeter[colNum][1] = y;
+					break;
+				}
+				if (y < height - 1) {
+					if (pixels[colNum][y + 1] == null) {
 						perimeter[colNum][1] = y;
-						isTopPerimeter = true;
-					}
-					if (y < height - 1) {
-						if (pixels[colNum][y + 1] == null) {
-							perimeter[colNum][1] = y;
-							isTopPerimeter = true;
-						}
+						break;
 					}
 				}
 			}
@@ -148,7 +151,7 @@ public class HitDetection {
 				for (int colObj2 = 0; colObj2 < obj2.getGraphicalObject().width; colObj2++) {
 					boolean condition1 = (y + obj1YPerimeter[colObj1][0]) <= (obj2Y + obj2YPerimeter[colObj2][1]);
 					boolean condition2 = (y + obj1YPerimeter[colObj1][1]) >= (obj2Y + obj2YPerimeter[colObj2][0]);
-					
+
 					if (condition1 && condition2) {
 						return true;
 					}
