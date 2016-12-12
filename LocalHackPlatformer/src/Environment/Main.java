@@ -3,7 +3,6 @@ package Environment;
 import entities.*;
 import Graphics.*;
 import Logic.*;
-
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -19,6 +18,7 @@ public class Main {
 	private static Thread displayThread;
 	private static Display display;
 	private static Screen screen;
+	private static DeathScreen deathScreen;
 
 	public static void main(String[] args) {
 
@@ -33,6 +33,7 @@ public class Main {
 
 		player = new Player(20, 20, 20, 20);
 		level = new Level();
+		deathScreen = new DeathScreen();
 
 		// Thread initialisation
 		logicThread();
@@ -91,7 +92,7 @@ public class Main {
 
 	private static void display() {
 		ArrayList<Entity> entities = new ArrayList<Entity>();
-		if (!player.isDead) {
+		
 			entities.addAll(Level.components);
 			entities.addAll(Level.enemies);
 			entities.add(player.getEntity());
@@ -99,10 +100,9 @@ public class Main {
 			for (Entity entity : entities) {
 				screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
 			}
-		} else {
-			Rectangle deathScreen = new Rectangle(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT,
-					Color.RED.getRGB());
-			screen.addGraphicalObject(deathScreen.getGraphicalObject(), deathScreen.getX(), deathScreen.getY());
+		if (player.isDead) {
+			deathScreen.increment();
+			screen.addGraphicalObject(deathScreen.getEntity().getGraphicalObject(), deathScreen.getEntity().getX(), deathScreen.getEntity().getY());
 		}
 		display.render(screen);
 		screen.clear();
