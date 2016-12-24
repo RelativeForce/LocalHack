@@ -9,5 +9,4 @@ public class Constants {
 	public static final int WINDOW_HEIGHT = 500;
 	public static final int WINDOW_PADDING = 200;
 	public static final int MOVE_DISTANCE = 3;
-	
 }
