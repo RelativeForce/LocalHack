@@ -2,20 +2,28 @@ package Environment;
 
 import java.util.Scanner;
 import Logic.Level;
+import Logic.Point;
 import entities.*;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 
 /**
+ * Loads the level from system memory.
+ * 
  * @author Joshua_Eddy
  * 
  */
-
 public class LevelLoader {
 
 	private File[] directory;
 
+	/**
+	 * Constructs a new LevelLoader object.
+	 * 
+	 * @param directory
+	 *            The path of the parent directory which contains the levels
+	 */
 	public LevelLoader(String directory) {
 		try {
 			File folder = new File(directory);
@@ -42,6 +50,15 @@ public class LevelLoader {
 
 	}
 
+	/**
+	 * Gets all the entities of a specific type from the level file.
+	 * 
+	 * @param levelNum
+	 *            The number of the level to be loaded.
+	 * @param entityType
+	 *            The entity type to be read from the level file.
+	 * @return ArrayList of entities that have been read from the level file.
+	 */
 	public ArrayList<Entity> getLevel(int levelNum, String entityType) {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
@@ -62,7 +79,7 @@ public class LevelLoader {
 			String detail1 = details[1];
 
 			if (type.equals("levelDetails") && entityType.equals("levelDetails")) {
-				Level.Length = Integer.parseInt(details[1]);
+				initialiseLevel(details, 1);
 			} else if (type.equals("component") && entityType.equals("component")) {
 				if (detail1.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
@@ -74,7 +91,7 @@ public class LevelLoader {
 				if (detail1.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
 				}
-			} else if (type.equals("objective")) {
+			} else if (type.equals("objective") && entityType.equals("objective")) {
 				if (detail1.equals("door")) {
 					entities.add(addDoor(details, 2));
 				}
@@ -157,4 +174,9 @@ public class LevelLoader {
 
 	}
 
+	private void initialiseLevel(String[] details, int firstDetail){
+		Level.Length = Integer.parseInt(details[firstDetail]);
+		Point start = new Point(Integer.parseInt(details[firstDetail + 1]), Integer.parseInt(details[firstDetail + 2]));
+		Level.StartPosition = start;
+	}
 }

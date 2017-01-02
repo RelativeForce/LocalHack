@@ -1,7 +1,23 @@
 package entities;
 
+/**
+ * The Floor object is type of Entity. It consists of a set of squares bordered by a single colour.
+ * @author Joshua_Eddy
+ *
+ */
 public class Floor extends Entity{
 	
+	/**
+	 * Initialises a Floor object Entity.
+	 * @param x The X coordinate of the Floor object.
+	 * @param y The Y coordinate of the Floor object.
+	 * @param width The width in pixels of the Floor object.
+	 * @param height The height in pixels of the Floor object.
+	 * @param borderColor The RGB colour of the background box. 
+	 * @param boxWidth The width of the little boxes inside the border box. width / boxWidth MUST BE AN INTEGER VLAUE.
+	 * @param boxHeight The height of the little boxes inside the border box. height / boxHeight MUST BE AN INTEGER VLAUE.
+	 * @param boxColor The RGB colour of the little boxes inside the border box.
+	 */
 	public Floor(int x, int y, int width, int height, Integer borderColor, int boxWidth, int boxHeight ,Integer boxColor){
 		
 		if (x >= 0) {

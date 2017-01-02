@@ -3,23 +3,55 @@ package Environment;
 import entities.*;
 import Graphics.*;
 import Logic.*;
+import java.awt.Color;
 import java.util.ArrayList;
 
+/**
+ * Stores the Game logic and fundamental functions.
+ * 
+ * @author Joshua_Eddy
+ */
 public class Main {
 
-	// Static
+	/**
+	 * Store whether game threads are running, set to false to kill the game
+	 * threads.
+	 */
 	public static boolean run;
+
+	/**
+	 * Stores the current Player object.
+	 */
 	public static Player player;
+
+	/**
+	 * Stores the current Level object.
+	 */
 	public static Level level;
-	public static DeathScreen deathScreen;
+
+	/**
+	 * Stores the current DeathScreen object.
+	 */
+	public static TransitionScreen transitionScreen;
+	
+	/**
+	 * The level that will be loaded upon Screen transition.
+	 */
+	public static int levelNumber;
 
 	// Private
 	private static Thread logicThread;
 	private static Thread displayThread;
 	private static Display display;
 	private static Screen screen;
-	private static int currentLevelNumber;
+	
 
+	/**
+	 * Starts the game.
+	 * 
+	 * @param args
+	 *            Starting string arguments.
+	 */
 	public static void main(String[] args) {
 
 		run = true;
@@ -31,9 +63,8 @@ public class Main {
 			display.render(screen);
 		}
 
-		
-		currentLevelNumber = 1;
-		deathScreen = new DeathScreen();
+		levelNumber = 1;
+		transitionScreen = new TransitionScreen(Color.RED.getRGB());
 		start();
 
 		// Thread initialisation
@@ -85,48 +116,54 @@ public class Main {
 
 	private static void logic() {
 
-		if(player.isDead && deathScreen.isFullScreen){
+		if (transitionScreen.isFullScreen) {
 			start();
 		}
-		
+
 		display.handleKeys();
 		player.gravity();
 		player.checkForDeath();
+		player.checkObjectves();
 
 	}
 
 	private static void display() {
-		
+
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
 		entities.addAll(Level.components);
 		entities.addAll(Level.enemies);
+		entities.addAll(Level.objectives);
 		entities.add(player.getEntity());
 
 		for (Entity entity : entities) {
 			screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
 		}
-		
-		if (player.isDead) {
-			deathScreen.increment();
+
+		if (transitionScreen.isActive) {
+			if (!transitionScreen.isFullScreen && transitionScreen.willIncrement) {
+				transitionScreen.increment();
+			} else if(!transitionScreen.willIncrement) {
+				transitionScreen.decrement();
+			}
+
+			screen.addGraphicalObject(transitionScreen.getEntity().getGraphicalObject(),
+					transitionScreen.getEntity().getX(), transitionScreen.getEntity().getY());
 		}
-		
-		if(deathScreen.getEntity().getGraphicalObject().height > 0 && !player.isDead){
-			deathScreen.decrement();
-		}
-		screen.addGraphicalObject(deathScreen.getEntity().getGraphicalObject(), deathScreen.getEntity().getX(),
-				deathScreen.getEntity().getY());
-		
+
 		display.render(screen);
 		screen.clear();
 	}
 
+	/**
+	 * Starts the level and initialises the player.
+	 * 
+	 */
 	public static void start() {
-		
-		player = new Player(20, 20, 20, 20);
-
-		level = new Level(currentLevelNumber);
-
-	}
 	
+		level = new Level(levelNumber);
+		player = new Player(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
+		
+	}
+
 }

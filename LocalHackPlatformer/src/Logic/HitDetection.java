@@ -2,121 +2,50 @@ package Logic;
 
 import entities.Entity;
 
+/**
+ * Contains the Logic for detecting hits between Entities.
+ * @author Joshua_Eddy
+ *
+ */
 public class HitDetection {
 
-	public static boolean detectHit(Entity obj1, Entity nextObj1, Entity obj2) {
+	/**
+	 * Checks if entity1 will collide with entity2 before it reaches the location of nextEntity1.
+	 * @param entity1 The initial position of the first Entity.
+	 * @param nextEntity1 The final position of the first Entity.
+	 * @param entity2 The current position of the second Entity.
+	 * @return Whether entity1 has collided with entity2.
+	 */
+	public static boolean detectHit(Entity entity1, Entity nextEntity1, Entity entity2) {
 
-		if (checkX(obj1, nextObj1, obj2) && checkY(obj1, nextObj1, obj2)) {
+		if (checkX(entity1, nextEntity1, entity2) && checkY(entity1, nextEntity1, entity2)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private static Integer[][] getXPerimeter(Entity object) {
+	private static boolean checkX(Entity entity1, Entity nextEntity1, Entity entity2) {
 
-		Integer[][] perimeter = new Integer[object.getGraphicalObject().height][2];
-		Integer[][] pixels = object.getGraphicalObject().getPixels();
-		int width = object.getGraphicalObject().width;
-		int height = object.getGraphicalObject().height;
-
-		for (int rowNum = 0; rowNum < height; rowNum++) {
-			for (int x = 0; x < width; x++) {
-
-				if ((pixels[x][rowNum] != null && x == 0)) {
-					perimeter[rowNum][0] = x;
-					break;
-				}
-				if (x > 0) {
-					if (pixels[x - 1][rowNum] == null) {
-						perimeter[rowNum][0] = x;
-						break;
-					}
-				}
-
-			}
-		}
-
-		for (int rowNum = 0; rowNum < height; rowNum++) {
-			for (int x = width - 1; x >= 0; x--) {
-				if (pixels[x][rowNum] != null && x == (width - 1)) {
-					perimeter[rowNum][1] = x;
-					break;
-				}
-				if (x < width - 1) {
-					if (pixels[x + 1][rowNum] == null) {
-						perimeter[rowNum][1] = x;
-						break;
-					}
-				}
-			}
-		}
-
-		return perimeter;
-	}
-
-	private static Integer[][] getYPerimeter(Entity object) {
-
-		Integer[][] perimeter = new Integer[object.getGraphicalObject().width][2];
-		boolean isTopPerimeter = true;
-		int width = object.getGraphicalObject().width;
-		int height = object.getGraphicalObject().height;
-		Integer[][] pixels = object.getGraphicalObject().getPixels();
-
-		for (int colNum = 0; colNum < width; colNum++) {
-			for (int y = 0; y < height; y++) {
-
-				if ((pixels != null && y == 0)) {
-					perimeter[colNum][0] = y;
-					break;
-				}
-				if (y > 0) {
-					if (pixels[colNum][y + 1] == null) {
-						perimeter[colNum][0] = y;
-						break;
-					}
-				}
-			}
-		}
-		for (int colNum = 0; colNum < width; colNum++) {
-			for (int y = height - 1; y >= 0; y--) {
-				if (pixels[colNum][y] != null && y == (height - 1)) {
-					perimeter[colNum][1] = y;
-					break;
-				}
-				if (y < height - 1) {
-					if (pixels[colNum][y + 1] == null) {
-						perimeter[colNum][1] = y;
-						break;
-					}
-				}
-			}
-		}
-
-		return perimeter;
-	}
-
-	private static boolean checkX(Entity obj1, Entity nextObj1, Entity obj2) {
-
-		Integer[][] obj1XPerimeter = getXPerimeter(obj1);
-		Integer[][] obj2XPerimeter = getXPerimeter(obj2);
+		Integer[][] obj1XPerimeter = entity1.getHitBox().getXPerimeter();
+		Integer[][] obj2XPerimeter = entity2.getHitBox().getXPerimeter();
 
 		int initalX;
 		int finalX;
 
-		if (obj1.getX() > nextObj1.getX()) {
-			initalX = nextObj1.getX();
-			finalX = obj1.getX();
+		if (entity1.getX() > nextEntity1.getX()) {
+			initalX = nextEntity1.getX();
+			finalX = entity1.getX();
 		} else {
-			initalX = obj1.getX();
-			finalX = nextObj1.getX();
+			initalX = entity1.getX();
+			finalX = nextEntity1.getX();
 		}
 
-		int obj2x = obj2.getX();
+		int obj2x = entity2.getX();
 
 		for (int x = initalX; x <= finalX; x++) {
-			for (int rowObj1 = 0; rowObj1 < obj1.getGraphicalObject().height; rowObj1++) {
-				for (int rowObj2 = 0; rowObj2 < obj2.getGraphicalObject().height; rowObj2++) {
+			for (int rowObj1 = 0; rowObj1 < entity1.getGraphicalObject().height; rowObj1++) {
+				for (int rowObj2 = 0; rowObj2 < entity2.getGraphicalObject().height; rowObj2++) {
 					boolean condition1 = (x + obj1XPerimeter[rowObj1][0]) <= (obj2x + obj2XPerimeter[rowObj2][1]);
 					boolean condition2 = (x + obj1XPerimeter[rowObj1][1]) >= (obj2x + obj2XPerimeter[rowObj2][0]);
 					if (condition1 && condition2) {
@@ -129,26 +58,26 @@ public class HitDetection {
 		return false;
 	}
 
-	private static boolean checkY(Entity obj1, Entity nextObj1, Entity obj2) {
+	private static boolean checkY(Entity entity1, Entity nextEntity1, Entity entity2) {
 
-		Integer[][] obj1YPerimeter = getYPerimeter(obj1);
-		Integer[][] obj2YPerimeter = getYPerimeter(obj2);
+		Integer[][] obj1YPerimeter = entity1.getHitBox().getYPerimeter();
+		Integer[][] obj2YPerimeter = entity2.getHitBox().getYPerimeter();
 
 		int initalY;
 		int finalY;
-		if (obj1.getY() > nextObj1.getY()) {
-			initalY = nextObj1.getY();
-			finalY = obj1.getY();
+		if (entity1.getY() > nextEntity1.getY()) {
+			initalY = nextEntity1.getY();
+			finalY = entity1.getY();
 		} else {
-			initalY = obj1.getY();
-			finalY = nextObj1.getY();
+			initalY = entity1.getY();
+			finalY = nextEntity1.getY();
 		}
 
-		int obj2Y = obj2.getY();
+		int obj2Y = entity2.getY();
 
 		for (int y = initalY; y <= finalY; y++) {
-			for (int colObj1 = 0; colObj1 < obj1.getGraphicalObject().width; colObj1++) {
-				for (int colObj2 = 0; colObj2 < obj2.getGraphicalObject().width; colObj2++) {
+			for (int colObj1 = 0; colObj1 < entity1.getGraphicalObject().width; colObj1++) {
+				for (int colObj2 = 0; colObj2 < entity2.getGraphicalObject().width; colObj2++) {
 					boolean condition1 = (y + obj1YPerimeter[colObj1][0]) <= (obj2Y + obj2YPerimeter[colObj2][1]);
 					boolean condition2 = (y + obj1YPerimeter[colObj1][1]) >= (obj2Y + obj2YPerimeter[colObj2][0]);
 

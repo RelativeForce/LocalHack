@@ -6,21 +6,29 @@ import java.awt.event.KeyListener;
 import Environment.Constants;
 import Environment.Main;
 
+/**
+ * Listens for keyboard inputs and may process multiple inputs simultaneously.
+ * @author Joshua_Eddy, John_Berg
+ *
+ */
 public class KeyBoardListener implements KeyListener {
 
 	private KeyEvent[] activeKeys;
 
+	/**
+	 * Constructs a new KeyBoardListener.
+	 * @param rollOver The number of input that can be processed at once.
+	 */
 	public KeyBoardListener(int rollOver) {
 		activeKeys = new KeyEvent[rollOver];
 	}
 
-	public boolean isActive(KeyEvent key) {
+	private boolean isActive(KeyEvent key) {
 
 		for (KeyEvent k : activeKeys) {
 
 			if (k != null) {
 				if (k.getKeyCode() == key.getKeyCode()) {
-					// System.out.println("active");
 					return true;
 				}
 			}
@@ -30,16 +38,19 @@ public class KeyBoardListener implements KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent k) {
+	/**
+	 * Adds a key to the list of active keys when a new key is pressed.
+	 */
+	public void keyPressed(KeyEvent key) {
 
-		if (!isActive(k) && isValid(k)) {
+		if (!isActive(key) && isValid(key)) {
 
 			for (int i = 0; i < activeKeys.length; i++) {
 				KeyEvent currentKey = activeKeys[i];
 
 				if (currentKey == null) {
 
-					activeKeys[i] = k;
+					activeKeys[i] = key;
 					break;
 				}
 			}
@@ -47,14 +58,17 @@ public class KeyBoardListener implements KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent k) {
+	/**
+	 * Removes a key from the list of active keys when that key is released.
+	 */
+	public void keyReleased(KeyEvent key) {
 
 		for (int i = 0; i < activeKeys.length; i++) {
 
 			KeyEvent currentKey = activeKeys[i];
 
 			if (currentKey != null) {
-				if (currentKey.getKeyCode() == k.getKeyCode()) {
+				if (currentKey.getKeyCode() == key.getKeyCode()) {
 
 					activeKeys[i] = null;
 					break;
@@ -64,16 +78,19 @@ public class KeyBoardListener implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent k) {
+	public void keyTyped(KeyEvent key) {
 
 	}
 
+	/**
+	 * Executes all the events for the keys that are currently active.
+	 */
 	public void handleEnvents() {
 		for (int i = 0; i < activeKeys.length; i++) {
 			KeyEvent currentKey = activeKeys[i];
 			if (currentKey != null) {
 
-				if (!Main.player.isDead) {
+				if (!Main.player.isDead && !Main.transitionScreen.isActive) {
 					if (currentKey.getKeyCode() == KeyEvent.VK_SPACE) {
 						Main.player.jump();
 
@@ -83,18 +100,13 @@ public class KeyBoardListener implements KeyListener {
 					} else if (currentKey.getKeyCode() == KeyEvent.VK_LEFT) {
 						Main.player.move(-Constants.MOVE_DISTANCE);
 					}
-				} else {
-
-					if (currentKey.getKeyCode() == KeyEvent.VK_ENTER && Main.deathScreen.isFullScreen) {
-						
-					}
 				}
 
 			}
 		}
 	}
 
-	public boolean isValid(KeyEvent key) {
+	private boolean isValid(KeyEvent key) {
 
 		switch (key.getKeyCode()) {
 		case KeyEvent.VK_SPACE:
