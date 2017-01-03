@@ -15,13 +15,15 @@ public class LevelChange implements Objective{
 	private int levelLink;
 	private Entity entity;
 	
+
 	/**
 	 * Constructs a LevelChange that when intercepted by the player will change the current level.
-	 * @param levelLink the level that this door links to.
+	 * @param door The door that will change the level when intercepted by the player.
+	 * @param levelLink The level that this door links to.
 	 */
-	public LevelChange(int x, int y, int width, int height, Integer doorColor, int levelLink){
+	public LevelChange(Door door, int levelLink){
 		this.levelLink = levelLink;
-		entity = new Door(x, y, width, height, doorColor);
+		entity = door;
 	}
 	
 	/**

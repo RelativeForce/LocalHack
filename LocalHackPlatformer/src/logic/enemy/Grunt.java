@@ -18,8 +18,7 @@ public class Grunt implements Enemy {
 	/**
 	 * Constructs a new Grunt object.
 	 * 
-	 * @param initalPosition
-	 *            The initial position of the Grunt object.
+	 * @param inital The initial position of the Grunt object.
 	 */
 	public Grunt(Point inital) {
 		gruntEntity = new Rectangle(inital.x, inital.y, 20, 20, Color.GREEN.getRGB());

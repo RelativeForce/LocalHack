@@ -134,7 +134,7 @@ public class LevelLoader {
 
 			if (type.equals("objective")) {
 				if (detail1.equals("door")) {
-					objectives.add(addLevelChnage(details, 2));
+					objectives.add(addDoor(details, 2));
 				}
 			}
 
@@ -181,7 +181,7 @@ public class LevelLoader {
 
 	}
 
-	private Objective addLevelChnage(String[] details, int firstDetail) {
+	private Objective addDoor(String[] details, int firstDetail) {
 
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
@@ -190,14 +190,15 @@ public class LevelLoader {
 		Color color = getColor(details[firstDetail + 4]);
 		int levelLink = Integer.parseInt(details[firstDetail + 5]);
 
-		LevelChange levelChange = new LevelChange(x, y, width, height, color.getRGB(), levelLink);
+		Door door = new Door(x, y, width, height, color.getRGB());
+		LevelChange levelChange = new LevelChange(door, levelLink);
 
 		return levelChange;
 	}
 
 	private Grunt addGrunt(String[] details, int firstDetail) {
 
-		// Initalise and return a grunt.
+		// Initialise and return a grunt.
 		return null;
 	}
 
