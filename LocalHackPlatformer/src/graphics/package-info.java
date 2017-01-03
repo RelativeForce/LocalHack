@@ -1,9 +1,6 @@
+
 /**
- * 
- */
-/**
- * @author John_Berg
- * @email bergj2@aston.ac.uk
+ * @author John_Berg, Joshua_Eddy
  *
  */
 package graphics;

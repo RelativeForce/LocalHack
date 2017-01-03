@@ -7,12 +7,13 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
-
+import environment.Constants;
 import logic.KeyBoardListener;;
 
 /**
+ * A JFrame that displays the game to the user.
  * 
- * @author John_Berg
+ * @author John_Berg, Joshua_Eddy
  *
  */
 public class Display extends Canvas {
@@ -24,17 +25,22 @@ public class Display extends Canvas {
 	private KeyBoardListener kbl;
 
 	/**
+	 * Creates a new Display object which displays the game to the user.
 	 * 
 	 * @param width
+	 *            The width in pixels of the Display object.
 	 * @param height
+	 *            The height of pixels of the Display object.
 	 * @param title
+	 *            The text that will me displayed at the top of the Display
+	 *            object.
 	 */
 	public Display(int width, int height, String title) {
 
 		super.setMinimumSize(new Dimension(width, height));
 		super.setPreferredSize(new Dimension(width, height));
 		super.setMaximumSize(new Dimension(width, height));
-		kbl =  new KeyBoardListener(5);
+		kbl = new KeyBoardListener(Constants.KEYBOARD_ROLLOVER);
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
@@ -48,6 +54,12 @@ public class Display extends Canvas {
 		this.addKeyListener(kbl);
 	}
 
+	/**
+	 * Renders the Screen object on the Display that is passed as a parameter.
+	 * 
+	 * @param s
+	 *            The Screen object to render on the Display.
+	 */
 	public void render(Screen s) {
 
 		BufferStrategy bs = getBufferStrategy();
@@ -75,8 +87,12 @@ public class Display extends Canvas {
 			}
 		}
 	}
-	public void handleKeys(){
-		
+
+	/**
+	 * Performs all the actions that are queued in the Keyboard Listener.
+	 */
+	public void handleKeys() {
+
 		kbl.handleEnvents();
 	}
 }

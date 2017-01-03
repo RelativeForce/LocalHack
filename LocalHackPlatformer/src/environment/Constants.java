@@ -54,4 +54,9 @@ public class Constants {
 	 */
 	public static final Point DEFAULT_POSITION = new Point(0,0);
 	
+	/**
+	 * The maximum number of keys that can be in the keyboard input queue at once.
+	 */
+	public static final int KEYBOARD_ROLLOVER = 5;
+	
 }
