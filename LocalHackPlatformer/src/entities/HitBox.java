@@ -1,6 +1,6 @@
 package entities;
 
-import Graphics.GraphicalObject;
+import graphics.GraphicalObject;
 
 /**
  * Two two dimensional Integer arrays that denote the HitBox of an Entity.

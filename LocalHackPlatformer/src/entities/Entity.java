@@ -1,8 +1,8 @@
 package entities;
 
-import Environment.Constants;
-import Graphics.GraphicalObject;
-import Logic.Point;
+import environment.Constants;
+import graphics.GraphicalObject;
+import logic.Point;
 
 /**
  * Stores the information for graphical objects to be draw on screen.

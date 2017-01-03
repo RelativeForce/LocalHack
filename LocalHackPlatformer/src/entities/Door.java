@@ -1,7 +1,8 @@
 package entities;
 
 import java.awt.Color;
-import Environment.Main;
+
+import environment.Main;
 
 /**
  * Describes a door that will start another level when the player intercepts it.
