@@ -196,10 +196,14 @@ public class LevelLoader {
 		return levelChange;
 	}
 
-	private Grunt addGrunt(String[] details, int firstDetail) {
+	private Enemy addGrunt(String[] details, int firstDetail) {
 
-		// Initialise and return a grunt.
-		return null;
+		int x = Integer.parseInt(details[firstDetail]);
+		int y = Integer.parseInt(details[firstDetail + 1]);
+		Point initial = new Point(x,y);
+		Grunt grunt = new Grunt(initial);
+		
+		return grunt;
 	}
 
 	private Entity addRectangle(String[] details, int firstDetail) {

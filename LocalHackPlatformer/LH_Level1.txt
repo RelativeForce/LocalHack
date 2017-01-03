@@ -7,5 +7,5 @@ component,rectangle,1150,400,50,50,blue
 component,rectangle,1250,350,50,50,blue
 component,rectangle,1350,225,200,50,blue
 component,floor,1600,450,300,50,black,brown,25,25
--enemy,rectangle,100,100,50,50,green
+enemy,grunt,1600,430
 objective,door,1800,350,60,100,brown,2

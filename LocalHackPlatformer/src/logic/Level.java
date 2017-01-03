@@ -75,12 +75,13 @@ public class Level {
 		for(Entity entity: components){
 			entities.add(entity);
 		}
-		for(Enemy enemy: enemies){
-			entities.add(enemy.getEntity());
-		}
 		for(Objective objective: objectives){
 			entities.add(objective.getEntity());
 		}
+		for(Enemy enemy: enemies){
+			entities.add(enemy.getEntity());
+		}
+		
 		
 		return entities;
 	}

@@ -127,7 +127,7 @@ public class Player {
 
 		
 		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getEnemies()) != null) {
-			playerEntity = new Rectangle(x, y, playerEntity.getGraphicalObject().width,
+			playerEntity = new Rectangle(x + xSpeed, y + (int) ySpeed, playerEntity.getGraphicalObject().width,
 					playerEntity.getGraphicalObject().height, Color.WHITE.getRGB());
 			isDead = true;
 			
@@ -152,6 +152,8 @@ public class Player {
 		
 		Objective objective = checkObjectiveCollision(x + xSpeed, y + (int) ySpeed, Main.level.getObjectives());
 		if (!isDead &&  objective != null) {
+			playerEntity = new Rectangle(x + xSpeed, y + (int) ySpeed, playerEntity.getGraphicalObject().width,
+					playerEntity.getGraphicalObject().height, Color.RED.getRGB());
 			objective.action();
 		}
 	}

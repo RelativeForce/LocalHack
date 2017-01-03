@@ -3,6 +3,7 @@ package environment;
 import entities.*;
 import graphics.*;
 import logic.*;
+import logic.enemy.Enemy;
 import logic.player.Player;
 
 import java.awt.Color;
@@ -133,10 +134,13 @@ public class Main {
 			start();
 		}
 
-		display.handleKeys();
-		player.gravity();
-		player.checkForDeath();
-		player.checkObjectves();
+		if(!transitionScreen.isActive){
+			display.handleKeys();
+			player.gravity();
+			moveEnemies();
+			player.checkForDeath();
+			player.checkObjectves();
+		}
 
 	}
 
@@ -166,4 +170,10 @@ public class Main {
 		screen.clear();
 	}
 
+	private static void moveEnemies(){
+		for(Enemy enemy : level.getEnemies()){
+			enemy.move();
+		}
+	}
+	
 }
