@@ -1,4 +1,4 @@
-package logic;
+package logic.player;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import entities.Objective;
 import entities.Rectangle;
 import environment.Constants;
 import environment.Main;
+import logic.HitDetection;
+import logic.Level;
 
 /**
  * Contains all the logic for the Player.

@@ -3,6 +3,7 @@ package environment;
 import entities.*;
 import graphics.*;
 import logic.*;
+import logic.player.Player;
 
 import java.awt.Color;
 import java.util.ArrayList;

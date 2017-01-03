@@ -1,6 +1,7 @@
-package logic;
+package logic.enemy;
 
 import entities.Entity;
+import logic.Point;
 
 /**
  * The interface of the Enemy type.
