@@ -5,6 +5,10 @@ import java.util.Scanner;
 import entities.*;
 import logic.Level;
 import logic.Point;
+import logic.enemy.Enemy;
+import logic.enemy.Grunt;
+import logic.objective.LevelChange;
+import logic.objective.Objective;
 
 import java.awt.Color;
 import java.io.File;
@@ -35,33 +39,42 @@ public class LevelLoader {
 		}
 	}
 
-	private Scanner getFile(String fileName) {
+	/**
+	 * Reads the details of the current level from the level file.
+	 * @param levelNum The number of the level to be loaded.
+	 */
+	public void getLevelDetails(int levelNum) {
 
-		Scanner scnr = null;
-		for (File level : directory) {
-			if (level.getPath().contains(fileName)) {
+		Scanner scnr = getFile("LH_Level" + levelNum);
 
-				try {
-					scnr = new Scanner(level);
-				} catch (Exception e) {
-
-				}
-			}
+		if (scnr == null) {
+			System.out.println("Failed to find level" + levelNum);
+			return;
 		}
-		return scnr;
+
+		while (scnr.hasNextLine()) {
+
+			String line = scnr.nextLine();
+			String[] details = line.split(",");
+
+			String type = details[0];
+
+			if (type.equals("levelDetails")) {
+				initialiseLevel(details, 1);
+			}
+
+		}
 
 	}
 
 	/**
-	 * Gets all the entities of a specific type from the level file.
+	 * Returns an ArrayList of all the Objectives read from the level file.
 	 * 
 	 * @param levelNum
 	 *            The number of the level to be loaded.
-	 * @param entityType
-	 *            The entity type to be read from the level file.
 	 * @return ArrayList of entities that have been read from the level file.
 	 */
-	public ArrayList<Entity> getLevel(int levelNum, String entityType) {
+	public ArrayList<Entity> getComponents(int levelNum) {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -80,22 +93,12 @@ public class LevelLoader {
 			String type = details[0];
 			String detail1 = details[1];
 
-			if (type.equals("levelDetails") && entityType.equals("levelDetails")) {
-				initialiseLevel(details, 1);
-			} else if (type.equals("component") && entityType.equals("component")) {
+			if (type.equals("component")) {
 				if (detail1.equals("rectangle")) {
 					entities.add(addRectangle(details, 2));
 				}
 				if (detail1.equals("floor")) {
 					entities.add(addFloor(details, 2));
-				}
-			} else if (type.equals("enemy") && entityType.equals("enemy")) {
-				if (detail1.equals("rectangle")) {
-					entities.add(addRectangle(details, 2));
-				}
-			} else if (type.equals("objective") && entityType.equals("objective")) {
-				if (detail1.equals("door")) {
-					entities.add(addDoor(details, 2));
 				}
 			}
 
@@ -103,7 +106,82 @@ public class LevelLoader {
 		return entities;
 	}
 
-	private Entity addDoor(String[] details, int firstDetail) {
+	/**
+	 * Returns an ArrayList of all the Objectives read from the level file.
+	 * 
+	 * @param levelNum
+	 *            The number of the level to be loaded.
+	 * @return An ArrayList of all the objectives in the level file.
+	 */
+	public ArrayList<Objective> getObjectives(int levelNum) {
+
+		ArrayList<Objective> objectives = new ArrayList<Objective>();
+
+		Scanner scnr = getFile("LH_Level" + levelNum);
+
+		if (scnr == null) {
+			System.out.println("Failed to find level" + levelNum);
+			return null;
+		}
+
+		while (scnr.hasNextLine()) {
+
+			String line = scnr.nextLine();
+			String[] details = line.split(",");
+
+			String type = details[0];
+			String detail1 = details[1];
+
+			if (type.equals("objective")) {
+				if (detail1.equals("door")) {
+					objectives.add(addLevelChnage(details, 2));
+				}
+			}
+
+		}
+
+		return objectives;
+	}
+
+	/**
+	 * Returns an ArrayList of all the Enemies read from the level file.
+	 * 
+	 * @param levelNum
+	 *            The number of the level to be loaded.
+	 * @return An ArrayList of all the enemies in the level file.
+	 */
+	public ArrayList<Enemy> getEnemies(int levelNum) {
+
+		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+
+		Scanner scnr = getFile("LH_Level" + levelNum);
+
+		if (scnr == null) {
+			System.out.println("Failed to find level" + levelNum);
+			return null;
+		}
+
+		while (scnr.hasNextLine()) {
+
+			String line = scnr.nextLine();
+			String[] details = line.split(",");
+
+			String type = details[0];
+			String detail1 = details[1];
+
+			if (type.equals("enemy")) {
+				if (detail1.equals("grunt")) {
+					enemies.add(addGrunt(details, 2));
+				}
+			}
+
+		}
+
+		return enemies;
+
+	}
+
+	private Objective addLevelChnage(String[] details, int firstDetail) {
 
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
@@ -112,9 +190,15 @@ public class LevelLoader {
 		Color color = getColor(details[firstDetail + 4]);
 		int levelLink = Integer.parseInt(details[firstDetail + 5]);
 
-		Door door = new Door(x, y, width, height, levelLink, color.getRGB());
+		LevelChange levelChange = new LevelChange(x, y, width, height, color.getRGB(), levelLink);
 
-		return door;
+		return levelChange;
+	}
+
+	private Grunt addGrunt(String[] details, int firstDetail) {
+
+		// Initalise and return a grunt.
+		return null;
 	}
 
 	private Entity addRectangle(String[] details, int firstDetail) {
@@ -176,7 +260,24 @@ public class LevelLoader {
 
 	}
 
-	private void initialiseLevel(String[] details, int firstDetail){
+	private Scanner getFile(String fileName) {
+
+		Scanner scnr = null;
+		for (File level : directory) {
+			if (level.getPath().contains(fileName)) {
+
+				try {
+					scnr = new Scanner(level);
+				} catch (Exception e) {
+
+				}
+			}
+		}
+		return scnr;
+
+	}
+	
+	private void initialiseLevel(String[] details, int firstDetail) {
 		Level.Length = Integer.parseInt(details[firstDetail]);
 		Point start = new Point(Integer.parseInt(details[firstDetail + 1]), Integer.parseInt(details[firstDetail + 2]));
 		Level.StartPosition = start;

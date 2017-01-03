@@ -77,6 +77,17 @@ public class Main {
 
 	}
 
+	/**
+	 * Starts the level and initialises the player.
+	 * 
+	 */
+	public static void start() {
+	
+		level = new Level(levelNumber);
+		player = new Player(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
+		
+	}
+	
 	private static void logicThread() {
 
 		logicThread = new Thread() {
@@ -133,9 +144,7 @@ public class Main {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
-		entities.addAll(Level.components);
-		entities.addAll(Level.enemies);
-		entities.addAll(Level.objectives);
+		entities.addAll(level.getAll());
 		entities.add(player.getEntity());
 
 		for (Entity entity : entities) {
@@ -155,17 +164,6 @@ public class Main {
 
 		display.render(screen);
 		screen.clear();
-	}
-
-	/**
-	 * Starts the level and initialises the player.
-	 * 
-	 */
-	public static void start() {
-	
-		level = new Level(levelNumber);
-		player = new Player(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
-		
 	}
 
 }

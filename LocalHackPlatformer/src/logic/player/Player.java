@@ -4,12 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import entities.Entity;
-import entities.Objective;
 import entities.Rectangle;
 import environment.Constants;
 import environment.Main;
 import logic.HitDetection;
 import logic.Level;
+import logic.enemy.Enemy;
+import logic.objective.Objective;
 
 /**
  * Contains all the logic for the Player.
@@ -55,7 +56,7 @@ public class Player {
 		int nextY = y + (int) ySpeed;
 
 		
-		if (checkCollision(nextX, nextY, Level.components) == null) {
+		if (checkCollision(nextX, nextY, Main.level.getComponents()) == null) {
 			playerEntity.setY(y + (int) ySpeed);
 			playerEntity.setX(x + xSpeed);
 		} else {
@@ -76,7 +77,7 @@ public class Player {
 
 		int nextX = x + changeInX;
 
-		if (checkCollision(nextX, y, Level.components) == null && nextX >= 0
+		if (checkCollision(nextX, y, Main.level.getComponents()) == null && nextX >= 0
 				&& nextX <= Constants.WINDOW_WIDTH - playerEntity.getGraphicalObject().width) {
 
 			if (nextX < Constants.WINDOW_PADDING && Level.StartX < 0) {
@@ -104,7 +105,7 @@ public class Player {
 		int y = playerEntity.getY();
 		
 		gravity();
-		if (ySpeed == 0 && checkCollision(x, y + 2, Level.components) != null) {
+		if (ySpeed == 0 && checkCollision(x, y + 2, Main.level.getComponents()) != null) {
 			ySpeed = -Constants.JUMP_HEIGHT;
 		}
 
@@ -125,7 +126,7 @@ public class Player {
 		}
 
 		
-		if (checkCollision(x + xSpeed, y + (int) ySpeed, Level.enemies) != null) {
+		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getEnemies()) != null) {
 			playerEntity = new Rectangle(x, y, playerEntity.getGraphicalObject().width,
 					playerEntity.getGraphicalObject().height, Color.WHITE.getRGB());
 			isDead = true;
@@ -149,10 +150,18 @@ public class Player {
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 		
-		Objective objective = (Objective)checkCollision(x + xSpeed, y + (int) ySpeed, Level.objectives);
+		Objective objective = checkObjectiveCollision(x + xSpeed, y + (int) ySpeed, Main.level.getObjectives());
 		if (!isDead &&  objective != null) {
 			objective.action();
 		}
+	}
+	
+	/**
+	 * Retrieves the Entity assigned to the Player.
+	 * @return The Entity assigned to the Player.
+	 */
+	public Entity getEntity() {
+		return playerEntity;
 	}
 	
 	private Entity checkCollision(int nextX, int nextY, ArrayList<Entity> list) {
@@ -168,12 +177,32 @@ public class Player {
 		return null;
 	}
 	
-	/**
-	 * Retrieves the Entity assigned to the Player.
-	 * @return The Entity assigned to the Player.
-	 */
-	public Entity getEntity() {
-		return playerEntity;
+	private Enemy checkEnemyCollision(int nextX, int nextY, ArrayList<Enemy> list){
+		
+		Entity nextPlayerEntity = new Rectangle(nextX, nextY, playerEntity.getGraphicalObject().width,
+				playerEntity.getGraphicalObject().height, 0xffff0000);
+		
+		for (Enemy enemy : list) {
+			if (HitDetection.detectHit(playerEntity, nextPlayerEntity, enemy.getEntity())) {
+				return enemy;
+			}
+		}
+		
+		return null;
+	}
+	
+	private Objective checkObjectiveCollision(int nextX, int nextY, ArrayList<Objective> list){
+		
+		Entity nextPlayerEntity = new Rectangle(nextX, nextY, playerEntity.getGraphicalObject().width,
+				playerEntity.getGraphicalObject().height, 0xffff0000);
+
+		for (Objective objective : list) {
+			if (HitDetection.detectHit(playerEntity, nextPlayerEntity, objective.getEntity())) {
+				return objective;
+			}
+		}
+		return null;
+		
 	}
 
 }
