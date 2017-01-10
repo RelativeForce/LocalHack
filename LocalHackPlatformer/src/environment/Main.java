@@ -17,12 +17,6 @@ import java.util.ArrayList;
 public class Main {
 
 	/**
-	 * Store whether game threads are running, set to false to kill the game
-	 * threads.
-	 */
-	public static boolean run;
-
-	/**
 	 * Stores the current Player object.
 	 */
 	public static Player player;
@@ -43,8 +37,7 @@ public class Main {
 	public static int levelNumber;
 
 	// Private
-	private static Thread logicThread;
-	private static Thread displayThread;
+	private static ThreadHandler threadHandler;
 	private static Display display;
 	private static Screen screen;
 	
@@ -56,8 +49,6 @@ public class Main {
 	 *            Starting string arguments.
 	 */
 	public static void main(String[] args) {
-
-		run = true;
 
 		display = new Display(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, "Platformer");
 		screen = new Screen(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
@@ -71,11 +62,9 @@ public class Main {
 		start();
 
 		// Thread initialisation
-		logicThread();
-		displayThread();
-		logicThread.start();
-		displayThread.start();
-
+		threadHandler = new ThreadHandler();
+		threadHandler.startThreads();
+		
 	}
 
 	/**
@@ -88,63 +77,19 @@ public class Main {
 		player = new Player(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
 		
 	}
-	
-	private static void logicThread() {
 
-		logicThread = new Thread() {
-
-			@Override
-			public void run() {
-
-				while (run) {
-					try {
-						sleep(10);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					logic();
-				}
-			}
-		};
-	}
-
-	private static void displayThread() {
-
-		displayThread = new Thread() {
-
-			@Override
-			public void run() {
-
-				while (run) {
-
-					try {
-						sleep(10);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					display();
-				}
-			}
-		};
-	}
-
-	private static void logic() {
-
-		if (transitionScreen.isFullScreen) {
-			start();
-		}
+	protected static void playerThread() {
 
 		if(!transitionScreen.isActive){
 			display.handleKeys();
 			player.gravity();
-			moveEnemies();
 			player.checkForDeath();
 			player.checkObjectves();
 		}
 
 	}
 
-	private static void display() {
+	protected static void displayThread() {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -161,6 +106,10 @@ public class Main {
 			} else if(!transitionScreen.willIncrement) {
 				transitionScreen.decrement();
 			}
+			
+			if (transitionScreen.isFullScreen) {
+				start();
+			}
 
 			screen.addGraphicalObject(transitionScreen.getEntity().getGraphicalObject(),
 					transitionScreen.getEntity().getX(), transitionScreen.getEntity().getY());
@@ -170,6 +119,13 @@ public class Main {
 		screen.clear();
 	}
 
+	protected static void enemyThread(){
+		if(!transitionScreen.isActive){
+			moveEnemies();
+		}
+		
+	}
+	
 	private static void moveEnemies(){
 		for(Enemy enemy : level.getEnemies()){
 			enemy.move();
