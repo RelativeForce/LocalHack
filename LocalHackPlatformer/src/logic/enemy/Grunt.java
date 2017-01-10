@@ -1,7 +1,7 @@
 package logic.enemy;
 
 import java.awt.Color;
-import directions.Direction;
+import directions.*;
 import entities.Entity;
 import entities.Rectangle;
 import environment.Main;
@@ -47,7 +47,7 @@ public class Grunt implements Enemy {
 
 		int nextX;
 		Entity checkSupport;
-		
+
 		if (direction == Direction.RIGHT) {
 			nextX = x + xSpeed;
 			checkSupport = new Rectangle(nextX + width, y + 5, 20, 20, 0xffff0000);
@@ -59,9 +59,9 @@ public class Grunt implements Enemy {
 		boolean hitRightBoundry = x + width >= Level.StartX + Level.Length;
 		boolean hitLeftBoundry = x <= Level.StartX;
 		boolean isSupported = HitDetection.detectHit(checkSupport, checkSupport, currentSupport);
-		
-		if (rebound(nextX, y) ||  hitRightBoundry || hitLeftBoundry || !isSupported) {
-			direction = invert(direction);
+
+		if (rebound(nextX, y) || hitRightBoundry || hitLeftBoundry || !isSupported) {
+			direction = DirectionHandler.invert(direction);
 		}
 
 		if (direction == Direction.RIGHT) {
@@ -78,16 +78,6 @@ public class Grunt implements Enemy {
 		return gruntEntity;
 	}
 
-	private Direction invert(Direction direct) {
-
-		if (direct == Direction.LEFT) {
-			return Direction.RIGHT;
-		} else {
-			return Direction.LEFT;
-		}
-
-	}
-
 	private void getSupport(int x, int y) {
 
 		Entity checkSupport = new Rectangle(x, y + 5, 20, 20, 0xffff0000);
@@ -100,8 +90,8 @@ public class Grunt implements Enemy {
 		}
 	}
 
-	private boolean rebound(int nextX, int y){
-		
+	private boolean rebound(int nextX, int y) {
+
 		Entity checkForWall = new Rectangle(nextX, y, 20, 20, 0xffff0000);
 
 		for (Entity component : Main.level.getComponents()) {
