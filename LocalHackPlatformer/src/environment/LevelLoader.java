@@ -1,7 +1,6 @@
 package environment;
 
 import java.util.Scanner;
-
 import entities.*;
 import logic.Level;
 import logic.Point;
@@ -9,7 +8,6 @@ import logic.enemy.Enemy;
 import logic.enemy.Grunt;
 import logic.objective.LevelChange;
 import logic.objective.Objective;
-
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +39,9 @@ public class LevelLoader {
 
 	/**
 	 * Reads the details of the current level from the level file.
-	 * @param levelNum The number of the level to be loaded.
+	 * 
+	 * @param levelNum
+	 *            The number of the level to be loaded.
 	 */
 	public void getLevelDetails(int levelNum) {
 
@@ -190,7 +190,15 @@ public class LevelLoader {
 		Color color = getColor(details[firstDetail + 4]);
 		int levelLink = Integer.parseInt(details[firstDetail + 5]);
 
-		Door door = new Door(x, y, width, height, color.getRGB());
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = x;
+		eD[1] = y;
+		eD[2] = width;
+		eD[3] = height;
+		eD[4] = color.getRGB();
+
+		Entity door = new Entity(EntityType.DOOR, eD);
 		LevelChange levelChange = new LevelChange(door, levelLink);
 
 		return levelChange;
@@ -200,9 +208,9 @@ public class LevelLoader {
 
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
-		Point initial = new Point(x,y);
+		Point initial = new Point(x, y);
 		Grunt grunt = new Grunt(initial);
-		
+
 		return grunt;
 	}
 
@@ -214,7 +222,15 @@ public class LevelLoader {
 		int height = Integer.parseInt(details[firstDetail + 3]);
 		Color color = getColor(details[firstDetail + 4]);
 
-		Rectangle rect = new Rectangle(x, y, width, height, color.getRGB());
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = x;
+		eD[1] = y;
+		eD[2] = width;
+		eD[3] = height;
+		eD[4] = color.getRGB();
+
+		Entity rect = new Entity(EntityType.RECTANGLE, eD);
 		return rect;
 	}
 
@@ -229,7 +245,19 @@ public class LevelLoader {
 		int boxWidth = Integer.parseInt(details[firstDetail + 6]);
 		int boxHeight = Integer.parseInt(details[firstDetail + 7]);
 
-		Floor floor = new Floor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB());
+		// eD = entity Details
+		Object[] eD = new Object[8];
+		eD[0] = x;
+		eD[1] = y;
+		eD[2] = width;
+		eD[3] = height;
+		eD[4] = borderColor.getRGB();
+		eD[5] = boxWidth;
+		eD[6] = boxHeight;
+		eD[7] = boxColor.getRGB();
+
+
+		Entity floor = new Entity(EntityType.FLOOR, eD);
 
 		return floor;
 	}
@@ -281,7 +309,7 @@ public class LevelLoader {
 		return scnr;
 
 	}
-	
+
 	private void initialiseLevel(String[] details, int firstDetail) {
 		Level.Length = Integer.parseInt(details[firstDetail]);
 		Point start = new Point(Integer.parseInt(details[firstDetail + 1]), Integer.parseInt(details[firstDetail + 2]));

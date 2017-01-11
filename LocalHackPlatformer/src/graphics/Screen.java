@@ -1,5 +1,7 @@
 package graphics;
 
+import graphics.objects.GraphicalObject;
+
 /**
  * An object that denotes the array of pixels that are displayed on the JFrame.
  * 
@@ -63,11 +65,11 @@ public class Screen {
 	 */
 	public void addGraphicalObject(GraphicalObject go, int x, int y) {
 
-		for (int i = 0; i < go.height; i++) {
+		for (int i = 0; i < go.getHeight(); i++) {
 
 			if (0 <= y + i && y + i < height) {
 
-				for (int j = 0; j < go.width; j++) {
+				for (int j = 0; j < go.getWidth(); j++) {
 
 					if (0 <= x + j && x + j < width) {
 

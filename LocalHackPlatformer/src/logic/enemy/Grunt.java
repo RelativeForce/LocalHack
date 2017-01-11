@@ -3,7 +3,7 @@ package logic.enemy;
 import java.awt.Color;
 import directions.*;
 import entities.Entity;
-import entities.Rectangle;
+import entities.EntityType;
 import environment.Main;
 import logic.HitDetection;
 import logic.Level;
@@ -29,7 +29,16 @@ public class Grunt implements Enemy {
 	 *            The initial position of the Grunt object.
 	 */
 	public Grunt(Point inital) {
-		gruntEntity = new Rectangle(inital.x, inital.y, 20, 20, Color.GREEN.getRGB());
+
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = inital.x;
+		eD[1] = inital.y;
+		eD[2] = 20;
+		eD[3] = 20;
+		eD[4] = Color.GREEN.getRGB();
+
+		gruntEntity = new Entity(EntityType.RECTANGLE, eD);
 		direction = Direction.LEFT;
 		xSpeed = 1;
 	}
@@ -37,7 +46,7 @@ public class Grunt implements Enemy {
 	@Override
 	public void move() {
 
-		int width = gruntEntity.getGraphicalObject().width;
+		int width = gruntEntity.getGraphicalObject().getWidth();
 		int x = gruntEntity.getX();
 		int y = gruntEntity.getY();
 
@@ -48,13 +57,22 @@ public class Grunt implements Enemy {
 		int nextX;
 		Entity checkSupport;
 
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[2] = 20;
+		eD[3] = 20;
+		eD[4] = 0xffff0000;
+		eD[1] = y + 5;
 		if (direction == Direction.RIGHT) {
 			nextX = x + xSpeed;
-			checkSupport = new Rectangle(nextX + width, y + 5, 20, 20, 0xffff0000);
+			eD[0] = nextX + width;
+
 		} else {
 			nextX = x - xSpeed;
-			checkSupport = new Rectangle(nextX - width, y + 5, 20, 20, 0xffff0000);
+			eD[0] = nextX - width;
 		}
+
+		checkSupport = new Entity(EntityType.RECTANGLE, eD);
 
 		boolean hitRightBoundry = x + width >= Level.StartX + Level.Length;
 		boolean hitLeftBoundry = x <= Level.StartX;
@@ -80,7 +98,15 @@ public class Grunt implements Enemy {
 
 	private void getSupport(int x, int y) {
 
-		Entity checkSupport = new Rectangle(x, y + 5, 20, 20, 0xffff0000);
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = x;
+		eD[1] = y + 5;
+		eD[2] = 20;
+		eD[3] = 20;
+		eD[4] = 0xffff0000;
+
+		Entity checkSupport = new Entity(EntityType.RECTANGLE, eD);
 		for (Entity component : Main.level.getComponents()) {
 
 			if (HitDetection.detectHit(gruntEntity, checkSupport, component)) {
@@ -92,7 +118,15 @@ public class Grunt implements Enemy {
 
 	private boolean rebound(int nextX, int y) {
 
-		Entity checkForWall = new Rectangle(nextX, y, 20, 20, 0xffff0000);
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = nextX;
+		eD[1] = y;
+		eD[2] = 20;
+		eD[3] = 20;
+		eD[4] = 0xffff0000;
+
+		Entity checkForWall = new Entity(EntityType.RECTANGLE, eD);
 
 		for (Entity component : Main.level.getComponents()) {
 

@@ -1,6 +1,6 @@
 package entities;
 
-import graphics.GraphicalObject;
+import graphics.objects.GraphicalObject;
 
 /**
  * Two two dimensional Integer arrays that denote the HitBox of an Entity.
@@ -25,10 +25,10 @@ public class HitBox {
 	
 	private void setXPerimeter(GraphicalObject object) {
 
-		xPerimeter = new Integer[object.height][2];
+		xPerimeter = new Integer[object.getHeight()][2];
 		Integer[][] pixels = object.getPixels();
-		int width = object.width;
-		int height = object.height;
+		int width = object.getWidth();
+		int height = object.getHeight();
 
 		for (int rowNum = 0; rowNum < height; rowNum++) {
 			for (int x = 0; x < width; x++) {
@@ -66,9 +66,9 @@ public class HitBox {
 
 	private void setYPerimeter(GraphicalObject object) {
 
-		yPerimeter = new Integer[object.width][2];
-		int width = object.width;
-		int height = object.height;
+		yPerimeter = new Integer[object.getWidth()][2];
+		int width = object.getWidth();
+		int height = object.getHeight();
 		Integer[][] pixels = object.getPixels();
 
 		for (int colNum = 0; colNum < width; colNum++) {

@@ -1,7 +1,7 @@
 package logic.objective;
 
 import java.awt.Color;
-import entities.Door;
+
 import entities.Entity;
 import environment.Main;
 
@@ -21,7 +21,7 @@ public class LevelChange implements Objective{
 	 * @param door The door that will change the level when intercepted by the player.
 	 * @param levelLink The level that this door links to.
 	 */
-	public LevelChange(Door door, int levelLink){
+	public LevelChange(Entity door, int levelLink){
 		this.levelLink = levelLink;
 		entity = door;
 	}

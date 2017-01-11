@@ -1,7 +1,7 @@
 package logic;
 
 import entities.Entity;
-import entities.Rectangle;
+import entities.EntityType;
 import environment.Constants;
 
 /**
@@ -11,8 +11,9 @@ import environment.Constants;
  */
 public class TransitionScreen {
 
-	private Rectangle screen;
+	private Entity screen;
 	private int height;
+	private Integer color;
 
 	/**
 	 * Whether the DeathScreen fills the window.
@@ -23,7 +24,7 @@ public class TransitionScreen {
 	 * Denotes whether the TransitionScreen is active or not.
 	 */
 	public boolean isActive;
-	
+
 	/*
 	 * Denotes whether the TransitionScreen will increment on the next Step.
 	 */
@@ -31,12 +32,24 @@ public class TransitionScreen {
 
 	/**
 	 * Constructs a new DeathScreen object.
-	 * @param color The colour of the transition screen.
+	 * 
+	 * @param color
+	 *            The colour of the transition screen.
 	 */
 	public TransitionScreen(Integer color) {
 		isFullScreen = false;
 		height = 0;
-		screen = new Rectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
+		this.color = color;
+
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = 0;
+		eD[1] = 0;
+		eD[2] = Constants.WINDOW_WIDTH;
+		eD[3] = height;
+		eD[4] = color;
+
+		screen = new Entity(EntityType.RECTANGLE, eD);
 		isActive = false;
 		willIncrement = true;
 	}
@@ -55,7 +68,17 @@ public class TransitionScreen {
 		}
 
 		height += Constants.TRANSITION_SCREEN_STEP;
-		screen = new Rectangle(0, 0, Constants.WINDOW_WIDTH, height, screen.getColor());
+
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = 0;
+		eD[1] = 0;
+		eD[2] = Constants.WINDOW_WIDTH;
+		eD[3] = height;
+		eD[4] = color;
+
+		screen = new Entity(EntityType.RECTANGLE, eD);
+
 	}
 
 	/**
@@ -69,8 +92,16 @@ public class TransitionScreen {
 			return;
 		}
 		height -= Constants.TRANSITION_SCREEN_STEP;
-		screen = new Rectangle(0, Constants.WINDOW_HEIGHT - height, Constants.WINDOW_WIDTH, height,
-				screen.getColor());
+
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = 0;
+		eD[1] = Constants.WINDOW_HEIGHT - height;
+		eD[2] = Constants.WINDOW_WIDTH;
+		eD[3] = height;
+		eD[4] = color;
+
+		screen = new Entity(EntityType.RECTANGLE, eD);
 
 	}
 
@@ -85,9 +116,21 @@ public class TransitionScreen {
 
 	/**
 	 * Changes the colour of the TransitionScreen.
-	 * @param color The new colour of the TransitionScreen.
+	 * 
+	 * @param color
+	 *            The new colour of the TransitionScreen.
 	 */
-	public void setColor(Integer color){
-		screen = new Rectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
+	public void setColor(Integer color) {
+		this.color = color;
+
+		// eD = entity Details
+		Object[] eD = new Object[5];
+		eD[0] = 0;
+		eD[1] = 0;
+		eD[2] = Constants.WINDOW_WIDTH;
+		eD[3] = height;
+		eD[4] = color;
+
+		screen = new Entity(EntityType.RECTANGLE, eD);
 	}
 }

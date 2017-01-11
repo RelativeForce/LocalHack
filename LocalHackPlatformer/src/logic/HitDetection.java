@@ -44,8 +44,8 @@ public class HitDetection {
 		int obj2x = entity2.getX();
 
 		for (int x = initalX; x <= finalX; x++) {
-			for (int rowObj1 = 0; rowObj1 < entity1.getGraphicalObject().height; rowObj1++) {
-				for (int rowObj2 = 0; rowObj2 < entity2.getGraphicalObject().height; rowObj2++) {
+			for (int rowObj1 = 0; rowObj1 < entity1.getGraphicalObject().getHeight(); rowObj1++) {
+				for (int rowObj2 = 0; rowObj2 < entity2.getGraphicalObject().getHeight(); rowObj2++) {
 					boolean condition1 = (x + obj1XPerimeter[rowObj1][0]) <= (obj2x + obj2XPerimeter[rowObj2][1]);
 					boolean condition2 = (x + obj1XPerimeter[rowObj1][1]) >= (obj2x + obj2XPerimeter[rowObj2][0]);
 					if (condition1 && condition2) {
@@ -76,8 +76,8 @@ public class HitDetection {
 		int obj2Y = entity2.getY();
 
 		for (int y = initalY; y <= finalY; y++) {
-			for (int colObj1 = 0; colObj1 < entity1.getGraphicalObject().width; colObj1++) {
-				for (int colObj2 = 0; colObj2 < entity2.getGraphicalObject().width; colObj2++) {
+			for (int colObj1 = 0; colObj1 < entity1.getGraphicalObject().getWidth(); colObj1++) {
+				for (int colObj2 = 0; colObj2 < entity2.getGraphicalObject().getWidth(); colObj2++) {
 					boolean condition1 = (y + obj1YPerimeter[colObj1][0]) <= (obj2Y + obj2YPerimeter[colObj2][1]);
 					boolean condition2 = (y + obj1YPerimeter[colObj1][1]) >= (obj2Y + obj2YPerimeter[colObj2][0]);
 
