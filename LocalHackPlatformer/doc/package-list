@@ -2,6 +2,7 @@ directions
 entities
 environment
 graphics
+graphics.objects
 logic
 logic.enemy
 logic.objective
