@@ -10,8 +10,7 @@ import entities.Entity;
 public interface Enemy {
 	
 	/**
-	 * Retrieves the next position of the Enemy.
-	 * @return The next position of the Enemy.
+	 * Moves the enemy to its next location.
 	 */
 	public void move();
 
