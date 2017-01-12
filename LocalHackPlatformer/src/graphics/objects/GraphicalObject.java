@@ -6,24 +6,14 @@ package graphics.objects;
  * @author Joshua_Eddy, John_Berg
  *
  */
-public class GraphicalObject {
+public abstract class GraphicalObject {
 
 	protected int width;
 
 	protected  int height;
 
 	protected Integer[][] pixels;
-
-	/**
-	 * Sets the 2D array of pixels.
-	 * @param pixels The pixel array that will be displayed on the screen.
-	 */
-	public void setPixels(Integer[][] pixels){
-		this.width = pixels.length;
-		this.height = pixels[0].length;
-		this.pixels = pixels;
-	}
-
+	
 	/**
 	 * Retrieves the pixel array of the GraphicalObject.
 	 * 
