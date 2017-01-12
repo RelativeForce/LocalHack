@@ -10,7 +10,7 @@ public abstract class GraphicalObject {
 
 	protected int width;
 
-	protected  int height;
+	protected int height;
 
 	protected Integer[][] pixels;
 	
@@ -29,6 +29,7 @@ public abstract class GraphicalObject {
 	 * @return The width of the GrapghicalObject.
 	 */
 	public int getWidth(){
+		
 		return width;
 	}
 	
@@ -37,6 +38,7 @@ public abstract class GraphicalObject {
 	 * @return The height of the GrapghicalObject.
 	 */
 	public int getHeight(){
+		
 		return height;
 	}
 }
