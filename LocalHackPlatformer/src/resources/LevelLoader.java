@@ -1,7 +1,8 @@
-package environment;
+package resources;
 
 import java.util.Scanner;
-import entities.*;
+import entities.EntityType;
+import entities.Entity;
 import logic.Level;
 import logic.Point;
 import logic.enemy.Enemy;
@@ -28,13 +29,8 @@ public class LevelLoader {
 	 * @param directory
 	 *            The path of the parent directory which contains the levels
 	 */
-	public LevelLoader(String directory) {
-		try {
-			File folder = new File(directory);
-			this.directory = folder.listFiles();
-		} catch (Exception e) {
-			System.out.println("Failed to load directory");
-		}
+	public LevelLoader(String directoryPath) {
+		directory = ResourceHandler.getDirectory(directoryPath);
 	}
 
 	/**
@@ -45,7 +41,7 @@ public class LevelLoader {
 	 */
 	public void getLevelDetails(int levelNum) {
 
-		Scanner scnr = getFile("LH_Level" + levelNum);
+		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);
@@ -78,7 +74,7 @@ public class LevelLoader {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
-		Scanner scnr = getFile("LH_Level" + levelNum);
+		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);
@@ -117,7 +113,7 @@ public class LevelLoader {
 
 		ArrayList<Objective> objectives = new ArrayList<Objective>();
 
-		Scanner scnr = getFile("LH_Level" + levelNum);
+		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);
@@ -154,7 +150,7 @@ public class LevelLoader {
 
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-		Scanner scnr = getFile("LH_Level" + levelNum);
+		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);
@@ -290,23 +286,6 @@ public class LevelLoader {
 
 		}
 		return color;
-
-	}
-
-	private Scanner getFile(String fileName) {
-
-		Scanner scnr = null;
-		for (File level : directory) {
-			if (level.getPath().contains(fileName)) {
-
-				try {
-					scnr = new Scanner(level);
-				} catch (Exception e) {
-
-				}
-			}
-		}
-		return scnr;
 
 	}
 
