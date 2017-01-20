@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import graphics.objects.Sprite;
+import graphics.objects.SpriteFrame;
 
 /**
  * The SpriteSheetReader class is intended for extracting spritesheets from image files,
@@ -49,7 +49,7 @@ public final class SpriteSheetReader {
 		
 		return image.getHeight();
 	}
-	private Sprite getSprite(final int x_Offset, final int y_Offset){
+	private SpriteFrame getSprite(final int x_Offset, final int y_Offset){
 		
 		for(int y = 0; y < height; ++y){
 			
@@ -70,9 +70,9 @@ public final class SpriteSheetReader {
 	 * @return The sprites contained within the target spritesheet.
 	 * @See Sprite
 	 */
-	public static final Sprite[] getSprites(final String path, final int width, final int height){
+	public static final SpriteFrame[] getSprites(final String path, final int width, final int height){
 		
-		LinkedList<Sprite> sprites = new LinkedList<Sprite>();
+		LinkedList<SpriteFrame> sprites = new LinkedList<SpriteFrame>();
 		SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
 		
 		for(int i = 0; i < spriteSheet.getMaxHeight(); i += height){
@@ -83,6 +83,6 @@ public final class SpriteSheetReader {
 			}
 		}
 		
-		return sprites.toArray(new Sprite[sprites.size()]);
+		return sprites.toArray(new SpriteFrame[sprites.size()]);
 	}
 }
