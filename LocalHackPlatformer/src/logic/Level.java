@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import entities.Entity;
 import environment.Constants;
-import environment.LevelLoader;
 import logic.enemy.Enemy;
 import logic.objective.Objective;
+import resources.LevelLoader;
 
 /**
  * Stores all the objects and details associated with a level.

@@ -23,21 +23,16 @@ public class Entity {
 	/**
 	 * Constructs an new of a specified type Entity.
 	 * 
-	 * @param type The Type of the entity object you wish to construct.
+	 * @param type
+	 *            The Type of the entity object you wish to construct.
 	 * @param details
-	 * 0. int x 
-	 * 1. int y 
-	 * 2. int width 
-	 * 3. int height 
-	 * 4+. Details specific to each EntityType.
+	 *            0. int x 1. int y 2+. Details specific to each EntityType.
 	 * 
 	 */
 	public Entity(EntityType type, Object[] details) {
 
 		int x = (int) details[0];
 		int y = (int) details[1];
-		int width = (int) details[2];
-		int height = (int) details[3];
 
 		setX(x);
 		setY(y);
@@ -50,8 +45,8 @@ public class Entity {
 
 			eSD = new Object[3];
 
-			eSD[0] = width;
-			eSD[1] = height;
+			eSD[0] = (int) details[2];
+			eSD[1] = (int) details[3];
 			eSD[2] = (Integer) details[4];
 
 			object = new Rectangle(eSD);
@@ -60,8 +55,8 @@ public class Entity {
 
 			eSD = new Object[3];
 
-			eSD[0] = width;
-			eSD[1] = height;
+			eSD[0] = (int) details[2];
+			eSD[1] = (int) details[3];
 			eSD[2] = (Integer) details[4];
 
 			object = new Door(eSD);
@@ -70,8 +65,8 @@ public class Entity {
 
 			eSD = new Object[6];
 
-			eSD[0] = width;
-			eSD[1] = height;
+			eSD[0] = (int) details[2];
+			eSD[1] = (int) details[3];
 			eSD[2] = (Integer) details[4];
 			eSD[3] = (int) details[5];
 			eSD[4] = (int) details[6];
@@ -81,22 +76,18 @@ public class Entity {
 			break;
 		case SPRITEFRAME:
 
-			eSD = new Object[4];
+			Integer[][] pixels = (Integer[][]) details[4];
 
-			eSD[0] = width;
-			eSD[1] = height;
-			eSD[2] = (String) details[4];
-			eSD[3] = (Point) details[5];
-
-			object = new SpriteFrame(eSD);
+			object = new SpriteFrame(pixels);
 			break;
 		default:
 			System.out.println("Invalid EntityType");
 			break;
 		}
 
-		if (object != null)
+		if (object != null) {
 			hitBox = new HitBox(object);
+		}
 	}
 
 	/**
@@ -109,7 +100,6 @@ public class Entity {
 		position.x = x;
 	}
 
-	
 	/**
 	 * Sets the Y value of the Entity.
 	 * 
@@ -120,7 +110,6 @@ public class Entity {
 		position.y = y;
 	}
 
-	
 	/**
 	 * Retrieves the X coordinate of the Entity.
 	 * 
@@ -130,7 +119,6 @@ public class Entity {
 		return position.x;
 	}
 
-	
 	/**
 	 * Retrieves the Y coordinate of the Entity.
 	 * 
@@ -140,7 +128,6 @@ public class Entity {
 		return position.y;
 	}
 
-	
 	/**
 	 * Retrieves the GraphicalObject from the Entity.
 	 * 
@@ -150,7 +137,6 @@ public class Entity {
 		return object;
 	}
 
-	
 	/**
 	 * Returns the HitBox of the Entity.
 	 * 
@@ -160,9 +146,9 @@ public class Entity {
 		return hitBox;
 	}
 
-	
 	/**
 	 * Retrieves the Type of this instance of an Entity.
+	 * 
 	 * @return The Type of this instance of an Entity.
 	 */
 	public EntityType getType() {
