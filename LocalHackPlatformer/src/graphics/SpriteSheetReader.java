@@ -31,6 +31,7 @@ public final class SpriteSheetReader {
 	}
 	private BufferedImage getImage(){
 		
+		
 		try{
 			
 			return ImageIO.read(file);
