@@ -29,7 +29,7 @@ public class Sprite {
 	}
 
 	public void nextFrame() {
-		currentFrame = currentFrame++ % frames.size();
+		currentFrame = (currentFrame + 1) % frames.size();
 	}
 
 	public Entity getEntity() {

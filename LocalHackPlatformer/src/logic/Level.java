@@ -131,7 +131,7 @@ public class Level {
 	
 	private void moveEnemies(int changeInX){
 		for(Enemy enemy : enemies){
-			enemy.getEntity().setX(enemy.getEntity().getX() + changeInX);
+			enemy.setX(enemy.getEntity().getX() + changeInX);
 		}
 	}
 	

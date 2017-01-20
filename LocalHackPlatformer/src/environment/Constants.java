@@ -59,8 +59,8 @@ public class Constants {
 	 */
 	public static final int KEYBOARD_ROLLOVER = 5;
 	
-	public static final String gruntFileName = "Grunt";
+	public static final String gruntFileName = "Grunt.png";
 	
-	public static final String playerFileName = "Player";
+	public static final String playerFileName = "Player.png";
 	
 }

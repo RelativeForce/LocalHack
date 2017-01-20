@@ -76,7 +76,7 @@ public class Entity {
 			break;
 		case SPRITEFRAME:
 
-			Integer[][] pixels = (Integer[][]) details[4];
+			Integer[][] pixels = (Integer[][]) details[2];
 
 			object = new SpriteFrame(pixels);
 			break;
