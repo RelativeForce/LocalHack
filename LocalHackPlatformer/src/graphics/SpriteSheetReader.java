@@ -49,13 +49,13 @@ public final class SpriteSheetReader {
 		
 		return image.getHeight();
 	}
-	private SpriteFrame getSprite(final int xOffset, final int yOffset){
+	private SpriteFrame getSprite(final int x_Offset, final int y_Offset){
 		
 		for(int y = 0; y < height; ++y){
 			
 			for(int x = 0; x < width; ++x){
 				
-				image.getRGB(x + xOffset, y + yOffset);
+				image.getRGB(x + x_Offset, y + y_Offset);
 			}
 		}
 		
@@ -72,9 +72,8 @@ public final class SpriteSheetReader {
 	 */
 	public static final SpriteFrame[] getSprites(final String path, final int width, final int height){
 		
-		SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
 		LinkedList<SpriteFrame> sprites = new LinkedList<SpriteFrame>();
-		
+		SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
 		
 		for(int i = 0; i < spriteSheet.getMaxHeight(); i += height){
 			
