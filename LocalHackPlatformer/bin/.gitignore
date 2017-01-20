@@ -1,4 +1,6 @@
-/resources/
-/graphics/
+/directions/
+/entities/
 /environment/
+/graphics/
 /logic/
+/resources/

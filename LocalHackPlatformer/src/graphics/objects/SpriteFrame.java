@@ -1,7 +1,5 @@
 package graphics.objects;
 
-import logic.Point;
-
 /**
  * A single position of a sprite.
  * @author Joshua_Eddy
@@ -11,20 +9,13 @@ public class SpriteFrame extends GraphicalObject {
 
 	/**
 	 * Constructs a new instance of a SpriteFrame.
-	 * @param details
-	 *            0. int width 
-	 *            1. int height 
-	 *            2. String directory
-	 *            3. Point position
+	 * @param pixels The 2d array of pixels that will denote the pixels of the graphical object.
 	 */
-	public SpriteFrame(Object[] details) {
+	public SpriteFrame(Integer[][] pixels) {
 
-		pixels = new Integer[(int) details[0]][(int) details[1]];
-		width = (int) details[0];
-		height = (int) details[1];
-		String directory = (String) details[2];
-		Point positionInFile = (Point)details[3];
-		
+		this.pixels = pixels;
+		this.width = pixels.length;
+		this.height = pixels[0].length;
 		
 	}
 
