@@ -2,17 +2,30 @@ package resources;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import graphics.objects.SpriteFrame;
+import graphics.objects.Sprite;
 
+/**
+ * The SpriteSheetReader class is intended for extracting spritesheets from image files,
+ * SpriteSheetReader has one public method which fetches the spritesheet from a target 
+ * path.
+ * 
+ * @author John
+ *
+ */
 public final class SpriteSheetReader {
 	
+	private final int width;
+	private final int height;
 	private final File file;
 	private final BufferedImage image;
 	
-	private SpriteSheetReader(final String path) {
+	private SpriteSheetReader(final String path, final int width, final int height) {
 		
+		this.width = width;
+		this.height = height;
 		file = new File(path);
 		image = getImage();
 	}
@@ -28,6 +41,26 @@ public final class SpriteSheetReader {
 			return null;
 		}
 	}
+	private int getMaxWidth(){
+		
+		return image.getWidth();
+	}
+	private int getMaxHeight(){
+		
+		return image.getHeight();
+	}
+	private Sprite getSprite(final int x_Offset, final int y_Offset){
+		
+		for(int y = 0; y < height; ++y){
+			
+			for(int x = 0; x < width; ++x){
+				
+				image.getRGB(x + x_Offset, y + y_Offset);
+			}
+		}
+		
+		return null;
+	}
 	/**
 	 * Read a spritesheet from a given path where each sprite is a fixed width and height.
 	 * 
@@ -35,13 +68,21 @@ public final class SpriteSheetReader {
 	 * @param width Sprite width.
 	 * @param height Sprite height.
 	 * @return The sprites contained within the target spritesheet.
-	 * @See SpriteFrame
+	 * @See Sprite
 	 */
-	public static final SpriteFrame[] getSprites(final String path, final int width, final int height){
+	public static final Sprite[] getSprites(final String path, final int width, final int height){
 		
-		SpriteSheetReader spriteSheet = new SpriteSheetReader(path);
+		LinkedList<Sprite> sprites = new LinkedList<Sprite>();
+		SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
 		
+		for(int i = 0; i < spriteSheet.getMaxHeight(); i += height){
+			
+			for(int j = 0; j < spriteSheet.getMaxWidth(); j += width){
+				
+				sprites.add(spriteSheet.getSprite(j, i));
+			}
+		}
 		
-		return null;
+		return sprites.toArray(new Sprite[sprites.size()]);
 	}
 }

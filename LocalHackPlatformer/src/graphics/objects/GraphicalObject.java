@@ -26,6 +26,7 @@ public abstract class GraphicalObject {
 	
 	/**
 	 * Retrieves the width of the GrapghicalObject.
+	 * 
 	 * @return The width of the GrapghicalObject.
 	 */
 	public int getWidth(){
@@ -35,6 +36,7 @@ public abstract class GraphicalObject {
 	
 	/**
 	 * Retrieves the height of the GrapghicalObject.
+	 * 
 	 * @return The height of the GrapghicalObject.
 	 */
 	public int getHeight(){
