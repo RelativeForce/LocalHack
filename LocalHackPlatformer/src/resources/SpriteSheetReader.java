@@ -29,7 +29,6 @@ public final class SpriteSheetReader {
 		file = new File(path);
 		image = getImage();
 	}
-
 	private BufferedImage getImage() {
 
 		try {
@@ -52,39 +51,34 @@ public final class SpriteSheetReader {
 
 		return image.getHeight();
 	}
-
 	private SpriteFrame getSprite(final int x_Offset, final int y_Offset) {
 
-		Integer[][] frame = new Integer[width][height];
+		final Integer[][] sprite = new Integer[width][height];
 
 		for (int y = 0; y < height; ++y) {
 
 			for (int x = 0; x < width; ++x) {
 
-				frame[x][y] = image.getRGB(x + x_Offset, y + y_Offset);
+				sprite[x][y] = image.getRGB(x + x_Offset, y + y_Offset);
 			}
 		}
 
-		return new SpriteFrame(frame);
+		return new SpriteFrame(sprite);
 	}
-
 	/**
 	 * Read a spritesheet from a given path where each sprite is a fixed width
 	 * and height.
 	 * 
-	 * @param path
-	 *            The path to the spritesheet.
-	 * @param width
-	 *            Sprite width.
-	 * @param height
-	 *            Sprite height.
+	 * @param path The path to the spritesheet.
+	 * @param width Sprite width.
+	 * @param height Sprite height.
 	 * @return The sprites contained within the target spritesheet.
-	 * @See Sprite
+	 * @See SpriteFrame
 	 */
 	public static final SpriteFrame[] getSprites(final String path, final int width, final int height) {
 
-		LinkedList<SpriteFrame> sprites = new LinkedList<SpriteFrame>();
-		SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
+		final SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
+		final LinkedList<SpriteFrame> sprites = new LinkedList<SpriteFrame>();
 
 		for (int i = 0; i < spriteSheet.getMaxHeight(); i += height) {
 
