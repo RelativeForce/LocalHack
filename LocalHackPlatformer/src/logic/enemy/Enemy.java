@@ -20,4 +20,8 @@ public interface Enemy {
 	 */
 	public Entity getEntity();
 	
+	
+	public void setX(int x);
+	
+	public void setY(int y);
 }
