@@ -8,81 +8,92 @@ import javax.imageio.ImageIO;
 import graphics.objects.SpriteFrame;
 
 /**
- * The SpriteSheetReader class is intended for extracting spritesheets from image files,
- * SpriteSheetReader has one public method which fetches the spritesheet from a target 
- * path.
+ * The SpriteSheetReader class is intended for extracting spritesheets from
+ * image files, SpriteSheetReader has one public method which fetches the
+ * spritesheet from a target path.
  * 
  * @author John
  *
  */
 public final class SpriteSheetReader {
-	
+
 	private final int width;
 	private final int height;
 	private final File file;
 	private final BufferedImage image;
-	
+
 	private SpriteSheetReader(final String path, final int width, final int height) {
-		
+
 		this.width = width;
 		this.height = height;
 		file = new File(path);
 		image = getImage();
 	}
-	private BufferedImage getImage(){
-		
-		try{
-			
+
+	private BufferedImage getImage() {
+
+		try {
+
 			return ImageIO.read(file);
-			
-		}catch(IOException e){
-			
+
+		} catch (IOException e) {
+
 			e.printStackTrace();
 			return null;
 		}
 	}
-	private int getMaxWidth(){
-		
+
+	private int getMaxWidth() {
+
 		return image.getWidth();
 	}
-	private int getMaxHeight(){
-		
+
+	private int getMaxHeight() {
+
 		return image.getHeight();
 	}
-	private SpriteFrame getSprite(final int x_Offset, final int y_Offset){
-		
-		for(int y = 0; y < height; ++y){
-			
-			for(int x = 0; x < width; ++x){
-				
-				image.getRGB(x + x_Offset, y + y_Offset);
+
+	private SpriteFrame getSprite(final int x_Offset, final int y_Offset) {
+
+		Integer[][] frame = new Integer[width][height];
+
+		for (int y = 0; y < height; ++y) {
+
+			for (int x = 0; x < width; ++x) {
+
+				frame[x][y] = image.getRGB(x + x_Offset, y + y_Offset);
 			}
 		}
-		
-		return null;
+
+		return new SpriteFrame(frame);
 	}
+
 	/**
-	 * Read a spritesheet from a given path where each sprite is a fixed width and height.
+	 * Read a spritesheet from a given path where each sprite is a fixed width
+	 * and height.
 	 * 
-	 * @param path The path to the spritesheet.
-	 * @param width Sprite width.
-	 * @param height Sprite height.
+	 * @param path
+	 *            The path to the spritesheet.
+	 * @param width
+	 *            Sprite width.
+	 * @param height
+	 *            Sprite height.
 	 * @return The sprites contained within the target spritesheet.
 	 * @See Sprite
 	 */
-	public static final SpriteFrame[] getSprites(final String path, final int width, final int height){
-		
+	public static final SpriteFrame[] getSprites(final String path, final int width, final int height) {
+
 		LinkedList<SpriteFrame> sprites = new LinkedList<SpriteFrame>();
 		SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
-		
-		for(int i = 0; i < spriteSheet.getMaxHeight(); i += height){
-			
-			for(int j = 0; j < spriteSheet.getMaxWidth(); j += width){
-				
+
+		for (int i = 0; i < spriteSheet.getMaxHeight(); i += height) {
+
+			for (int j = 0; j < spriteSheet.getMaxWidth(); j += width) {
+
 				sprites.add(spriteSheet.getSprite(j, i));
 			}
 		}
-		
+
 		return sprites.toArray(new SpriteFrame[sprites.size()]);
 	}
 }
