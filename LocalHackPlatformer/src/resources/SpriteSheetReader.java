@@ -67,7 +67,7 @@ public final class SpriteSheetReader {
 	}
 	/**
 	 * Read a spritesheet from a given path where each sprite is a fixed width
-	 * and height.
+	 * and height. Each sprite in the spritesheet must be of equal size.
 	 * 
 	 * @param path The path to the spritesheet.
 	 * @param width Sprite width.
