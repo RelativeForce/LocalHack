@@ -8,6 +8,7 @@ import environment.Constants;
 import environment.Main;
 import logic.HitDetection;
 import logic.Level;
+import logic.Point;
 import logic.enemy.Enemy;
 import logic.objective.Objective;
 
@@ -68,7 +69,7 @@ public class Player {
 		int nextX = x + xSpeed;
 		int nextY = y + (int) ySpeed;
 
-		if (checkCollision(nextX, nextY, Main.level.getComponents()) == null) {
+		if (!checkCollision(nextX, nextY, Main.level.getComponents())) {
 			playerEntity.setY(y + (int) ySpeed);
 			playerEntity.setX(x + xSpeed);
 		} else {
@@ -91,7 +92,7 @@ public class Player {
 
 		int nextX = x + changeInX;
 
-		if (checkCollision(nextX, y, Main.level.getComponents()) == null && nextX >= 0
+		if (!checkCollision(nextX, y, Main.level.getComponents()) && nextX >= 0
 				&& nextX <= Constants.WINDOW_WIDTH - playerEntity.getGraphicalObject().getWidth()) {
 
 			if (nextX < Constants.WINDOW_PADDING && Level.StartX < 0) {
@@ -119,7 +120,7 @@ public class Player {
 		int y = playerEntity.getY();
 
 		gravity();
-		if (ySpeed == 0 && checkCollision(x, y + 2, Main.level.getComponents()) != null) {
+		if (ySpeed == 0 && checkCollision(x, y + 2, Main.level.getComponents())) {
 			ySpeed = -Constants.JUMP_HEIGHT;
 		}
 
@@ -139,7 +140,7 @@ public class Player {
 			isDead = true;
 		}
 
-		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getEnemies()) != null) {
+		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getEnemies())) {
 
 			// eD = entity Details
 			Object[] eD = new Object[5];
@@ -198,61 +199,31 @@ public class Player {
 		return playerEntity;
 	}
 
-	private Entity checkCollision(int nextX, int nextY, ArrayList<Entity> list) {
-
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = nextX;
-		eD[1] = nextY;
-		eD[2] = playerEntity.getGraphicalObject().getWidth();
-		eD[3] = playerEntity.getGraphicalObject().getHeight();
-		eD[4] = 0xffff0000;
-
-		Entity nextPlayerEntity = new Entity(EntityType.RECTANGLE, eD);
-
-		for (Entity component : list) {
-			if (HitDetection.detectHit(playerEntity, nextPlayerEntity, component)) {
-				return component;
-			}
-		}
-		return null;
+	private boolean checkCollision(int nextX, int nextY, ArrayList<Entity> list) {
+		
+		return HitDetection.getObstruction(playerEntity, new Point(nextX, nextY), list.toArray(new Entity[list.size()])) != null;
+		
 	}
 
-	private Enemy checkEnemyCollision(int nextX, int nextY, ArrayList<Enemy> list) {
+	private boolean checkEnemyCollision(int nextX, int nextY, ArrayList<Enemy> list) {
 
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = nextX;
-		eD[1] = nextY;
-		eD[2] = playerEntity.getGraphicalObject().getWidth();
-		eD[3] = playerEntity.getGraphicalObject().getHeight();
-		eD[4] = 0xffff0000;
+		
+		Entity[] array = new Entity[list.size()];
+		
+		for(int i = 0; i < list.size(); ++i){
+			
+			array[i] = list.get(i).getEntity();
+			
+		}		
 
-		Entity nextPlayerEntity = new Entity(EntityType.RECTANGLE, eD);
-
-		for (Enemy enemy : list) {
-			if (HitDetection.detectHit(playerEntity, nextPlayerEntity, enemy.getEntity())) {
-				return enemy;
-			}
-		}
-
-		return null;
+		return HitDetection.getObstruction(playerEntity, new Point(nextX, nextY), array) != null;
 	}
 
 	private Objective checkObjectiveCollision(int nextX, int nextY, ArrayList<Objective> list) {
-
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = nextX;
-		eD[1] = nextY;
-		eD[2] = playerEntity.getGraphicalObject().getWidth();
-		eD[3] = playerEntity.getGraphicalObject().getHeight();
-		eD[4] = 0xffff0000;
-
-		Entity nextPlayerEntity = new Entity(EntityType.RECTANGLE, eD);
+		
 
 		for (Objective objective : list) {
-			if (HitDetection.detectHit(playerEntity, nextPlayerEntity, objective.getEntity())) {
+			if (HitDetection.detectHit(playerEntity, new Point(nextX, nextY), objective.getEntity())) {
 				return objective;
 			}
 		}

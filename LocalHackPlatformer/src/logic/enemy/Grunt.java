@@ -75,7 +75,8 @@ public class Grunt implements Enemy {
 
 		boolean hitRightBoundry = nextX + width >= Level.StartX + Level.Length;
 		boolean hitLeftBoundry = nextX <= Level.StartX;
-		boolean isSupported = HitDetection.detectHit(checkSupport, checkSupport, currentSupport);
+		boolean isSupported = HitDetection.detectHit(checkSupport, new Point(checkSupport.getX(), checkSupport.getY()),
+				currentSupport);
 
 		if (rebound(nextX, y) || hitRightBoundry || hitLeftBoundry || !isSupported) {
 			direction = direction.getOppositeDirection();
@@ -86,11 +87,11 @@ public class Grunt implements Enemy {
 		} else {
 			gruntSprite.setX(gruntSprite.getX() - xSpeed);
 		}
-		
-		if(movesMade % 5 == 0){
+
+		if (movesMade % 5 == 0) {
 			gruntSprite.nextFrame();
 		}
-		
+
 		movesMade++;
 
 	}
@@ -103,44 +104,15 @@ public class Grunt implements Enemy {
 
 	private void getSupport(int x, int y) {
 
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = x;
-		eD[1] = y + 5;
-		eD[2] = gruntSprite.getEntity().getGraphicalObject().getWidth();
-		eD[3] = gruntSprite.getEntity().getGraphicalObject().getHeight();
-		eD[4] = 0xffff0000;
+		currentSupport = HitDetection.getObstruction(gruntSprite.getEntity(), new Point(x, y + 5),
+				Main.level.getComponents().toArray(new Entity[Main.level.getComponents().size()]));
 
-		Entity checkSupport = new Entity(EntityType.RECTANGLE, eD);
-		for (Entity component : Main.level.getComponents()) {
-
-			if (HitDetection.detectHit(gruntSprite.getEntity(), checkSupport, component)) {
-				currentSupport = component;
-			}
-
-		}
 	}
 
 	private boolean rebound(int nextX, int y) {
 
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = nextX;
-		eD[1] = y;
-		eD[2] = gruntSprite.getEntity().getGraphicalObject().getWidth();
-		eD[3] = gruntSprite.getEntity().getGraphicalObject().getHeight();
-		eD[4] = 0xffff0000;
-
-		Entity checkForWall = new Entity(EntityType.RECTANGLE, eD);
-
-		for (Entity component : Main.level.getComponents()) {
-
-			if (HitDetection.detectHit(gruntSprite.getEntity(), checkForWall, component)) {
-				return true;
-			}
-
-		}
-		return false;
+		return (HitDetection.getObstruction(gruntSprite.getEntity(), new Point(nextX, y),
+				Main.level.getComponents().toArray(new Entity[Main.level.getComponents().size()]))) != null;
 	}
 
 	@Override
