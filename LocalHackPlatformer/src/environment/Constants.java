@@ -59,8 +59,19 @@ public class Constants {
 	 */
 	public static final int KEYBOARD_ROLLOVER = 5;
 	
-	public static final String gruntFileName = "Grunt.png";
+	/**
+	 * The filename of the image containing the grunt sprite frames.
+	 */
+	public static final String GRUNT_FILENAME = "Grunt.png";
 	
-	public static final String playerFileName = "Player.png";
+	/**
+	 * The filename of the image containing the player sprite frames.
+	 */
+	public static final String PLAYER_FILENAME = "Player.png";
+	
+	/**
+	 * In RGB the value is equivalent to 0xFF00FF.
+	 */
+	public static final Integer TRANSPARENT_COLOR = -0xFF01; 
 	
 }

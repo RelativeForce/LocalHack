@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+
+import environment.Constants;
 import graphics.objects.SpriteFrame;
 
 /**
  * The SpriteSheetReader class is intended for extracting sprite sheets from
- * image files, SpriteSheetReader has one public method which fetches the
- * sprite sheet from a target path.
+ * image files, SpriteSheetReader has one public method which fetches the sprite
+ * sheet from a target path.
  * 
  * @author John_Berg
  *
@@ -29,7 +31,7 @@ public final class SpriteSheetReader {
 		file = new File(path);
 		image = getImage();
 	}
-	
+
 	private BufferedImage getImage() {
 
 		try {
@@ -52,7 +54,7 @@ public final class SpriteSheetReader {
 
 		return image.getHeight();
 	}
-	
+
 	private SpriteFrame getSprite(final int x_Offset, final int y_Offset) {
 
 		final Integer[][] sprite = new Integer[width][height];
@@ -61,20 +63,28 @@ public final class SpriteSheetReader {
 
 			for (int x = 0; x < width; ++x) {
 
-					sprite[x][y] = image.getRGB(x + x_Offset, y + y_Offset);
-		
+				int currentPixel = image.getRGB(x + x_Offset, y + y_Offset);
+				if( currentPixel == Constants.TRANSPARENT_COLOR.intValue()){
+					sprite[x][y] = null;
+				}else{
+					sprite[x][y] = currentPixel;
+				}
 			}
 		}
 
 		return new SpriteFrame(sprite);
 	}
+
 	/**
 	 * Read a spritesheet from a given path where each sprite is a fixed width
 	 * and height. Each sprite in the spritesheet must be of equal size.
 	 * 
-	 * @param path The path to the spritesheet.
-	 * @param width Sprite width.
-	 * @param height Sprite height.
+	 * @param path
+	 *            The path to the spritesheet.
+	 * @param width
+	 *            Sprite width.
+	 * @param height
+	 *            Sprite height.
 	 * @return The sprites contained within the target spritesheet.
 	 * @See SpriteFrame
 	 */

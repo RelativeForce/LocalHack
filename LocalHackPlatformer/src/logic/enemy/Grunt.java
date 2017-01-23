@@ -34,7 +34,7 @@ public class Grunt implements Enemy {
 	public Grunt(Point inital) {
 
 		File currentDirectory = new File(System.getProperty("user.dir"));
-		gruntSprite = new Sprite(currentDirectory.getPath() + "\\" + Constants.gruntFileName, 20, 25, inital.x,
+		gruntSprite = new Sprite(currentDirectory.getPath() + "\\" + Constants.GRUNT_FILENAME, 20, 25, inital.x,
 				inital.y);
 
 		direction = Direction.LEFT;
