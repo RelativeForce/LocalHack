@@ -3,7 +3,7 @@ package logic;
 import entities.Entity;
 
 /**
- * Contains the Logic for detecting hits between Entities.
+ * Library for hit detection between objects of type <code>Entity</code>.
  * 
  * @author Joshua_Eddy
  *
@@ -14,6 +14,7 @@ public class HitDetection {
 	 * Checks if entity1 will collide with entity2 before it reaches the
 	 * location of nextEntity1.
 	 * 
+	 * @deprecated
 	 * @param entity1
 	 *            The initial position of the first Entity.
 	 * @param nextEntity1
@@ -27,6 +28,32 @@ public class HitDetection {
 
 		if (checkX(entity1, nextEntity1.getX(), entity2)
 				&& checkY(entity1, nextEntity1.getY(), entity2)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if a specified <code>Entity</code> will collide with another
+	 * specified <code>Entity</code> before it reaches a specified
+	 * <code>Point</code> from the <strong>first</strong> <code>Entity</code>.
+	 * 
+	 * @param entity1
+	 *            The first <code>Entity</code>.
+	 * @param finalPosition
+	 *            The <code>Point</code> that denotes the final position of the
+	 *            first <code>Entity</code>.
+	 * @param entity2
+	 *            The second <code>Entity</code>.
+	 * @return <code>true</code> if a collision is detected between the two
+	 *         specified <code>Entity</code>s and <code>false</code> if not.
+	 */
+	public static boolean detectHit(Entity entity1, Point finalPosition,
+			Entity entity2) {
+
+		if (checkX(entity1, finalPosition.x, entity2)
+				&& checkY(entity1, finalPosition.y, entity2)) {
 			return true;
 		}
 
@@ -129,6 +156,17 @@ public class HitDetection {
 	public static Entity getObstruction(Entity entity, Point finalPosition,
 			Entity[] entities) {
 
+		for (Entity element : entities) {
+
+			if (detectHit(entity, finalPosition, element)) {
+
+				return element;
+
+			}
+
+		}
+
 		return null;
 	}
+
 }
