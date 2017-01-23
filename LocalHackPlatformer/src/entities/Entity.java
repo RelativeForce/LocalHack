@@ -16,7 +16,6 @@ import logic.Point;
 public class Entity {
 
 	private GraphicalObject object;
-	private EntityType type;
 	private HitBox hitBox;
 	private Point position = new Point(Constants.DEFAULT_POSITION);
 
@@ -81,6 +80,17 @@ public class Entity {
 		}
 	}
 	
+	/**
+	 * Creates a Rectangle <code>Entity</code> with the details specified as <code>parameters</code>.
+	 * 
+	 * @param x The <code>int</code> x coordinate of the <code>Entity</code>.
+	 * @param y The <code>int</code> y coordinate of the <code>Entity</code>.
+	 * @param width The <code>int</code> width of the <code>Entity</code>.
+	 * @param height The <code>int</code> height of the <code>Entity</code>.
+	 * @param color The <code>Integer</code> colour of the <code>Entity</code>.
+	 * @return If any of the <code>parameters</code> are invalid, this function will return <code>null</code>.
+	 * Otherwise a <code>Entity</code> of type Rectangle with the specified details.
+	 */
 	public static Entity Rectangle(int x, int y, int width, int height, Integer color){
 		
 		Object[] eSD = new Object[5];
@@ -93,6 +103,20 @@ public class Entity {
 		return new Entity(EntityType.RECTANGLE, eSD);
 	}
 	
+	/**
+	 * Creates a Floor <code>Entity</code> with the details specified as <code>parameters</code>.
+	 * 
+	 * @param x The <code>int</code> x coordinate of the <code>Entity</code>.
+	 * @param y The <code>int</code> y coordinate of the <code>Entity</code>.
+	 * @param width The <code>int</code> width of the <code>Entity</code>.
+	 * @param height The <code>int</code> height of the <code>Entity</code>.
+	 * @param borderColor The <code>Integer</code> colour of the space between the boxes of the Floor.
+	 * @param boxWidth The <code>int</code> width of the boxes that are contained within the <code>Entity</code>.
+	 * @param boxHeight The <code>int</code> height of the boxes that are contained within the <code>Entity</code>
+	 * @param boxColor The <code>Integer</code> colour of the squares of the Floor.
+	 * @return If any of the <code>parameters</code> are invalid, this function will return <code>null</code>.
+	 * Otherwise a <code>Entity</code> of type Floor with the specified details.
+	 */
 	public static Entity Floor(int x, int y, int width, int height, Integer borderColor, int boxWidth, int boxHeight, Integer boxColor){
 		
 		Object[] eSD = new Object[8];
@@ -109,6 +133,17 @@ public class Entity {
 		return new Entity(EntityType.FLOOR, eSD);
 	}
 	
+	/**
+	 * Creates a Door <code>Entity</code> with the details specified as <code>parameters</code>.
+	 * 
+	 * @param x The <code>int</code> x coordinate of the <code>Entity</code>.
+	 * @param y The <code>int</code> y coordinate of the <code>Entity</code>.
+	 * @param width The <code>int</code> width of the <code>Entity</code>.
+	 * @param height The <code>int</code> height of the <code>Entity</code>.
+	 * @param color The <code>Integer</code> colour of the <code>Entity</code>.
+	 * @return If any of the <code>parameters</code> are invalid, this function will return <code>null</code>.
+	 * Otherwise a <code>Entity</code> of type Door with the specified details.
+	 */
 	public static Entity Door(int x, int y, int width, int height, Integer color){
 		
 		Object[] eSD = new Object[5];
@@ -122,6 +157,15 @@ public class Entity {
 		
 	}
 	
+	/**
+	 * Creates a SpriteFrame <code>Entity</code> with the details specified as <code>parameters</code>.
+	 * 
+	 * @param x The <code>int</code> x coordinate of the <code>Entity</code>.
+	 * @param y The <code>int</code> y coordinate of the <code>Entity</code>.
+	 * @param pixels The <code>Integer[][]</code> that denotes the pixels of the SpriteFrame.
+	 * @return If any of the <code>parameters</code> are invalid, this function will return <code>null</code>.
+	 * Otherwise a <code>Entity</code> of type SpriteFrame with the specified details.
+	 */
 	public static Entity SpriteFrame(int x, int y, Integer[][] pixels){
 		
 		Object[] eSD = new Object[3];
@@ -189,12 +233,4 @@ public class Entity {
 		return hitBox;
 	}
 
-	/**
-	 * Retrieves the Type of this instance of an Entity.
-	 * 
-	 * @return The Type of this instance of an Entity.
-	 */
-	public EntityType getType() {
-		return type;
-	}
 }
