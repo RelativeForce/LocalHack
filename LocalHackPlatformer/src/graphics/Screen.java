@@ -1,5 +1,6 @@
 package graphics;
 
+import java.awt.Color;
 import graphics.objects.GraphicalObject;
 
 /**
@@ -108,7 +109,7 @@ public class Screen {
 
 			for (int j = 0; j < width; j++) {
 
-				pixels[j][i] = 0;
+				pixels[j][i] = 	Color.BLACK.getRGB();
 			}
 		}
 	}

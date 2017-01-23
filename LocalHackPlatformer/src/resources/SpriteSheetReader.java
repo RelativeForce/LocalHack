@@ -8,11 +8,11 @@ import javax.imageio.ImageIO;
 import graphics.objects.SpriteFrame;
 
 /**
- * The SpriteSheetReader class is intended for extracting spritesheets from
+ * The SpriteSheetReader class is intended for extracting sprite sheets from
  * image files, SpriteSheetReader has one public method which fetches the
- * spritesheet from a target path.
+ * sprite sheet from a target path.
  * 
- * @author John
+ * @author John_Berg
  *
  */
 public final class SpriteSheetReader {
@@ -29,6 +29,7 @@ public final class SpriteSheetReader {
 		file = new File(path);
 		image = getImage();
 	}
+	
 	private BufferedImage getImage() {
 
 		try {
@@ -51,6 +52,7 @@ public final class SpriteSheetReader {
 
 		return image.getHeight();
 	}
+	
 	private SpriteFrame getSprite(final int x_Offset, final int y_Offset) {
 
 		final Integer[][] sprite = new Integer[width][height];
@@ -59,7 +61,8 @@ public final class SpriteSheetReader {
 
 			for (int x = 0; x < width; ++x) {
 
-				sprite[x][y] = image.getRGB(x + x_Offset, y + y_Offset);
+					sprite[x][y] = image.getRGB(x + x_Offset, y + y_Offset);
+		
 			}
 		}
 
