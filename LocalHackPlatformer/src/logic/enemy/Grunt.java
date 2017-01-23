@@ -46,6 +46,7 @@ public class Grunt implements Enemy {
 	public void move() {
 
 		int width = gruntSprite.getEntity().getGraphicalObject().getWidth();
+		int height = gruntSprite.getEntity().getGraphicalObject().getHeight();
 		int x = gruntSprite.getX();
 		int y = gruntSprite.getY();
 
@@ -56,22 +57,17 @@ public class Grunt implements Enemy {
 		int nextX;
 		Entity checkSupport;
 
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[2] = width;
-		eD[3] = gruntSprite.getEntity().getGraphicalObject().getHeight();
-		eD[4] = 0xffff0000;
-		eD[1] = y + 5;
 		if (direction == Direction.RIGHT) {
+
 			nextX = x + xSpeed;
-			eD[0] = nextX + width;
+			checkSupport = Entity.Rectangle(nextX + width, y + 5, width, height, 0xffff0000);
 
 		} else {
+			
 			nextX = x - xSpeed;
-			eD[0] = nextX - width;
+			checkSupport = Entity.Rectangle(nextX - width, y + 5, width, height, 0xffff0000);
+			
 		}
-
-		checkSupport = new Entity(EntityType.RECTANGLE, eD);
 
 		boolean hitRightBoundry = nextX + width >= Level.StartX + Level.Length;
 		boolean hitLeftBoundry = nextX <= Level.StartX;

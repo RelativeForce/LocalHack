@@ -20,9 +20,8 @@ public class Sprite {
 
 		for (SpriteFrame frameSprite : SpriteSheetReader.getSprites(path, width, height)) {
 
-			Object[] eSD = { x, y, frameSprite.getPixels() };
-
-			frames.add(new Entity(EntityType.SPRITEFRAME, eSD));
+			frames.add(Entity.SpriteFrame(x, y, frameSprite.getPixels()));
+			
 		}
 
 		currentFrame = 0;
@@ -38,12 +37,10 @@ public class Sprite {
 		entity.setY(y);
 		return entity;
 	}
-	
 
 	public int getX() {
 		return x;
 	}
-	
 
 	public void setX(int x) {
 		this.x = x;

@@ -42,15 +42,7 @@ public class Player {
 	 */
 	public Player(int x, int y, int width, int height) {
 
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = x;
-		eD[1] = y;
-		eD[2] = width;
-		eD[3] = height;
-		eD[4] = Color.RED.getRGB();
-
-		playerEntity = new Entity(EntityType.RECTANGLE, eD);
+		playerEntity = Entity.Rectangle(x, y, width, height, Color.RED.getRGB());
 		ySpeed = 0;
 		xSpeed = 0;
 		isDead = false;
@@ -142,16 +134,9 @@ public class Player {
 
 		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getEnemies())) {
 
-			// eD = entity Details
-			Object[] eD = new Object[5];
-			eD[0] = x + xSpeed;
-			eD[1] = y + (int) ySpeed;
-			eD[2] = playerEntity.getGraphicalObject().getWidth();
-			eD[3] = playerEntity.getGraphicalObject().getHeight();
-			eD[4] = Color.WHITE.getRGB();
-
-			playerEntity = new Entity(EntityType.RECTANGLE, eD);
 			isDead = true;
+			playerEntity = Entity.Rectangle(x + xSpeed, y + (int) ySpeed, playerEntity.getGraphicalObject().getWidth(),
+					playerEntity.getGraphicalObject().getHeight(), Color.WHITE.getRGB());
 
 		}
 
@@ -176,15 +161,8 @@ public class Player {
 		Objective objective = checkObjectiveCollision(x + xSpeed, y + (int) ySpeed, Main.level.getObjectives());
 		if (!isDead && objective != null) {
 
-			// eD = entity Details
-			Object[] eD = new Object[5];
-			eD[0] = x + xSpeed;
-			eD[1] = y + (int) ySpeed;
-			eD[2] = playerEntity.getGraphicalObject().getWidth();
-			eD[3] = playerEntity.getGraphicalObject().getHeight();
-			eD[4] = Color.RED.getRGB();
-
-			playerEntity = new Entity(EntityType.RECTANGLE, eD);
+			playerEntity = Entity.Rectangle(x + xSpeed, y + (int) ySpeed, playerEntity.getGraphicalObject().getWidth(),
+					playerEntity.getGraphicalObject().getHeight(), Color.RED.getRGB());
 
 			objective.action();
 		}
@@ -200,27 +178,26 @@ public class Player {
 	}
 
 	private boolean checkCollision(int nextX, int nextY, ArrayList<Entity> list) {
-		
-		return HitDetection.getObstruction(playerEntity, new Point(nextX, nextY), list.toArray(new Entity[list.size()])) != null;
-		
+
+		return HitDetection.getObstruction(playerEntity, new Point(nextX, nextY),
+				list.toArray(new Entity[list.size()])) != null;
+
 	}
 
 	private boolean checkEnemyCollision(int nextX, int nextY, ArrayList<Enemy> list) {
 
-		
 		Entity[] array = new Entity[list.size()];
-		
-		for(int i = 0; i < list.size(); ++i){
-			
+
+		for (int i = 0; i < list.size(); ++i) {
+
 			array[i] = list.get(i).getEntity();
-			
-		}		
+
+		}
 
 		return HitDetection.getObstruction(playerEntity, new Point(nextX, nextY), array) != null;
 	}
 
 	private Objective checkObjectiveCollision(int nextX, int nextY, ArrayList<Objective> list) {
-		
 
 		for (Objective objective : list) {
 			if (HitDetection.detectHit(playerEntity, new Point(nextX, nextY), objective.getEntity())) {

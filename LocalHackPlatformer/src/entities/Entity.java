@@ -20,16 +20,7 @@ public class Entity {
 	private HitBox hitBox;
 	private Point position = new Point(Constants.DEFAULT_POSITION);
 
-	/**
-	 * Constructs an new of a specified type Entity.
-	 * 
-	 * @param type
-	 *            The Type of the entity object you wish to construct.
-	 * @param details
-	 *            0. int x 1. int y 2+. Details specific to each EntityType.
-	 * 
-	 */
-	public Entity(EntityType type, Object[] details) {
+	private Entity(EntityType type, Object[] details) {
 
 		int x = (int) details[0];
 		int y = (int) details[1];
@@ -88,6 +79,58 @@ public class Entity {
 		if (object != null) {
 			hitBox = new HitBox(object);
 		}
+	}
+	
+	public static Entity Rectangle(int x, int y, int width, int height, Integer color){
+		
+		Object[] eSD = new Object[5];
+		eSD[0] = x;
+		eSD[1] = y;
+		eSD[2] = width;
+		eSD[3] = height;
+		eSD[4] = color;
+		
+		return new Entity(EntityType.RECTANGLE, eSD);
+	}
+	
+	public static Entity Floor(int x, int y, int width, int height, Integer borderColor, int boxWidth, int boxHeight, Integer boxColor){
+		
+		Object[] eSD = new Object[8];
+		eSD[0] = x;
+		eSD[1] = y;
+		eSD[2] = width;
+		eSD[3] = height;
+		eSD[4] = borderColor;
+		eSD[5] = boxWidth;
+		eSD[6] = boxHeight;
+		eSD[7] = boxColor;
+		
+		
+		return new Entity(EntityType.FLOOR, eSD);
+	}
+	
+	public static Entity Door(int x, int y, int width, int height, Integer color){
+		
+		Object[] eSD = new Object[5];
+		eSD[0] = x;
+		eSD[1] = y;
+		eSD[2] = width;
+		eSD[3] = height;
+		eSD[4] = color;
+		
+		return new Entity(EntityType.DOOR, eSD);
+		
+	}
+	
+	public static Entity SpriteFrame(int x, int y, Integer[][] pixels){
+		
+		Object[] eSD = new Object[3];
+		eSD[0] = x;
+		eSD[1] = y;
+		eSD[2] = pixels;
+		
+		return new Entity(EntityType.SPRITEFRAME, eSD);
+		
 	}
 
 	/**

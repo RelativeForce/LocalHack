@@ -186,15 +186,7 @@ public class LevelLoader {
 		Color color = getColor(details[firstDetail + 4]);
 		int levelLink = Integer.parseInt(details[firstDetail + 5]);
 
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = x;
-		eD[1] = y;
-		eD[2] = width;
-		eD[3] = height;
-		eD[4] = color.getRGB();
-
-		Entity door = new Entity(EntityType.DOOR, eD);
+		Entity door = Entity.Door(x, y, width, height, color.getRGB());
 		LevelChange levelChange = new LevelChange(door, levelLink);
 
 		return levelChange;
@@ -218,15 +210,7 @@ public class LevelLoader {
 		int height = Integer.parseInt(details[firstDetail + 3]);
 		Color color = getColor(details[firstDetail + 4]);
 
-		// eD = entity Details
-		Object[] eD = new Object[5];
-		eD[0] = x;
-		eD[1] = y;
-		eD[2] = width;
-		eD[3] = height;
-		eD[4] = color.getRGB();
-
-		Entity rect = new Entity(EntityType.RECTANGLE, eD);
+		Entity rect = Entity.Rectangle(x, y, width, height, color.getRGB());
 		return rect;
 	}
 
@@ -241,19 +225,7 @@ public class LevelLoader {
 		int boxWidth = Integer.parseInt(details[firstDetail + 6]);
 		int boxHeight = Integer.parseInt(details[firstDetail + 7]);
 
-		// eD = entity Details
-		Object[] eD = new Object[8];
-		eD[0] = x;
-		eD[1] = y;
-		eD[2] = width;
-		eD[3] = height;
-		eD[4] = borderColor.getRGB();
-		eD[5] = boxWidth;
-		eD[6] = boxHeight;
-		eD[7] = boxColor.getRGB();
-
-
-		Entity floor = new Entity(EntityType.FLOOR, eD);
+		Entity floor = Entity.Floor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB());
 
 		return floor;
 	}
