@@ -78,7 +78,7 @@ public class Grunt implements Enemy {
 		boolean isSupported = HitDetection.detectHit(checkSupport, checkSupport, currentSupport);
 
 		if (rebound(nextX, y) || hitRightBoundry || hitLeftBoundry || !isSupported) {
-			direction = DirectionHandler.invert(direction);
+			direction = direction.getOppositeDirection();
 		}
 
 		if (direction == Direction.RIGHT) {
