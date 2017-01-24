@@ -20,4 +20,21 @@ public class SpriteFrame extends GraphicalObject {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer[][] getInvertedPixels() {
+		
+		Integer[][] invertedPixels = new Integer[width][height];
+		
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				invertedPixels[j][i] = this.pixels[width - j - 1][i];
+			}
+		}
+		
+		return invertedPixels;
+	}
+
 }

@@ -45,8 +45,7 @@ public class Player {
 	public Player(int x, int y, int width, int height) {
 
 		File currentDirectory = new File(System.getProperty("user.dir"));
-		playerSprite = new Sprite(currentDirectory.getPath() + "\\" + Constants.PLAYER_FILENAME, 16, 32, x,
-				y);
+		playerSprite = new Sprite(currentDirectory.getPath() + "\\" + Constants.PLAYER_FILENAME, 16, 32, x, y);
 		movesMade = 0;
 		ySpeed = 0;
 		xSpeed = 0;
@@ -86,6 +85,12 @@ public class Player {
 
 		int x = playerSprite.getX();
 		int y = playerSprite.getY();
+		
+		if(changeInX >= 0){
+			playerSprite.revert();
+		}else{
+			playerSprite.invert();
+		}
 
 		int nextX = x + changeInX;
 
@@ -105,12 +110,11 @@ public class Player {
 			}
 
 			xSpeed = changeInX / Constants.FRICTION;
-			
-			if(movesMade % 5 == 0){
+
+			if (movesMade % 5 == 0) {
 				playerSprite.nextFrame();
 			}
-			
-			
+
 			movesMade++;
 		}
 	}

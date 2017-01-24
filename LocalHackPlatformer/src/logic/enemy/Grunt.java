@@ -79,8 +79,10 @@ public class Grunt implements Enemy {
 
 		if (direction == Direction.RIGHT) {
 			gruntSprite.setX(gruntSprite.getX() + xSpeed);
+			gruntSprite.invert();
 		} else {
 			gruntSprite.setX(gruntSprite.getX() - xSpeed);
+			gruntSprite.revert();
 		}
 
 		if (movesMade % 5 == 0) {
