@@ -67,7 +67,7 @@ public class Constants {
 	/**
 	 * The filename of the image containing the player sprite frames.
 	 */
-	public static final String PLAYER_FILENAME = "Player.png";
+	public static final String PLAYER_FILENAME = "Mario.png";
 	
 	/**
 	 * In RGB the value is equivalent to 0xFF00FF.
