@@ -3,7 +3,7 @@ package graphics.objects;
 import java.awt.Color;
 
 /**
- * Describes a door that will start another level when the player intercepts it.
+ * A <code>GraphicalObject</code> that denotes a Door on the screen.
  * 
  * @author Joshua_Eddy
  *
@@ -13,10 +13,12 @@ public class Door extends GraphicalObject {
 
 	/**
 	 * Constructs a new Door GraphicalObject.
-	 * @param details
-	 * 	 *        0. int width
-	 *            1. int height 
-	 *            2. Integer doorColor 
+	 * @param details  </br>
+	 * 0. <code>int</code> width - The width of the Door</br>
+	 * 1. <code>int</code> height - The height of the Door</br>
+	 * 2. <code>Integer</code> doorColor - The colour of the Door</br>
+	 * @see GraphicalObject
+	 * @see Entity
 	 */
 	public Door(Object[] details) {
 

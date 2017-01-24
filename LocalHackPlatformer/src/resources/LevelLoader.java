@@ -1,7 +1,6 @@
 package resources;
 
 import java.util.Scanner;
-import entities.EntityType;
 import entities.Entity;
 import logic.Level;
 import logic.Point;

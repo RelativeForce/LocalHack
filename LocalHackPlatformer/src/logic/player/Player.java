@@ -3,7 +3,6 @@ package logic.player;
 import java.awt.Color;
 import java.util.ArrayList;
 import entities.Entity;
-import entities.EntityType;
 import environment.Constants;
 import environment.Main;
 import logic.HitDetection;

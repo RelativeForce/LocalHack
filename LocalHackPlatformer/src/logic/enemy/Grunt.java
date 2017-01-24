@@ -3,7 +3,6 @@ package logic.enemy;
 import java.io.File;
 import directions.*;
 import entities.Entity;
-import entities.EntityType;
 import entities.Sprite;
 import environment.Constants;
 import environment.Main;

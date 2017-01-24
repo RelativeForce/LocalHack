@@ -1,7 +1,6 @@
 package logic;
 
 import entities.Entity;
-import entities.EntityType;
 import environment.Constants;
 
 /**
