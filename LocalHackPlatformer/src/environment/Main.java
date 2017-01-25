@@ -1,16 +1,17 @@
 package environment;
 
-import entities.*;
-import graphics.*;
-import logic.*;
-import logic.enemy.Enemy;
-import logic.player.Player;
-
 import java.awt.Color;
 import java.util.ArrayList;
 
+import environment.graphics.*;
+import environment.logic.*;
+import environment.logic.constructs.Player;
+import environment.logic.constructs.TransitionScreen;
+import environment.logic.constructs.enemies.Enemy;
+import environment.logic.entities.*;
+
 /**
- * Stores the Game logic and fundamental functions.
+ * Initialises game play state.
  * 
  * @author Joshua_Eddy
  */
@@ -45,8 +46,7 @@ public class Main {
 	/**
 	 * Starts the game.
 	 * 
-	 * @param args
-	 *            Starting string arguments.
+	 * @param args Unused.
 	 */
 	public static void main(String[] args) {
 

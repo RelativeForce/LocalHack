@@ -1,13 +1,15 @@
 package resources;
 
 import java.util.Scanner;
-import entities.Entity;
-import logic.Level;
-import logic.Point;
-import logic.enemy.Enemy;
-import logic.enemy.Grunt;
-import logic.objective.LevelChange;
-import logic.objective.Objective;
+
+import environment.logic.Level;
+import environment.logic.Point;
+import environment.logic.constructs.enemies.Enemy;
+import environment.logic.constructs.enemies.Grunt;
+import environment.logic.constructs.objectives.LevelChange;
+import environment.logic.constructs.objectives.Objective;
+import environment.logic.entities.Entity;
+
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class LevelLoader {
 	 *            The path of the parent directory which contains the levels
 	 */
 	public LevelLoader(String directoryPath) {
-		directory = ResourceHandler.getDirectory(directoryPath);
+		directory = TextFileReader.getDirectory(directoryPath);
 	}
 
 	/**
@@ -40,7 +42,7 @@ public class LevelLoader {
 	 */
 	public void getLevelDetails(int levelNum) {
 
-		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
+		Scanner scnr = TextFileReader.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);
@@ -73,7 +75,7 @@ public class LevelLoader {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
-		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
+		Scanner scnr = TextFileReader.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);
@@ -112,7 +114,7 @@ public class LevelLoader {
 
 		ArrayList<Objective> objectives = new ArrayList<Objective>();
 
-		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
+		Scanner scnr = TextFileReader.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);
@@ -149,7 +151,7 @@ public class LevelLoader {
 
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-		Scanner scnr = ResourceHandler.getScannedFile("LH_Level" + levelNum, directory);
+		Scanner scnr = TextFileReader.getScannedFile("LH_Level" + levelNum, directory);
 
 		if (scnr == null) {
 			System.out.println("Failed to find level" + levelNum);

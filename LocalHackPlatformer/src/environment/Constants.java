@@ -1,9 +1,9 @@
 package environment;
 
-import logic.Point;
+import environment.logic.Point;
 
 /**
- * Stores the various constant values that are used throughout the game.
+ * Stores the various constant values that are used throughout the Game modules.
  * @author Joshua_Eddy
  *
  */

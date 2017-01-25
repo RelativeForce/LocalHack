@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import environment.Constants;
-import graphics.objects.SpriteFrame;
+import environment.graphics.objects.SpriteFrame;
 
 /**
  * The SpriteSheetReader class is intended for extracting sprite sheets from
