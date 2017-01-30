@@ -1,5 +1,8 @@
 package environment.logic.constructs;
 
+import java.util.ArrayList;
+
+import environment.logic.entities.Entity;
 import environment.logic.entities.Sprite;
 
 public class Construct {
@@ -41,8 +44,20 @@ public class Construct {
 	public void move(int changeInX, int changeInY) {
 		setX(getX() + changeInX);
 		setY(getY() + changeInY);
+	}
+
+	public static <E> Entity[] filterConstructs(E type, ArrayList<Construct> collection) {
+		ArrayList<Entity> entities =  new ArrayList<Entity>();
 		
+		if(type instanceof Construct){
+			for(Construct con : collection){
+				if(!type.getClass().equals(con.getClass())){
+					entities.add(con.getSprite().getEntity());
+				}
+			}			
+		}
 		
+		return entities.toArray(new Entity[entities.size()]);
 	}
 
 }

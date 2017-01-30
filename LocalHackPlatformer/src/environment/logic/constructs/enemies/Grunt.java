@@ -80,10 +80,10 @@ public class Grunt extends Construct implements Enemy {
 		}
 
 		if (direction == Direction.RIGHT) {
-			setX(getSprite().getX() + xSpeed);
+			setX(x + xSpeed);
 			getSprite().invert();
 		} else {
-			setX(getSprite().getX() - xSpeed);
+			setX(y - xSpeed);
 			getSprite().revert();
 		}
 
@@ -103,9 +103,13 @@ public class Grunt extends Construct implements Enemy {
 	}
 
 	private boolean rebound(int nextX, int y) {
+		
+		ArrayList<Construct> constructs = new ArrayList<Construct>();
+		constructs.addAll(Main.level.getConstructs());
+		constructs.remove(this);
 
 		return (HitDetection.getObstruction(getSprite().getEntity(), new Point(nextX, y),
-				toArray(Main.level.getConstructs()))) != null;
+				toArray(constructs))) != null;
 	}
 
 	private Entity[] toArray(ArrayList<Construct> list) {
