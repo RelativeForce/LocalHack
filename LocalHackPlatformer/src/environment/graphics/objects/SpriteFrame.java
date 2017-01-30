@@ -25,21 +25,4 @@ public class SpriteFrame extends GraphicalObject {
 
 	}
 
-	/**
-	 * Inverts the pixels to give a mirror image.
-	 * @return <code>Integer[][]</code> that denotes the mirror pixels of the <code>GraphicalObject</code>s pixels.
-	 */
-	public Integer[][] getInvertedPixels() {
-		
-		Integer[][] invertedPixels = new Integer[width][height];
-		
-		for(int i = 0; i < height; i++){
-			for(int j = 0; j < width; j++){
-				invertedPixels[j][i] = this.pixels[width - j - 1][i];
-			}
-		}
-		
-		return invertedPixels;
-	}
-
 }

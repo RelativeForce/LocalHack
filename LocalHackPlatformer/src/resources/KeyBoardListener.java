@@ -8,6 +8,7 @@ import environment.Main;
 
 /**
  * Listens for keyboard inputs and may process multiple inputs simultaneously.
+ * 
  * @author Joshua_Eddy, John_Berg
  *
  */
@@ -17,7 +18,9 @@ public class KeyBoardListener implements KeyListener {
 
 	/**
 	 * Constructs a new KeyBoardListener.
-	 * @param rollOver The number of input that can be processed at once.
+	 * 
+	 * @param rollOver
+	 *            The number of input that can be processed at once.
 	 */
 	public KeyBoardListener(int rollOver) {
 		activeKeys = new KeyEvent[rollOver];
@@ -95,10 +98,10 @@ public class KeyBoardListener implements KeyListener {
 						Main.player.jump();
 
 					} else if (currentKey.getKeyCode() == KeyEvent.VK_RIGHT) {
-						Main.player.move(Constants.MOVE_DISTANCE);
+						Main.player.move(Constants.MOVE_DISTANCE, 0);
 
 					} else if (currentKey.getKeyCode() == KeyEvent.VK_LEFT) {
-						Main.player.move(-Constants.MOVE_DISTANCE);
+						Main.player.move(-Constants.MOVE_DISTANCE, 0);
 					}
 				}
 

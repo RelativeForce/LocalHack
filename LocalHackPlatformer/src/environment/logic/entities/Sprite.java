@@ -6,11 +6,12 @@ import environment.graphics.objects.SpriteFrame;
 import resources.SpriteSheetReader;
 
 /**
- * Encapsulates the behaviour of a sprite which is denoted by a collection of <code>SpriteFrame</code> <code>Entity</code>s.
+ * Encapsulates the behaviour of a sprite which is denoted by a collection of
+ * <code>SpriteFrame</code> <code>Entity</code>s.
  * 
  * @author Joshua_Eddy
  * 
- * @see Entity
+ * @see environment.logic.entities.Entity
  * @see environment.graphics.objects.SpriteFrame
  *
  */
@@ -27,13 +28,22 @@ public class Sprite {
 	 * Constructs a new <code>Sprite</code>.</br>
 	 * If the <code>path</code> is invalid an IOException will be thrown.
 	 * 
-	 * @param path The <code>String</code> file path of the sprite image file.
-	 * @param width The <code>int</code> width of the sprites in the image file in pixels.
-	 * @param height The <code>int</code> height of the sprites in the image file in pixels.
-	 * @param x The <code>int</code> x  of the sprite on the <code>Screen</code>.
-	 * @param y The <code>int</code> y  of the sprite on the <code>Screen</code>.
+	 * @param path
+	 *            The <code>String</code> file path of the sprite image file.
+	 * @param width
+	 *            The <code>int</code> width of the sprites in the image file in
+	 *            pixels.
+	 * @param height
+	 *            The <code>int</code> height of the sprites in the image file
+	 *            in pixels.
+	 * @param x
+	 *            The <code>int</code> x of the sprite on the
+	 *            <code>Screen</code>.
+	 * @param y
+	 *            The <code>int</code> y of the sprite on the
+	 *            <code>Screen</code>.
 	 * 
-	 * @see Entity
+	 * @see environment.logic.entities.Entity
 	 * @see environment.graphics.objects.GraphicalObject
 	 * @see environment.graphics.objects.SpriteFrame
 	 */
@@ -41,19 +51,86 @@ public class Sprite {
 
 		setX(x);
 		setY(y);
+		currentFrame = 0;
 
-		inverted = false;
 		frames = new ArrayList<Entity>();
-		invertedFrames = new ArrayList<Entity>();
 
 		for (SpriteFrame frameSprite : SpriteSheetReader.getSprites(path, width, height)) {
 
 			frames.add(Entity.SpriteFrame(x, y, frameSprite.getPixels()));
-			invertedFrames.add(Entity.SpriteFrame(x, y, frameSprite.getInvertedPixels()));
 
 		}
 
+		initaliseInvertedSpriteFrames();
+
+		
+	}
+
+	/**
+	 * Constructs a new <code>Sprite</code>.</br>
+	 * 
+	 * @param frames
+	 *            The collection of <code>Entity</code>s that denote the
+	 *            sprite's frames.
+	 * @param x
+	 *            The <code>int</code> x of the sprite on the
+	 *            <code>Screen</code>.
+	 * @param y
+	 *            The <code>int</code> y of the sprite on the
+	 *            <code>Screen</code>.
+	 * 
+	 * @see environment.logic.entities.Entity
+	 * @see environment.graphics.objects.GraphicalObject
+	 * @see environment.graphics.objects.SpriteFrame
+	 */
+	public Sprite(ArrayList<Entity> frames, int x, int y) {
+
+		this.frames = frames;
+		setX(x);
+		setY(y);
 		currentFrame = 0;
+
+		initaliseInvertedSpriteFrames();
+
+	}
+
+	/**
+	 * Constructs a new <code>Sprite</code>.</br>
+	 * 
+	 * @param frame
+	 *            The single <code>Entity</code> that denotes the sprite.
+	 * @param x
+	 *            The <code>int</code> x of the sprite on the
+	 *            <code>Screen</code>.
+	 * @param y
+	 *            The <code>int</code> y of the sprite on the
+	 *            <code>Screen</code>.
+	 * @see environment.logic.entities.Entity
+	 * @see environment.graphics.objects.GraphicalObject
+	 * @see environment.graphics.objects.SpriteFrame
+	 */
+	public Sprite(Entity frame, int x, int y) {
+
+		frames = new ArrayList<Entity>();
+		frames.add(frame);
+
+		setX(x);
+		setY(y);
+		currentFrame = 0;
+
+		initaliseInvertedSpriteFrames();
+
+	}
+
+	private void initaliseInvertedSpriteFrames() {
+
+		invertedFrames = new ArrayList<Entity>();
+		inverted = false;
+
+		for (Entity frame : frames) {
+			invertedFrames.add(Entity.SpriteFrame(x, y, frame.getGraphicalObject().getInvertedPixels()));
+		}
+
 	}
 
 	public void nextFrame() {
@@ -66,12 +143,12 @@ public class Sprite {
 		entity.setY(y);
 		return entity;
 	}
-	
-	public void invert(){
+
+	public void invert() {
 		inverted = true;
 	}
-	
-	public void revert(){
+
+	public void revert() {
 		inverted = false;
 	}
 

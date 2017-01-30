@@ -3,7 +3,6 @@ package environment.logic.constructs;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
-
 import environment.Constants;
 import environment.Main;
 import environment.logic.HitDetection;
@@ -19,9 +18,8 @@ import environment.logic.entities.Sprite;
  * 
  * @author Joshua_Eddy
  */
-public class Player {
+public class Player extends Construct {
 
-	private Sprite playerSprite;
 	private double ySpeed;
 	private int xSpeed;
 	private int movesMade;
@@ -45,8 +43,9 @@ public class Player {
 	 */
 	public Player(int x, int y, int width, int height) {
 
-		File currentDirectory = new File(System.getProperty("user.dir"));
-		playerSprite = new Sprite(currentDirectory.getPath() + "\\" + Constants.PLAYER_FILENAME, 16, 32, x, y);
+		super(x, y, new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.PLAYER_FILENAME,
+				16, 32, x, y));
+
 		movesMade = 0;
 		ySpeed = 0;
 		xSpeed = 0;
@@ -59,16 +58,16 @@ public class Player {
 	 */
 	public void gravity() {
 
-		int x = playerSprite.getX();
-		int y = playerSprite.getY();
+		int x = getSprite().getX();
+		int y = getSprite().getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 		int nextX = x + xSpeed;
 		int nextY = y + (int) ySpeed;
 
-		if (!checkCollision(nextX, nextY, Main.level.getComponents())) {
-			playerSprite.setY(y + (int) ySpeed);
-			playerSprite.setX(x + xSpeed);
+		if (!checkCollision(nextX, nextY, Main.level.getConstructs())) {
+			getSprite().setY(y + (int) ySpeed);
+			getSprite().setX(x + xSpeed);
 		} else {
 			ySpeed = 0;
 			xSpeed = 0;
@@ -81,22 +80,25 @@ public class Player {
 	 * 
 	 * @param changeInX
 	 *            The change in X coordinate for the Player Entity.
+	 * @param changeInY
+	 *            Unused
 	 */
-	public void move(int changeInX) {
+	@Override
+	public void move(int changeInX, int changeInY) {
 
-		int x = playerSprite.getX();
-		int y = playerSprite.getY();
-		
-		if(changeInX >= 0){
-			playerSprite.revert();
-		}else{
-			playerSprite.invert();
+		int x = getSprite().getX();
+		int y = getSprite().getY();
+
+		if (changeInX >= 0) {
+			getSprite().revert();
+		} else {
+			getSprite().invert();
 		}
 
 		int nextX = x + changeInX;
 
-		if (!checkCollision(nextX, y, Main.level.getComponents()) && nextX >= 0
-				&& nextX <= Constants.WINDOW_WIDTH - playerSprite.getEntity().getGraphicalObject().getWidth()) {
+		if (!checkCollision(nextX, y, Main.level.getConstructs()) && nextX >= 0
+				&& nextX <= Constants.WINDOW_WIDTH - getSprite().getEntity().getGraphicalObject().getWidth()) {
 
 			if (nextX < Constants.WINDOW_PADDING && Level.StartX < 0) {
 				Main.level.moveLevel(-changeInX);
@@ -107,13 +109,13 @@ public class Player {
 
 			} else {
 
-				playerSprite.setX(nextX);
+				getSprite().setX(nextX);
 			}
 
 			xSpeed = changeInX / Constants.FRICTION;
 
 			if (movesMade % 5 == 0) {
-				playerSprite.nextFrame();
+				getSprite().nextFrame();
 			}
 
 			movesMade++;
@@ -125,11 +127,11 @@ public class Player {
 	 */
 	public void jump() {
 
-		int x = playerSprite.getX();
-		int y = playerSprite.getY();
+		int x = getSprite().getX();
+		int y = getSprite().getY();
 
 		gravity();
-		if (ySpeed == 0 && checkCollision(x, y + 2, Main.level.getComponents())) {
+		if (ySpeed == 0 && checkCollision(x, y + 2, Main.level.getConstructs())) {
 			ySpeed = -Constants.JUMP_HEIGHT;
 		}
 
@@ -140,8 +142,8 @@ public class Player {
 	 */
 	public void checkForDeath() {
 
-		int x = playerSprite.getX();
-		int y = playerSprite.getY();
+		int x = getSprite().getX();
+		int y = getSprite().getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
@@ -149,7 +151,7 @@ public class Player {
 			isDead = true;
 		}
 
-		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getEnemies())) {
+		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getConstructs())) {
 
 			isDead = true;
 
@@ -168,14 +170,14 @@ public class Player {
 	 */
 	public void checkObjectves() {
 
-		int x = playerSprite.getX();
-		int y = playerSprite.getY();
+		int x = getSprite().getX();
+		int y = getSprite().getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
-		Objective objective = checkObjectiveCollision(x + xSpeed, y + (int) ySpeed, Main.level.getObjectives());
-		if (!isDead && objective != null) {
-			objective.action();
+		Construct objective = checkObjectiveCollision(x + xSpeed, y + (int) ySpeed, Main.level.getConstructs());
+		if (!isDead && objective != null && objective instanceof Objective) {
+			((Objective) objective).action();
 		}
 	}
 
@@ -185,38 +187,50 @@ public class Player {
 	 * @return The Entity assigned to the Player.
 	 */
 	public Entity getEntity() {
-		return playerSprite.getEntity();
+		return getSprite().getEntity();
 	}
 
-	private boolean checkCollision(int nextX, int nextY, ArrayList<Entity> list) {
+	private boolean checkCollision(int nextX, int nextY, ArrayList<Construct> list) {
 
-		return HitDetection.getObstruction(playerSprite.getEntity(), new Point(nextX, nextY),
-				list.toArray(new Entity[list.size()])) != null;
+		return HitDetection.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(list)) != null;
 
 	}
 
-	private boolean checkEnemyCollision(int nextX, int nextY, ArrayList<Enemy> list) {
+	private boolean checkEnemyCollision(int nextX, int nextY, ArrayList<Construct> list) {
 
-		Entity[] array = new Entity[list.size()];
+		ArrayList<Construct> array = new ArrayList<Construct>();
 
 		for (int i = 0; i < list.size(); ++i) {
-
-			array[i] = list.get(i).getEntity();
-
+			if (list.get(i) instanceof Enemy) {
+				array.add(list.get(i));
+			}
 		}
 
-		return HitDetection.getObstruction(playerSprite.getEntity(), new Point(nextX, nextY), array) != null;
+		return HitDetection.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(array)) != null;
 	}
 
-	private Objective checkObjectiveCollision(int nextX, int nextY, ArrayList<Objective> list) {
+	private Construct checkObjectiveCollision(int nextX, int nextY, ArrayList<Construct> list) {
 
-		for (Objective objective : list) {
-			if (HitDetection.detectHit(playerSprite.getEntity(), new Point(nextX, nextY), objective.getEntity())) {
+		for (Construct objective : list) {
+			if (HitDetection.detectHit(getSprite().getEntity(), new Point(nextX, nextY),
+					objective.getSprite().getEntity())) {
 				return objective;
 			}
 		}
 		return null;
 
 	}
+
+	private Entity[] toArray(ArrayList<Construct> list) {
+
+		Entity[] entities = new Entity[list.size()];
+
+		for (int i = 0; i < list.size(); i++) {
+			entities[i] = list.get(i).getSprite().getEntity();
+		}
+
+		return entities;
+	}
+	
 
 }

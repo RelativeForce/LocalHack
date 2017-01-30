@@ -4,8 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import environment.Constants;
-import environment.logic.constructs.enemies.Enemy;
-import environment.logic.constructs.objectives.Objective;
+import environment.logic.constructs.Construct;
 import environment.logic.entities.Entity;
 import resources.LevelLoader;
 
@@ -30,12 +29,8 @@ public class Level {
 	 * Stores the position the player will start at when the level is played.
 	 */
 	public static Point StartPosition;
-
-	private ArrayList<Entity> components;
-
-	private ArrayList<Enemy> enemies;
 	
-	private ArrayList<Objective> objectives;
+	private ArrayList<Construct> constructs;
 	
 	/**
 	 * Constructs a new Level object.
@@ -43,9 +38,7 @@ public class Level {
 	 */
 	public Level(int levelNumber){
 		
-		components = new ArrayList<Entity>();
-		enemies = new ArrayList<Enemy>();
-		objectives = new ArrayList<Objective>();
+		constructs = new ArrayList<Construct>();
 		StartX = 0;
 		StartPosition = Constants.DEFAULT_POSITION;
 		loadLevel(levelNumber);
@@ -58,9 +51,9 @@ public class Level {
 	 */
 	public void moveLevel(int changeInX){
 		
-		moveComponents(changeInX);
-		moveEnemies(changeInX);
-		moveObjectives(changeInX);
+		for(Construct construct : constructs){
+			construct.move(changeInX, 0);
+		}
 		StartX += changeInX;
 		
 	}
@@ -69,19 +62,13 @@ public class Level {
 	 * Returns an ArrayList of all the Entities in the Level.
 	 * @return ArrayList of all the Entities in the Level.
 	 */
-	public ArrayList<Entity> getAll(){
+	public ArrayList<Entity> getEntities(){
 		
 		ArrayList<Entity> entities = new ArrayList<Entity>();
-		for(Entity entity: components){
-			entities.add(entity);
+
+		for(int i = 0; i < constructs.size(); i++){
+			entities.add(constructs.get(i).getSprite().getEntity());
 		}
-		for(Objective objective: objectives){
-			entities.add(objective.getEntity());
-		}
-		for(Enemy enemy: enemies){
-			entities.add(enemy.getEntity());
-		}
-		
 		
 		return entities;
 	}
@@ -90,24 +77,8 @@ public class Level {
 	 * Returns an ArrayList of all the Enemy Entities in the Level.
 	 * @return ArrayList of all the Enemy Entities in the Level.
 	 */
-	public ArrayList<Enemy> getEnemies(){
-		return enemies;
-	}
-	
-	/**
-	 * Returns an ArrayList of all the Component Entities in the Level.
-	 * @return ArrayList of all the Component Entities in the Level.
-	 */
-	public ArrayList<Entity> getComponents(){
-		return components;
-	}
-	
-	/**
-	 * Returns an ArrayList of all the Objectives in the Level.
-	 * @return ArrayList of all the Objectives in the Level.
-	 */
-	public ArrayList<Objective> getObjectives(){
-		return objectives;
+	public ArrayList<Construct> getConstructs(){
+		return constructs;
 	}
 	
 	private void loadLevel(int levelNumber) {
@@ -115,31 +86,11 @@ public class Level {
 		File currentDirectory = new File(System.getProperty("user.dir"));
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
 		levelloader.getLevelDetails(levelNumber);
-		components.addAll(levelloader.getComponents(levelNumber));
-		enemies.addAll(levelloader.getEnemies(levelNumber));
-		objectives.addAll(levelloader.getObjectives(levelNumber));
+		
+		constructs.addAll(levelloader.getComponents(levelNumber));
+		constructs.addAll(levelloader.getEnemies(levelNumber));
+		constructs.addAll(levelloader.getObjectives(levelNumber));
 
-	}
-	
-	private void moveComponents(int changeInX){
-		
-		for(Entity entity : components){
-			entity.setX(entity.getX() + changeInX);;
-		}
-		
-	}
-	
-	private void moveEnemies(int changeInX){
-		for(Enemy enemy : enemies){
-			enemy.setX(enemy.getEntity().getX() + changeInX);
-		}
-	}
-	
-	private void moveObjectives(int changeInX){
-		
-		for(Objective objective : objectives){
-			objective.getEntity().setX(objective.getEntity().getX() + changeInX);;
-		}
 	}
 	
 }

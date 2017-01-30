@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import environment.graphics.*;
 import environment.logic.*;
+import environment.logic.constructs.Construct;
 import environment.logic.constructs.Player;
 import environment.logic.constructs.TransitionScreen;
 import environment.logic.constructs.enemies.Enemy;
@@ -93,7 +94,7 @@ public class Main {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
-		entities.addAll(level.getAll());
+		entities.addAll(level.getEntities());
 		entities.add(player.getEntity());
 
 		for (Entity entity : entities) {
@@ -127,8 +128,11 @@ public class Main {
 	}
 	
 	private static void moveEnemies(){
-		for(Enemy enemy : level.getEnemies()){
-			enemy.move();
+		for(Construct construct : level.getConstructs()){
+			if(construct instanceof Enemy){
+				((Enemy) construct).getMove();
+			}
+							
 		}
 	}
 	
