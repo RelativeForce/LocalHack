@@ -33,12 +33,16 @@ public class Construct {
 	}
 
 	public Sprite getSprite() {
+		sprite.setX(getX());
+		sprite.setY(getY());
 		return sprite;
 	}
 
 	public void move(int changeInX, int changeInY) {
 		setX(getX() + changeInX);
 		setY(getY() + changeInY);
+		
+		
 	}
 
 }

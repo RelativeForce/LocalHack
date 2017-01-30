@@ -58,16 +58,16 @@ public class Player extends Construct {
 	 */
 	public void gravity() {
 
-		int x = getSprite().getX();
-		int y = getSprite().getY();
+		int x = getX();
+		int y = getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 		int nextX = x + xSpeed;
 		int nextY = y + (int) ySpeed;
 
 		if (!checkCollision(nextX, nextY, Main.level.getConstructs())) {
-			getSprite().setY(y + (int) ySpeed);
-			getSprite().setX(x + xSpeed);
+			setY(y + (int) ySpeed);
+			setX(x + xSpeed);
 		} else {
 			ySpeed = 0;
 			xSpeed = 0;
@@ -86,8 +86,8 @@ public class Player extends Construct {
 	@Override
 	public void move(int changeInX, int changeInY) {
 
-		int x = getSprite().getX();
-		int y = getSprite().getY();
+		int x = getX();
+		int y = getY();
 
 		if (changeInX >= 0) {
 			getSprite().revert();
@@ -109,7 +109,7 @@ public class Player extends Construct {
 
 			} else {
 
-				getSprite().setX(nextX);
+				setX(nextX);
 			}
 
 			xSpeed = changeInX / Constants.FRICTION;
@@ -127,8 +127,8 @@ public class Player extends Construct {
 	 */
 	public void jump() {
 
-		int x = getSprite().getX();
-		int y = getSprite().getY();
+		int x = getX();
+		int y = getY();
 
 		gravity();
 		if (ySpeed == 0 && checkCollision(x, y + 2, Main.level.getConstructs())) {
@@ -142,8 +142,8 @@ public class Player extends Construct {
 	 */
 	public void checkForDeath() {
 
-		int x = getSprite().getX();
-		int y = getSprite().getY();
+		int x = getX();
+		int y = getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
@@ -170,8 +170,8 @@ public class Player extends Construct {
 	 */
 	public void checkObjectves() {
 
-		int x = getSprite().getX();
-		int y = getSprite().getY();
+		int x = getX();
+		int y = getY();
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 

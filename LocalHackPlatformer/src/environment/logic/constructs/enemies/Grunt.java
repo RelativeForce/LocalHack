@@ -48,8 +48,8 @@ public class Grunt extends Construct implements Enemy {
 
 		int width = getSprite().getEntity().getGraphicalObject().getWidth();
 		int height = getSprite().getEntity().getGraphicalObject().getHeight();
-		int x = getSprite().getX();
-		int y = getSprite().getY();
+		int x = getX();
+		int y = getY();
 
 		if (currentSupport == null) {
 			getSupport(x, y);
@@ -80,10 +80,10 @@ public class Grunt extends Construct implements Enemy {
 		}
 
 		if (direction == Direction.RIGHT) {
-			getSprite().setX(getSprite().getX() + xSpeed);
+			setX(getSprite().getX() + xSpeed);
 			getSprite().invert();
 		} else {
-			getSprite().setX(getSprite().getX() - xSpeed);
+			setX(getSprite().getX() - xSpeed);
 			getSprite().revert();
 		}
 
