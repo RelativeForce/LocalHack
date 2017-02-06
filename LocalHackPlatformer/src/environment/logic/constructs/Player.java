@@ -5,12 +5,12 @@ import java.io.File;
 import java.util.ArrayList;
 import environment.Constants;
 import environment.Main;
-import environment.logic.HitDetection;
 import environment.logic.Level;
 import environment.logic.Point;
 import environment.logic.constructs.enemies.Enemy;
 import environment.logic.constructs.objectives.Objective;
 import environment.logic.entities.Entity;
+import environment.logic.entities.HitBox;
 import environment.logic.entities.Sprite;
 
 /**
@@ -192,7 +192,7 @@ public class Player extends Construct {
 
 	private boolean checkCollision(int nextX, int nextY, ArrayList<Construct> list) {
 
-		return HitDetection.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(list)) != null;
+		return HitBox.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(list)) != null;
 
 	}
 
@@ -206,13 +206,13 @@ public class Player extends Construct {
 			}
 		}
 
-		return HitDetection.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(array)) != null;
+		return HitBox.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(array)) != null;
 	}
 
 	private Construct checkObjectiveCollision(int nextX, int nextY, ArrayList<Construct> list) {
 
 		for (Construct objective : list) {
-			if (HitDetection.detectHit(getSprite().getEntity(), new Point(nextX, nextY),
+			if (HitBox.detectHit(getSprite().getEntity(), new Point(nextX, nextY),
 					objective.getSprite().getEntity())) {
 				return objective;
 			}

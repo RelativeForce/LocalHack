@@ -47,6 +47,7 @@ public class Construct {
 	}
 
 	public static <E> Entity[] filterConstructs(E type, ArrayList<Construct> collection) {
+		
 		ArrayList<Entity> entities =  new ArrayList<Entity>();
 		
 		if(type instanceof Construct){

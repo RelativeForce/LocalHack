@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import environment.Constants;
 import environment.Main;
 import environment.logic.Direction;
-import environment.logic.HitDetection;
 import environment.logic.Level;
 import environment.logic.Point;
 import environment.logic.constructs.Construct;
 import environment.logic.entities.Entity;
+import environment.logic.entities.HitBox;
 import environment.logic.entities.Sprite;
 
 /**
@@ -72,7 +72,7 @@ public class Grunt extends Construct implements Enemy {
 
 		boolean hitRightBoundry = nextX + width >= Level.StartX + Level.Length;
 		boolean hitLeftBoundry = nextX <= Level.StartX;
-		boolean isSupported = HitDetection.detectHit(checkSupport, new Point(checkSupport.getX(), checkSupport.getY()),
+		boolean isSupported = HitBox.detectHit(checkSupport, new Point(checkSupport.getX(), checkSupport.getY()),
 				currentSupport);
 
 		if (rebound(nextX, y) || hitRightBoundry || hitLeftBoundry || !isSupported) {
@@ -97,7 +97,7 @@ public class Grunt extends Construct implements Enemy {
 
 	private void getSupport(int x, int y) {
 
-		currentSupport = HitDetection.getObstruction(getSprite().getEntity(), new Point(x, y + 5),
+		currentSupport = HitBox.getObstruction(getSprite().getEntity(), new Point(x, y + 5),
 				toArray(Main.level.getConstructs()));
 
 	}
@@ -108,7 +108,7 @@ public class Grunt extends Construct implements Enemy {
 		constructs.addAll(Main.level.getConstructs());
 		constructs.remove(this);
 
-		return (HitDetection.getObstruction(getSprite().getEntity(), new Point(nextX, y),
+		return (HitBox.getObstruction(getSprite().getEntity(), new Point(nextX, y),
 				toArray(constructs))) != null;
 	}
 
