@@ -1,8 +1,10 @@
-package environment.graphics.objects;
+package tests;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import environment.graphics.objects.Rectangle;
 
 public class TestRectangle {
 
@@ -19,25 +21,25 @@ public class TestRectangle {
 	@Test
 	public void testWidth(){
 		
-		assertEquals(rectangle.width, 2);
+		assertEquals(rectangle.getWidth(), 2);
 		
 	}
 	
 	@Test
 	public void testHeight(){
 		
-		assertEquals(rectangle.height, 2);
+		assertEquals(rectangle.getHeight(), 2);
 		
 	}
 	
 	@Test
 	public void testPixels(){
 		
-		for(int heightCounter = 0; heightCounter < rectangle.height; heightCounter++){
+		for(int heightCounter = 0; heightCounter < rectangle.getHeight(); heightCounter++){
 			
-			for(int widthCounter = 0; widthCounter< rectangle.width; widthCounter++){
+			for(int widthCounter = 0; widthCounter< rectangle.getWidth(); widthCounter++){
 				
-				assertTrue(rectangle.pixels[widthCounter][heightCounter] == color);
+				assertTrue(rectangle.getPixels()[widthCounter][heightCounter] == color);
 				
 			}
 		}

@@ -1,4 +1,4 @@
-package environment.logic.entities;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import environment.graphics.objects.GraphicalObject;
 import environment.graphics.objects.Rectangle;
+import environment.logic.entities.Entity;
 
 public class TestEntity {
 
