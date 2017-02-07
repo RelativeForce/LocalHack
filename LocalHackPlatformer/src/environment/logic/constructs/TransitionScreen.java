@@ -40,7 +40,7 @@ public class TransitionScreen {
 		isFullScreen = false;
 		height = 0;
 		this.color = color;
-		screen = Entity.Rectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
+		screen = Entity.newRectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
 		isActive = false;
 		willIncrement = true;
 
@@ -69,7 +69,7 @@ public class TransitionScreen {
 		eD[3] = height;
 		eD[4] = color;
 
-		screen = Entity.Rectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
+		screen = Entity.newRectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
 
 	}
 
@@ -89,7 +89,7 @@ public class TransitionScreen {
 		}
 		
 		height -= Constants.TRANSITION_SCREEN_STEP;
-		screen = Entity.Rectangle(0, Constants.WINDOW_HEIGHT - height, Constants.WINDOW_WIDTH, height, color);
+		screen = Entity.newRectangle(0, Constants.WINDOW_HEIGHT - height, Constants.WINDOW_WIDTH, height, color);
 
 	}
 
@@ -111,7 +111,7 @@ public class TransitionScreen {
 	public void setColor(Integer color) {
 		
 		this.color = color;
-		screen = Entity.Rectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
+		screen = Entity.newRectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
 
 	}
 }

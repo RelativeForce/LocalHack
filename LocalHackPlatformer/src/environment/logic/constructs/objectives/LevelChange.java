@@ -3,17 +3,19 @@ package environment.logic.constructs.objectives;
 import java.awt.Color;
 
 import environment.Main;
+import environment.logic.Level;
+import environment.logic.constructs.Construct;
 import environment.logic.entities.Entity;
+import environment.logic.entities.Sprite;
 
 /**
  * When this object is intercepted by the player, the game will change level.
  * @author Joshua_Eddy
  *
  */
-public class LevelChange implements Objective{
+public class LevelChange extends Construct implements Objective{
 	
 	private int levelLink;
-	private Entity entity;
 	
 
 	/**
@@ -21,9 +23,9 @@ public class LevelChange implements Objective{
 	 * @param door The door that will change the level when intercepted by the player.
 	 * @param levelLink The level that this door links to.
 	 */
-	public LevelChange(Entity door, int levelLink){
+	public LevelChange(int x, int y, Entity door, int levelLink){
+		super(door.getX(), door.getY(), new Sprite(door, door.getX(), door.getY()));
 		this.levelLink = levelLink;
-		entity = door;
 	}
 	
 	/**
@@ -35,16 +37,11 @@ public class LevelChange implements Objective{
 	}
 	
 	@Override
-	public Entity getEntity(){
-		return entity;
-	}
-	
-	@Override
 	public void action() {
 		
 		Main.transitionScreen.setColor(Color.CYAN.getRGB());
 		Main.transitionScreen.isActive = true;
-		Main.levelNumber = levelLink;
+		Level.currentLevel = levelLink;
 		
 	}
 
