@@ -1,4 +1,4 @@
-package environment.logic.constructs;
+package environment.logic.constructs.players;
 
 import java.awt.Color;
 import java.io.File;
@@ -6,26 +6,23 @@ import environment.Constants;
 import environment.Main;
 import environment.logic.Level;
 import environment.logic.Point;
+import environment.logic.constructs.Construct;
 import environment.logic.constructs.objectives.Objective;
 import environment.logic.entities.Entity;
 import environment.logic.entities.Sprite;
 
 /**
- * Contains all the environment.logic for the Player.
+ * A default player.
  * 
  * @author Joshua_Eddy
  */
-public class Player extends Construct {
+public class DefaultPlayer extends Construct implements Player {
 
 	private double ySpeed;
 	private int xSpeed;
 	private int movesMade;
-
-	/**
-	 * The player's state.
-	 */
-	public boolean isDead;
-
+	private boolean isDead;
+	
 	/**
 	 * Constructs a new Player object.
 	 * 
@@ -38,7 +35,7 @@ public class Player extends Construct {
 	 * @param height
 	 *            The height of the Player Entity.
 	 */
-	public Player(int x, int y, int width, int height) {
+	public DefaultPlayer(int x, int y, int width, int height) {
 
 		super(x, y, new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.PLAYER_FILENAME,
 				16, 32, x, y));
@@ -50,9 +47,7 @@ public class Player extends Construct {
 
 	}
 
-	/**
-	 * Simulates the effects of gravity on the Player.
-	 */
+	@Override
 	public void gravity() {
 
 		int x = getX();
@@ -72,14 +67,6 @@ public class Player extends Construct {
 
 	}
 
-	/**
-	 * Moves the player a specified X distance.
-	 * 
-	 * @param changeInX
-	 *            The change in X coordinate for the Player Entity.
-	 * @param changeInY
-	 *            Unused
-	 */
 	@Override
 	public void move(int changeInX, int changeInY) {
 
@@ -119,9 +106,7 @@ public class Player extends Construct {
 		}
 	}
 
-	/**
-	 * Simulates the player jumping.
-	 */
+	@Override
 	public void jump() {
 
 		int x = getX();
@@ -135,9 +120,7 @@ public class Player extends Construct {
 
 	}
 
-	/**
-	 * Checks if the player has achieved death criteria.
-	 */
+	@Override
 	public void checkForDeath() {
 
 		int x = getX();
@@ -162,11 +145,8 @@ public class Player extends Construct {
 
 	}
 
-	/**
-	 * Checks if the player has intercepted an objective and if so, performs
-	 * that objectives action.
-	 */
-	public void checkObjectves() {
+	@Override
+	public void checkObjectives() {
 
 		int x = getX();
 		int y = getY();
@@ -180,13 +160,16 @@ public class Player extends Construct {
 		}
 	}
 
-	/**
-	 * Retrieves the Entity assigned to the Player.
-	 * 
-	 * @return The Entity assigned to the Player.
-	 */
+	@Override
 	public Entity getEntity() {
 		return getSprite().getEntity();
 	}
+
+	@Override
+	public boolean isAlive() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

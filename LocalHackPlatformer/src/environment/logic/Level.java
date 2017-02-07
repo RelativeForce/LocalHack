@@ -2,7 +2,6 @@ package environment.logic;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import environment.Constants;
 import environment.logic.constructs.Construct;
 import environment.logic.constructs.enemies.Enemy;
@@ -52,7 +51,6 @@ public class Level {
 	public Level() {
 
 		constructs = new ArrayList<Construct>();
-		StartX = 0;
 		StartPosition = Constants.DEFAULT_POSITION;
 		loadLevel();
 
@@ -106,38 +104,37 @@ public class Level {
 
 	public void loadLevel() {
 
+		constructs.clear();
+		StartX = 0;
 		File currentDirectory = new File(System.getProperty("user.dir"));
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
 		levelloader.getLevelDetails(currentLevel);
 
 		constructs.addAll(levelloader.getComponents(currentLevel));
-		constructs.addAll(levelloader.getEnemies(currentLevel));
 		constructs.addAll(levelloader.getObjectives(currentLevel));
-
+		constructs.addAll(levelloader.getEnemies(currentLevel));
 	}
 
 	/**
-	 * Retrieves the element from a collection of type <code>Entity</code> that
-	 * a specified <code>Entity</code> will collide with on its path to a final
-	 * position.
-	 * 
-	 * If entity does not collide with any elements in entities the function
-	 * will return </code>null</code>.
-	 * 
+	 * Checks if a specified <code>Construct</code> has collided with another
+	 * <code>Construct</code> in the level of type
+	 * <code>Terrain</code>. If the <code>Construct</code> does not collide with
+	 * any elements of the terrain the function will return </code>null</code>.
 	 * Otherwise the function will return the <strong>first</strong> element in
-	 * the collection that the specified <code>Entity</code> collides with.
+	 * the terrain that the specified <code>Construct</code> collides with.
 	 * 
-	 * @param entity
-	 *            A <code>Entity</code> that will collide with an element from
-	 *            entities .
+	 * @param otherConstruct
+	 *            A <code>Construct</code> that may collide with an element of
+	 *            the terrain.
 	 * @param finalPosition
 	 *            The <code>Point</code> that denotes the final position that
-	 *            entity will have.
-	 * @param entities
-	 *            The collection of entities that entity may collide with.
-	 * @return The <strong>first</strong> element from a collection of type
-	 *         <code>Entity</code> that the specified specified
-	 *         <code>Entity</code> collided with, if any.
+	 *            <code>Construct</code> will have.
+	 * @return The <strong>first</strong> element from the terrain that the
+	 *         specified specified <code>Construct</code> collided with, if any.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.terrains.Terrain
+	 * @see environment.logic.Point
 	 */
 	public Construct getLevelCollision(Construct otherConstruct, Point finalPosition) {
 
@@ -145,14 +142,10 @@ public class Level {
 
 			if (element instanceof Terrain) {
 
-				if (!(element.equals(otherConstruct))) {
+				if (checkHit(element, otherConstruct, finalPosition)) {
 
-					if (Entity.detectHit(otherConstruct.getSprite().getEntity(), finalPosition,
-							element.getSprite().getEntity())) {
+					return element;
 
-						return element;
-
-					}
 				}
 			}
 
@@ -160,40 +153,76 @@ public class Level {
 		return null;
 	}
 
+	/**
+	 * Checks if a specified <code>Construct</code> has collided with another
+	 * <code>Construct</code> in the level of type
+	 * <code>Enemy</code>. If the <code>Construct</code> does not collide with
+	 * any of the enemies in the level the function will return </code>null</code>.
+	 * Otherwise the function will return the <strong>first</strong> enemy in
+	 * the level that the specified <code>Construct</code> collides with.
+	 * 
+	 * @param otherConstruct
+	 *            A <code>Construct</code> that may collide with a
+	 *            <code>Enemy</code> in the level.
+	 * @param finalPosition
+	 *            The <code>Point</code> that denotes the final position that
+	 *            <code>Construct</code> will have.
+	 * @return The <strong>first</strong> element from the set of enemies in the
+	 *         level that the specified specified <code>Construct</code>
+	 *         collided with, if any.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.enemies.Enemy
+	 * @see environment.logic.Point
+	 */
 	public Construct checkForEnemyCollision(Construct otherConstruct, Point finalPosition) {
 
 		for (Construct element : constructs) {
 
 			if (element instanceof Enemy) {
 
-				if (!(element.equals(otherConstruct))) {
-					if (Entity.detectHit(otherConstruct.getSprite().getEntity(), finalPosition,
-							element.getSprite().getEntity())) {
+				if (checkHit(element, otherConstruct, finalPosition)) {
 
-						return element;
-
-					}
-
+					return element;
 				}
+
 			}
 
 		}
 		return null;
 	}
 
+	/**
+	 * Checks if a specified <code>Construct</code> has collided with another
+	 * <code>Construct</code> in the <code>Level</code> of type
+	 * <code>Objective</code>. If the <code>Construct</code> does not collide with
+	 * any of the objectives in the level the function will return </code>null</code>.
+	 * Otherwise the function will return the <strong>first</strong> enemy in
+	 * the level that the specified <code>Construct</code> collides with.
+	 * 
+	 * @param otherConstruct
+	 *            A <code>Construct</code> that may collide with a
+	 *            <code>Enemy</code> in the level.
+	 * @param finalPosition
+	 *            The <code>Point</code> that denotes the final position that
+	 *            <code>Construct</code> will have.
+	 * @return The <strong>first</strong> element from the set of enemies in the
+	 *         level that the specified specified <code>Construct</code>
+	 *         collided with, if any.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.objectives.Objective
+	 * @see environment.logic.Point
+	 */
 	public Construct checkForObjectiveCollision(Construct otherConstruct, Point finalPosition) {
 
 		for (Construct element : constructs) {
 
 			if (element instanceof Objective) {
 
-				if (!(element.equals(otherConstruct))) {
-					if (Entity.detectHit(otherConstruct.getSprite().getEntity(), finalPosition,
-							element.getSprite().getEntity())) {
+				if (checkHit(element, otherConstruct, finalPosition)) {
 
-						return element;
-
-					}
+					return element;
 
 				}
 			}
@@ -202,4 +231,17 @@ public class Level {
 		return null;
 	}
 
+	private boolean checkHit(Construct element, Construct otherConstruct, Point finalPosition) {
+
+		if (!(element.equals(otherConstruct))) {
+			if (Entity.detectHit(otherConstruct.getSprite().getEntity(), finalPosition,
+					element.getSprite().getEntity())) {
+
+				return true;
+
+			}
+
+		}
+		return false;
+	}
 }

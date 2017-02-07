@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import environment.graphics.*;
 import environment.logic.*;
 import environment.logic.constructs.Construct;
-import environment.logic.constructs.Player;
 import environment.logic.constructs.TransitionScreen;
 import environment.logic.constructs.enemies.Enemy;
+import environment.logic.constructs.players.DefaultPlayer;
+import environment.logic.constructs.players.Player;
 import environment.logic.entities.*;
 
 /**
@@ -70,7 +71,7 @@ public class Main {
 	public static void start() {
 	
 		level.loadLevel();
-		player = new Player(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
+		player = new DefaultPlayer(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
 		
 	}
 
@@ -80,7 +81,7 @@ public class Main {
 			display.handleKeys();
 			player.gravity();
 			player.checkForDeath();
-			player.checkObjectves();
+			player.checkObjectives();
 		}
 
 	}

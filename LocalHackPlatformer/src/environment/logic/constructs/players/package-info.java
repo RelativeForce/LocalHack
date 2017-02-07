@@ -1,6 +1,6 @@
 /**
  * <h3>Function:</h3>
- * Encapsulates the behaviours of an objective types the player will intercept.
+ * Encapsulates the behaviours of the different player types.
  * 
  * <h3>Super-Module:</h3> constructs
  * 
@@ -8,4 +8,4 @@
  *
  *@see environment.logic.constructs
  */
-package environment.logic.constructs.objectives;
+package environment.logic.constructs.players;

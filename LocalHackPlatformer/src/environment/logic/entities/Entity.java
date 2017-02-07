@@ -1,11 +1,6 @@
 package environment.logic.entities;
 
-import environment.Constants;
-import environment.graphics.objects.Door;
-import environment.graphics.objects.Floor;
-import environment.graphics.objects.GraphicalObject;
-import environment.graphics.objects.Rectangle;
-import environment.graphics.objects.SpriteFrame;
+import environment.graphics.objects.*;
 import environment.logic.Point;
 
 /**
@@ -22,12 +17,11 @@ public class Entity {
 
 	private GraphicalObject object;
 	private HitBox hitBox;
-	private Point position = new Point(Constants.DEFAULT_POSITION);
+	private Point position;
 
 	private Entity(int x, int y, GraphicalObject object) {
 
-		setX(x);
-		setY(y);
+		position = new Point(x, y);
 		this.object = object;
 		this.hitBox = new HitBox(object);
 
@@ -255,7 +249,7 @@ public class Entity {
 		}
 		return false;
 	}
-	
+
 	private static boolean checkX(Entity entity1, int nextX, Entity entity2) {
 
 		Integer[][] obj1XPerimeter = entity1.getHitBox().getHorizontalBoundaries();
@@ -321,6 +315,5 @@ public class Entity {
 
 		return false;
 	}
-
 
 }

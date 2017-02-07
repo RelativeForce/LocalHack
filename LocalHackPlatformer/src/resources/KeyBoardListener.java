@@ -93,7 +93,7 @@ public class KeyBoardListener implements KeyListener {
 			KeyEvent currentKey = activeKeys[i];
 			if (currentKey != null) {
 
-				if (!Main.player.isDead && !Main.transitionScreen.isActive) {
+				if (!Main.player.isAlive() && !Main.transitionScreen.isActive) {
 					if (currentKey.getKeyCode() == KeyEvent.VK_SPACE) {
 						Main.player.jump();
 
