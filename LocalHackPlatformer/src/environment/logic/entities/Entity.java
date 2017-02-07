@@ -53,13 +53,7 @@ public class Entity {
 	 */
 	public static Entity Rectangle(int x, int y, int width, int height, Integer color) {
 
-		Object[] eSD = new Object[3];
-
-		eSD[0] = width;
-		eSD[1] = height;
-		eSD[2] = color;
-
-		GraphicalObject object = new Rectangle(eSD);
+		GraphicalObject object = new Rectangle(width, height, color);
 
 		return new Entity(x, y, object);
 	}
@@ -94,16 +88,7 @@ public class Entity {
 	public static Entity Floor(int x, int y, int width, int height, Integer borderColor, int boxWidth, int boxHeight,
 			Integer boxColor) {
 
-		Object[] eSD = new Object[6];
-
-		eSD[0] = width;
-		eSD[1] = height;
-		eSD[2] = borderColor;
-		eSD[3] = boxWidth;
-		eSD[4] = boxHeight;
-		eSD[5] = boxColor;
-
-		GraphicalObject object = new Floor(eSD);
+		GraphicalObject object = new Floor(width, height, borderColor, boxWidth, boxHeight, boxColor);
 
 		return new Entity(x, y, object);
 	}
@@ -128,13 +113,7 @@ public class Entity {
 	 */
 	public static Entity Door(int x, int y, int width, int height, Integer color) {
 
-		Object[] eSD = new Object[3];
-
-		eSD[0] = width;
-		eSD[1] = height;
-		eSD[2] = color;
-
-		GraphicalObject object = new Door(eSD);
+		GraphicalObject object = new Door(width, height, color);
 
 		return new Entity(x, y, object);
 
@@ -230,7 +209,8 @@ public class Entity {
 	 * @param o
 	 *            The
 	 *            <code>Object<code> that is to be checked against <code>this</code>.
-	 * @return <code>boolean</code> of if the the object is identical to <code>this</code>.
+	 * @return <code>boolean</code> of if the the object is identical to
+	 *         <code>this</code>.
 	 * 
 	 * @see Entity
 	 */

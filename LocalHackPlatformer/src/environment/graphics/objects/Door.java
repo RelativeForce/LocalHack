@@ -18,21 +18,20 @@ public class Door extends GraphicalObject {
 
 	/**
 	 * Constructs a new <code>Door</code> graphical object.
-	 * @param details <code>Object[]<code> which is indexed as follows: </br>
-	 * 0. <code>int</code> width of the Door in pixels.</br>
-	 * 1. <code>int</code> height of the Door in pixels.</br>
-	 * 2. <code>Integer</code> colour of the Door.</br>
-	 * @see GraphicalObject
+	 * @param width <code>int</code> width of the Door in pixels.
+	 * @param height <code>int</code> height of the Door in pixels.
+	 * @param color <code>Integer</code> colour of the Door.
 	 * 
+	 * @see GraphicalObject
 	 */
-	public Door(Object[] details) {
+	public Door(int width, int height, Integer color) {
 
-		pixels = new Integer[(int)details[0]][(int)details[1]];
-		width = (int)details[0];
-		height = (int)details[1];
+		this.pixels = new Integer[width][height];
+		this.width = width;
+		this.height = height;
 
 		addBackground();
-		addDoor((Integer)details[2]);
+		addDoor(color);
 		addDoorHandle((3 * width) / 4, height / 2);
 
 	}

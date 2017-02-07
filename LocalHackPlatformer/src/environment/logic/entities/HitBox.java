@@ -33,10 +33,11 @@ public class HitBox {
 	 */
 	public static boolean detectHit(Entity entity1, Point finalPosition, Entity entity2) {
 
-		if (checkX(entity1, finalPosition.x, entity2) && checkY(entity1, finalPosition.y, entity2)) {
-			return true;
+		if (!entity1.equals(entity2)) {
+			if (checkX(entity1, finalPosition.x, entity2) && checkY(entity1, finalPosition.y, entity2)) {
+				return true;
+			}
 		}
-
 		return false;
 	}
 
@@ -67,7 +68,7 @@ public class HitBox {
 
 		for (Entity element : entities) {
 
-			if (!element.equals(entity) && detectHit(entity, finalPosition, element)) {
+			if (detectHit(entity, finalPosition, element)) {
 
 				return element;
 

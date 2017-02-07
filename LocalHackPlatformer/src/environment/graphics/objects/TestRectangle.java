@@ -12,12 +12,7 @@ public class TestRectangle {
 	@Before
 	public void setup(){
 		
-		Object[] details = new Object[4];
-		details[0] = 2;
-		details[1] = 2;
-		details[2] = color;
-
-		rectangle  = new Rectangle(details);
+	rectangle  = new Rectangle(2,2,color);
 	}
 	
 	

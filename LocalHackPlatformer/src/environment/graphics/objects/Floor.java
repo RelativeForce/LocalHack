@@ -17,24 +17,23 @@ import java.awt.Color;
 public class Floor extends GraphicalObject {
 
 	/**
-	 * Constructs a new <code>Floor</code> graphical object.
-	 * @param details <code>Object[]<code> which is indexed as follows: </br>
-	 *            0. <code>int</code> width of the floor in pixels.</br>
-	 *            1. <code>int</code> height of the floor in pixels.</br>
-	 *            2. <code>Integer</code> colour of the border surrounding the boxes inside the floor.</br>
-	 *            3. <code>int</code> width of the boxes inside the floor. The '<i>width of box</i>' % '<i>width of floor</i>' <strong>must</strong> equal zero.</br>
-	 *            4. <code>int</code> height of the boxes inside the floor. The '<i>height of box</i>' % '<i>height of floor</i>' <strong>must</strong> equal zero.</br>
-	 *            5. <code>Integer</code> colour of the boxes inside the floor.
+	 * Constructs a new <code>Floor</code> graphi
+	 * @param width <code>int</code> width of the floor in pixels.
+	 * @param height <code>int</code> height of the floor in pixels.
+	 * @param color <code>Integer</code> colour of the border surrounding the boxes inside the floor.
+	 * @param boxWidth <code>int</code> width of the boxes inside the floor. The '<i>width of box</i>' % '<i>width of floor</i>' <strong>must</strong> equal zero.
+	 * @param boxHeight <code>int</code> height of the boxes inside the floor. The '<i>height of box</i>' % '<i>height of floor</i>' <strong>must</strong> equal zero.
+	 * @param boxColor <code>Integer</code> colour of the boxes inside the floor.
 	 * @see GraphicalObject
 	 */
-	public Floor(Object[] details) {
+	public Floor(int width, int height, Integer color, int boxWidth, int boxHeight, Integer boxColor) {
 
-		pixels = new Integer[(int) details[0]][(int) details[1]];
-		width = (int) details[0];
-		height = (int) details[1];
+		this.pixels = new Integer[width][height];
+		this.width = width;
+		this.height = height;
 
 		addBackground();
-		addBoxes((int) details[3], (int) details[4], (Integer) details[5]);
+		addBoxes(boxWidth, boxHeight, boxColor);
 
 	}
 
