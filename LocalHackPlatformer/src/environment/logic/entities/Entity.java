@@ -224,4 +224,31 @@ public class Entity {
 		return hitBox;
 	}
 
+	/**
+	 * Checks if another object is a duplicate of <code>this</code>.
+	 * 
+	 * @param o
+	 *            The
+	 *            <code>Object<code> that is to be checked against <code>this</code>.
+	 * @return <code>boolean</code> of if the the object is identical to <code>this</code>.
+	 * 
+	 * @see Entity
+	 */
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof Entity) {
+
+			Entity otherEntity = (Entity) o;
+
+			if (otherEntity.getX() == this.getX() && otherEntity.getY() == this.getY()
+					&& otherEntity.hitBox.equals(this.hitBox) && otherEntity.object.equals(this.object)) {
+				return true;
+			}
+
+		}
+
+		return false;
+	}
+
 }

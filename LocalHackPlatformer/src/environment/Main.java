@@ -32,11 +32,6 @@ public class Main {
 	 * Stores the current DeathScreen object.
 	 */
 	public static TransitionScreen transitionScreen;
-	
-	/**
-	 * The level that will be loaded upon Screen transition.
-	 */
-	public static int levelNumber;
 
 	// Private
 	private static ThreadHandler threadHandler;
@@ -58,7 +53,7 @@ public class Main {
 			display.render(screen);
 		}
 
-		levelNumber = 1;
+		level = new Level();
 		transitionScreen = new TransitionScreen(Color.RED.getRGB());
 		start();
 
@@ -74,7 +69,7 @@ public class Main {
 	 */
 	public static void start() {
 	
-		level = new Level(levelNumber);
+		level.loadLevel();
 		player = new Player(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
 		
 	}

@@ -5,7 +5,8 @@ import environment.logic.Point;
 
 /**
  * Denotes the outer boundaries of the region of pixels given by a
- * <code>GraphicalObject<code>. This class also handles the implementation for detecting a collision between two entities.
+ * <code>GraphicalObject<code>. This class also handles the implementation for
+ * detecting a collision between two entities.
  * 
  * @author Joshua_Eddy
  *
@@ -66,7 +67,7 @@ public class HitBox {
 
 		for (Entity element : entities) {
 
-			if (detectHit(entity, finalPosition, element)) {
+			if (!element.equals(entity) && detectHit(entity, finalPosition, element)) {
 
 				return element;
 
@@ -278,6 +279,57 @@ public class HitBox {
 			}
 		}
 
+	}
+
+	/**
+	 * @see HitBox
+	 * @see Entity
+	 */
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof HitBox) {
+
+			HitBox otherHitBox = (HitBox) o;
+			if (otherHitBox.horizontalBoundaries.length == this.horizontalBoundaries.length
+					&& otherHitBox.verticalBoundaries.length == this.verticalBoundaries.length) {
+
+				if (checkEquality(otherHitBox.horizontalBoundaries, this.horizontalBoundaries)
+						&& checkEquality(otherHitBox.verticalBoundaries, this.verticalBoundaries)) {
+					return true;
+				}
+
+			}
+
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if two HitBox parameter arrays are identical.
+	 * 
+	 * @param array1
+	 *            <code>int[][]</code>
+	 * @param array2
+	 *            <code>int[][]</code>
+	 * @return <code>boolean</code>
+	 */
+	private boolean checkEquality(Integer[][] array1, Integer[][] array2) {
+
+		for (int d2 = 0; d2 < 2; d2++) {
+
+			for (int d1 = 0; d1 < array1.length; d1++) {
+
+				if (array1[d1][d2] != array2[d1][d2]) {
+					return false;
+				}
+
+			}
+
+		}
+
+		return true;
 	}
 
 }

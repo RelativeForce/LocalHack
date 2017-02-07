@@ -3,6 +3,7 @@ package environment.logic.constructs.objectives;
 import java.awt.Color;
 
 import environment.Main;
+import environment.logic.Level;
 import environment.logic.constructs.Construct;
 import environment.logic.entities.Entity;
 import environment.logic.entities.Sprite;
@@ -40,7 +41,7 @@ public class LevelChange extends Construct implements Objective{
 		
 		Main.transitionScreen.setColor(Color.CYAN.getRGB());
 		Main.transitionScreen.isActive = true;
-		Main.levelNumber = levelLink;
+		Level.currentLevel = levelLink;
 		
 	}
 

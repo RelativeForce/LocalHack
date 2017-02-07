@@ -30,18 +30,23 @@ public class Level {
 	 */
 	public static Point StartPosition;
 	
-	private ArrayList<Construct> constructs;
+	/**
+	 * Stores the current level number.
+	 */
+	public static int currentLevel = 1;
+	
+	private ArrayList<Construct> constructs;	
 	
 	/**
 	 * Constructs a new Level object.
 	 * @param levelNumber The number of the level that is to be loaded from computer memory.
 	 */
-	public Level(int levelNumber){
+	public Level(){
 		
 		constructs = new ArrayList<Construct>();
 		StartX = 0;
 		StartPosition = Constants.DEFAULT_POSITION;
-		loadLevel(levelNumber);
+		loadLevel();
 		
 	}
 	
@@ -56,6 +61,11 @@ public class Level {
 		}
 		StartX += changeInX;
 		
+	}
+	
+	public void changeLevel(int newLevelNumber){
+		currentLevel = newLevelNumber;
+		loadLevel();
 	}
 	
 	/**
@@ -81,15 +91,15 @@ public class Level {
 		return constructs;
 	}
 	
-	private void loadLevel(int levelNumber) {
+	public void loadLevel() {
 
 		File currentDirectory = new File(System.getProperty("user.dir"));
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
-		levelloader.getLevelDetails(levelNumber);
+		levelloader.getLevelDetails(currentLevel);
 		
-		constructs.addAll(levelloader.getComponents(levelNumber));
-		constructs.addAll(levelloader.getEnemies(levelNumber));
-		constructs.addAll(levelloader.getObjectives(levelNumber));
+		constructs.addAll(levelloader.getComponents(currentLevel));
+		constructs.addAll(levelloader.getEnemies(currentLevel));
+		constructs.addAll(levelloader.getObjectives(currentLevel));
 
 	}
 	
