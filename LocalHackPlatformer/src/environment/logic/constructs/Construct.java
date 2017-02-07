@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import environment.logic.entities.Entity;
 import environment.logic.entities.Sprite;
 
-public class Construct {
+public abstract class Construct {
 
 	private int x;
 	private int y;
@@ -47,18 +47,38 @@ public class Construct {
 	}
 
 	public static <E> Entity[] filterConstructs(E type, ArrayList<Construct> collection) {
-		
-		ArrayList<Entity> entities =  new ArrayList<Entity>();
-		
-		if(type instanceof Construct){
-			for(Construct con : collection){
-				if(!type.getClass().equals(con.getClass())){
+
+		ArrayList<Entity> entities = new ArrayList<Entity>();
+
+		if (type instanceof Construct) {
+			for (Construct con : collection) {
+				if (!type.getClass().equals(con.getClass())) {
 					entities.add(con.getSprite().getEntity());
 				}
-			}			
+			}
 		}
-		
+
 		return entities.toArray(new Entity[entities.size()]);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof Construct) {
+
+			Construct otherConstruct = (Construct) o;
+			
+			if(otherConstruct.x == this.x && otherConstruct.y == this.y){
+				
+				if(otherConstruct.sprite.equals(this.sprite)){
+					return true;
+				}
+				
+			}
+
+		}
+
+		return false;
 	}
 
 }

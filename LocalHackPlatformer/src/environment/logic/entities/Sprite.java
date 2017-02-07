@@ -57,13 +57,12 @@ public class Sprite {
 
 		for (SpriteFrame frameSprite : SpriteSheetReader.getSprites(path, width, height)) {
 
-			frames.add(Entity.SpriteFrame(x, y, frameSprite.getPixels()));
+			frames.add(Entity.newSpriteFrame(x, y, frameSprite.getPixels()));
 
 		}
 
 		initaliseInvertedSpriteFrames();
 
-		
 	}
 
 	/**
@@ -128,7 +127,7 @@ public class Sprite {
 		inverted = false;
 
 		for (Entity frame : frames) {
-			invertedFrames.add(Entity.SpriteFrame(x, y, frame.getGraphicalObject().getInvertedPixels()));
+			invertedFrames.add(Entity.newSpriteFrame(x, y, frame.getGraphicalObject().getInvertedPixels()));
 		}
 
 	}
@@ -166,6 +165,38 @@ public class Sprite {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof Sprite) {
+
+			Sprite otherSprite = (Sprite) o;
+
+			if (otherSprite.x == this.x && otherSprite.y == this.y) {
+
+				if (otherSprite.frames.size() == this.frames.size()) {
+
+					for (int index = 0; index < this.frames.size(); index++) {
+
+						if (!otherSprite.frames.get(index).equals(this.frames.get(index))) {
+
+							return false;
+
+						}
+
+					}
+
+					return true;
+
+				}
+
+			}
+
+		}
+
+		return false;
 	}
 
 }

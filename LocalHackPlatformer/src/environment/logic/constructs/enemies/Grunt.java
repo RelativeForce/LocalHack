@@ -1,8 +1,6 @@
 package environment.logic.constructs.enemies;
 
 import java.io.File;
-import java.util.ArrayList;
-
 import environment.Constants;
 import environment.Main;
 import environment.logic.Direction;
@@ -10,7 +8,6 @@ import environment.logic.Level;
 import environment.logic.Point;
 import environment.logic.constructs.Construct;
 import environment.logic.entities.Entity;
-import environment.logic.entities.HitBox;
 import environment.logic.entities.Sprite;
 
 /**
@@ -61,18 +58,18 @@ public class Grunt extends Construct implements Enemy {
 		if (direction == Direction.RIGHT) {
 
 			nextX = x + xSpeed;
-			checkSupport = Entity.Rectangle(nextX + width, y + 5, width, height, 0xffff0000);
+			checkSupport = Entity.newRectangle(nextX + width, y + 5, width, height, 0xffff0000);
 
 		} else {
 
 			nextX = x - xSpeed;
-			checkSupport = Entity.Rectangle(nextX - width, y + 5, width, height, 0xffff0000);
+			checkSupport = Entity.newRectangle(nextX - width, y + 5, width, height, 0xffff0000);
 
 		}
 
 		boolean hitRightBoundry = nextX + width >= Level.StartX + Level.Length;
 		boolean hitLeftBoundry = nextX <= Level.StartX;
-		boolean isSupported = HitBox.detectHit(checkSupport, new Point(checkSupport.getX(), checkSupport.getY()),
+		boolean isSupported = Entity.detectHit(checkSupport, new Point(checkSupport.getX(), checkSupport.getY()),
 				currentSupport);
 
 		if (rebound(nextX, y) || hitRightBoundry || hitLeftBoundry || !isSupported) {
@@ -83,7 +80,7 @@ public class Grunt extends Construct implements Enemy {
 			setX(x + xSpeed);
 			getSprite().invert();
 		} else {
-			setX(y - xSpeed);
+			setX(x - xSpeed);
 			getSprite().revert();
 		}
 
@@ -97,30 +94,13 @@ public class Grunt extends Construct implements Enemy {
 
 	private void getSupport(int x, int y) {
 
-		currentSupport = HitBox.getObstruction(getSprite().getEntity(), new Point(x, y + 5),
-				toArray(Main.level.getConstructs()));
+		currentSupport = Main.level.getLevelCollision(this, new Point(x, y + 5)).getSprite().getEntity();
 
 	}
 
 	private boolean rebound(int nextX, int y) {
-		
-		ArrayList<Construct> constructs = new ArrayList<Construct>();
-		constructs.addAll(Main.level.getConstructs());
-		constructs.remove(this);
 
-		return (HitBox.getObstruction(getSprite().getEntity(), new Point(nextX, y),
-				toArray(constructs))) != null;
-	}
-
-	private Entity[] toArray(ArrayList<Construct> list) {
-
-		Entity[] entities = new Entity[list.size()];
-
-		for (int i = 0; i < list.size(); i++) {
-			entities[i] = list.get(i).getSprite().getEntity();
-		}
-
-		return entities;
+		return (Main.level.getLevelCollision(this, new Point(nextX, y))) != null;
 	}
 
 }

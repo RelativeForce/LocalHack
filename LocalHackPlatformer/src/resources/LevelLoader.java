@@ -6,6 +6,7 @@ import environment.logic.Point;
 import environment.logic.constructs.Construct;
 import environment.logic.constructs.enemies.Grunt;
 import environment.logic.constructs.objectives.LevelChange;
+import environment.logic.constructs.terrains.Normal;
 import environment.logic.entities.Entity;
 import environment.logic.entities.Sprite;
 
@@ -186,7 +187,7 @@ public class LevelLoader {
 		Color color = getColor(details[firstDetail + 4]);
 		int levelLink = Integer.parseInt(details[firstDetail + 5]);
 
-		Entity door = Entity.Door(x, y, width, height, color.getRGB());
+		Entity door = Entity.newDoor(x, y, width, height, color.getRGB());
 		LevelChange levelChange = new LevelChange(x, y, door, levelLink);
 
 		return levelChange;
@@ -210,7 +211,7 @@ public class LevelLoader {
 		int height = Integer.parseInt(details[firstDetail + 3]);
 		Color color = getColor(details[firstDetail + 4]);
 
-		Construct rect = new Construct(x, y, new Sprite(Entity.Rectangle(x, y, width, height, color.getRGB()), x, y));
+		Construct rect = new Normal(x, y, new Sprite(Entity.newRectangle(x, y, width, height, color.getRGB()), x, y));
 		return rect;
 	}
 
@@ -225,8 +226,8 @@ public class LevelLoader {
 		int boxWidth = Integer.parseInt(details[firstDetail + 6]);
 		int boxHeight = Integer.parseInt(details[firstDetail + 7]);
 
-		Construct floor = new Construct(x, y, new Sprite(
-				Entity.Floor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB()), x, y));
+		Construct floor = new Normal(x, y, new Sprite(
+				Entity.newFloor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB()), x, y));
 		return floor;
 	}
 

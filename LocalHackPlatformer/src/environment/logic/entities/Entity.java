@@ -51,7 +51,7 @@ public class Entity {
 	 *         will return <code>null</code>. Otherwise a <code>Entity</code> of
 	 *         type Rectangle with the specified details.
 	 */
-	public static Entity Rectangle(int x, int y, int width, int height, Integer color) {
+	public static Entity newRectangle(int x, int y, int width, int height, Integer color) {
 
 		GraphicalObject object = new Rectangle(width, height, color);
 
@@ -85,7 +85,7 @@ public class Entity {
 	 *         will return <code>null</code>. Otherwise a <code>Entity</code> of
 	 *         type Floor with the specified details.
 	 */
-	public static Entity Floor(int x, int y, int width, int height, Integer borderColor, int boxWidth, int boxHeight,
+	public static Entity newFloor(int x, int y, int width, int height, Integer borderColor, int boxWidth, int boxHeight,
 			Integer boxColor) {
 
 		GraphicalObject object = new Floor(width, height, borderColor, boxWidth, boxHeight, boxColor);
@@ -111,7 +111,7 @@ public class Entity {
 	 *         will return <code>null</code>. Otherwise a <code>Entity</code> of
 	 *         type Door with the specified details.
 	 */
-	public static Entity Door(int x, int y, int width, int height, Integer color) {
+	public static Entity newDoor(int x, int y, int width, int height, Integer color) {
 
 		GraphicalObject object = new Door(width, height, color);
 
@@ -134,7 +134,7 @@ public class Entity {
 	 *         will return <code>null</code>. Otherwise a <code>Entity</code> of
 	 *         type SpriteFrame with the specified details.
 	 */
-	public static Entity SpriteFrame(int x, int y, Integer[][] pixels) {
+	public static Entity newSpriteFrame(int x, int y, Integer[][] pixels) {
 
 		GraphicalObject object = new SpriteFrame(pixels);
 
@@ -230,5 +230,97 @@ public class Entity {
 
 		return false;
 	}
+
+	/**
+	 * Checks if a specified <code>Entity</code> will collide with another
+	 * specified <code>Entity</code> before it reaches a specified
+	 * <code>Point</code> from the <strong>first</strong> <code>Entity</code>.
+	 * 
+	 * @param entity1
+	 *            The first <code>Entity</code>.
+	 * @param finalPosition
+	 *            The <code>Point</code> that denotes the final position of the
+	 *            first <code>Entity</code>.
+	 * @param entity2
+	 *            The second <code>Entity</code>.
+	 * @return <code>true</code> if a collision is detected between the two
+	 *         specified <code>Entity</code>s and <code>false</code> if not.
+	 */
+	public static boolean detectHit(Entity entity1, Point finalPosition, Entity entity2) {
+
+		if (!entity1.equals(entity2)) {
+			if (checkX(entity1, finalPosition.x, entity2) && checkY(entity1, finalPosition.y, entity2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static boolean checkX(Entity entity1, int nextX, Entity entity2) {
+
+		Integer[][] obj1XPerimeter = entity1.getHitBox().getHorizontalBoundaries();
+		Integer[][] obj2XPerimeter = entity2.getHitBox().getHorizontalBoundaries();
+
+		int initalX;
+		int finalX;
+
+		if (entity1.getX() > nextX) {
+			initalX = nextX;
+			finalX = entity1.getX();
+		} else {
+			initalX = entity1.getX();
+			finalX = nextX;
+		}
+
+		int obj2x = entity2.getX();
+
+		for (int x = initalX; x <= finalX; x++) {
+			for (int rowObj1 = 0; rowObj1 < entity1.getGraphicalObject().getHeight(); rowObj1++) {
+				for (int rowObj2 = 0; rowObj2 < entity2.getGraphicalObject().getHeight(); rowObj2++) {
+					boolean condition1 = (x + obj1XPerimeter[rowObj1][0]) <= (obj2x + obj2XPerimeter[rowObj2][1]);
+					boolean condition2 = (x + obj1XPerimeter[rowObj1][1]) >= (obj2x + obj2XPerimeter[rowObj2][0]);
+					if (condition1 && condition2) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean checkY(Entity entity1, int nextY, Entity entity2) {
+
+		Integer[][] obj1YPerimeter = entity1.getHitBox().getVerticalBoundaries();
+		Integer[][] obj2YPerimeter = entity2.getHitBox().getVerticalBoundaries();
+
+		int initalY;
+		int finalY;
+		if (entity1.getY() > nextY) {
+			initalY = nextY;
+			finalY = entity1.getY();
+		} else {
+			initalY = entity1.getY();
+			finalY = nextY;
+		}
+
+		int obj2Y = entity2.getY();
+
+		for (int y = initalY; y <= finalY; y++) {
+			for (int colObj1 = 0; colObj1 < entity1.getGraphicalObject().getWidth(); colObj1++) {
+				for (int colObj2 = 0; colObj2 < entity2.getGraphicalObject().getWidth(); colObj2++) {
+					boolean condition1 = (y + obj1YPerimeter[colObj1][0]) <= (obj2Y + obj2YPerimeter[colObj2][1]);
+					boolean condition2 = (y + obj1YPerimeter[colObj1][1]) >= (obj2Y + obj2YPerimeter[colObj2][0]);
+
+					if (condition1 && condition2) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 
 }

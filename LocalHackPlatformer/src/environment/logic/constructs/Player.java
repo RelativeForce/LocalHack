@@ -2,15 +2,12 @@ package environment.logic.constructs;
 
 import java.awt.Color;
 import java.io.File;
-import java.util.ArrayList;
 import environment.Constants;
 import environment.Main;
 import environment.logic.Level;
 import environment.logic.Point;
-import environment.logic.constructs.enemies.Enemy;
 import environment.logic.constructs.objectives.Objective;
 import environment.logic.entities.Entity;
-import environment.logic.entities.HitBox;
 import environment.logic.entities.Sprite;
 
 /**
@@ -65,9 +62,9 @@ public class Player extends Construct {
 		int nextX = x + xSpeed;
 		int nextY = y + (int) ySpeed;
 
-		if (!checkCollision(nextX, nextY, Main.level.getConstructs())) {
-			setY(y + (int) ySpeed);
-			setX(x + xSpeed);
+		if (Main.level.getLevelCollision(this, new Point(nextX, nextY)) == null) {
+			setY(nextY);
+			setX(nextX);
 		} else {
 			ySpeed = 0;
 			xSpeed = 0;
@@ -96,8 +93,8 @@ public class Player extends Construct {
 		}
 
 		int nextX = x + changeInX;
-
-		if (!checkCollision(nextX, y, Main.level.getConstructs()) && nextX >= 0
+		
+		if (Main.level.getLevelCollision(this, new Point(nextX, y)) == null && nextX >= 0
 				&& nextX <= Constants.WINDOW_WIDTH - getSprite().getEntity().getGraphicalObject().getWidth()) {
 
 			if (nextX < Constants.WINDOW_PADDING && Level.StartX < 0) {
@@ -131,7 +128,8 @@ public class Player extends Construct {
 		int y = getY();
 
 		gravity();
-		if (ySpeed == 0 && checkCollision(x, y + 2, Main.level.getConstructs())) {
+		
+		if (ySpeed == 0 && Main.level.getLevelCollision(this, new Point(x, y+1)) != null) {
 			ySpeed = -Constants.JUMP_HEIGHT;
 		}
 
@@ -150,8 +148,8 @@ public class Player extends Construct {
 		if (y > Constants.WINDOW_HEIGHT) {
 			isDead = true;
 		}
-
-		if (checkEnemyCollision(x + xSpeed, y + (int) ySpeed, Main.level.getConstructs())) {
+		
+		if (Main.level.checkForEnemyCollision(this, new Point(x + xSpeed, y + (int) ySpeed)) != null) {
 
 			isDead = true;
 
@@ -175,7 +173,8 @@ public class Player extends Construct {
 
 		ySpeed = ySpeed + Constants.GRAVITY;
 
-		Construct objective = checkObjectiveCollision(x + xSpeed, y + (int) ySpeed, Main.level.getConstructs());
+		Construct objective = Main.level.checkForObjectiveCollision(this, new Point(x + xSpeed, y + (int) ySpeed));
+		
 		if (!isDead && objective != null && objective instanceof Objective) {
 			((Objective) objective).action();
 		}
@@ -189,48 +188,5 @@ public class Player extends Construct {
 	public Entity getEntity() {
 		return getSprite().getEntity();
 	}
-
-	private boolean checkCollision(int nextX, int nextY, ArrayList<Construct> list) {
-
-		return HitBox.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(list)) != null;
-
-	}
-
-	private boolean checkEnemyCollision(int nextX, int nextY, ArrayList<Construct> list) {
-
-		ArrayList<Construct> array = new ArrayList<Construct>();
-
-		for (int i = 0; i < list.size(); ++i) {
-			if (list.get(i) instanceof Enemy) {
-				array.add(list.get(i));
-			}
-		}
-
-		return HitBox.getObstruction(getSprite().getEntity(), new Point(nextX, nextY), toArray(array)) != null;
-	}
-
-	private Construct checkObjectiveCollision(int nextX, int nextY, ArrayList<Construct> list) {
-
-		for (Construct objective : list) {
-			if (HitBox.detectHit(getSprite().getEntity(), new Point(nextX, nextY),
-					objective.getSprite().getEntity())) {
-				return objective;
-			}
-		}
-		return null;
-
-	}
-
-	private Entity[] toArray(ArrayList<Construct> list) {
-
-		Entity[] entities = new Entity[list.size()];
-
-		for (int i = 0; i < list.size(); i++) {
-			entities[i] = list.get(i).getSprite().getEntity();
-		}
-
-		return entities;
-	}
-	
 
 }
