@@ -7,6 +7,7 @@ import environment.logic.constructs.Construct;
 public class Section {
 
 	private final static int maxWidth = 500;
+	private static LinkedList<Construct> moved;
 	// private final static int maxHeight = 500;
 
 	private Section a;
@@ -41,13 +42,15 @@ public class Section {
 
 		// numberOfsections stores the number of sections that can be fitted
 		// into the current section.
-		int numberOfSectionsX = (int) Math.ceil(width / maxWidth);
+		
+		
+		boolean hasChildren = width > maxWidth;
 
 		// int numberOfSectionsY = (int) Math.ceil(height / maxHeight);
 
 		// if the number of sections is greater than 1 then the current section
 		// is NOT a leaf node on the section tree.
-		if (numberOfSectionsX > 1) {
+		if (hasChildren) {
 
 			// As this section is not a leaf node of the section tree it does
 			// not have any constructs inside it.
@@ -164,13 +167,13 @@ public class Section {
 
 			if (insideA) {
 				
-				childConstructs.addAll(a.getAllConstructs());
+				childConstructs.addAll(a.getSectionConstructs(con1));
 			
 			}
 
 			if (insideB) {
 
-				childConstructs.addAll(b.getAllConstructs());
+				childConstructs.addAll(b.getSectionConstructs(con1));
 			}
 			return childConstructs;
 		}
@@ -199,18 +202,29 @@ public class Section {
 		}
 
 	}
+	
+	public void move(int changeInX, int changeInY){
+		
+		moved = new LinkedList<Construct>();
+		moveSection(changeInX, changeInY);
+		
+	}
 
-	public void move(int changeInX, int changeInY) {
+	private void moveSection(int changeInX, int changeInY) {
 
 		x += changeInX;
 		y += changeInY;
 
 		if (!isLeafNode()) {
-			a.move(changeInX, changeInY);
-			b.move(changeInX, changeInY);
+			a.moveSection(changeInX, changeInY);
+			b.moveSection(changeInX, changeInY);
 		} else {
 			for (Construct con : constructs) {
-				con.move(changeInX, changeInY);
+				if(!moved.contains(con)){
+					con.move(changeInX, changeInY);
+					moved.add(con);
+				}
+				
 			}
 		}
 	}
