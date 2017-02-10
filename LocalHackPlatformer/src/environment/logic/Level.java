@@ -1,7 +1,8 @@
 package environment.logic;
 
 import java.io.File;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import environment.Constants;
 import environment.logic.constructs.Construct;
 import environment.logic.constructs.enemies.Enemy;
@@ -39,7 +40,7 @@ public class Level {
 	 */
 	public static int currentLevel = 1;
 
-	private ArrayList<Construct> constructs;
+	private Section mainSection;
 
 	/**
 	 * Constructs a new Level object.
@@ -50,7 +51,6 @@ public class Level {
 	 */
 	public Level() {
 
-		constructs = new ArrayList<Construct>();
 		StartPosition = Constants.DEFAULT_POSITION;
 		loadLevel();
 
@@ -65,9 +65,7 @@ public class Level {
 	 */
 	public void moveLevel(int changeInX) {
 
-		for (Construct construct : constructs) {
-			construct.move(changeInX, 0);
-		}
+		mainSection.move(changeInX, 0);
 		StartX += changeInX;
 
 	}
@@ -82,12 +80,12 @@ public class Level {
 	 * 
 	 * @return ArrayList of all the Entities in the Level.
 	 */
-	public ArrayList<Entity> getEntities() {
+	public LinkedList<Entity> getEntities() {
 
-		ArrayList<Entity> entities = new ArrayList<Entity>();
-
-		for (int i = 0; i < constructs.size(); i++) {
-			entities.add(constructs.get(i).getSprite().getEntity());
+		LinkedList<Entity> entities = new LinkedList<Entity>();
+		
+		for(Construct con : mainSection.getAllConstructs()){
+			entities.add(con.getSprite().getEntity());
 		}
 
 		return entities;
@@ -98,30 +96,35 @@ public class Level {
 	 * 
 	 * @return ArrayList of all the Enemy Entities in the Level.
 	 */
-	public ArrayList<Construct> getConstructs() {
-		return constructs;
+	public LinkedList<Construct> getConstructs() {
+		return mainSection.getAllConstructs();
 	}
 
 	public void loadLevel() {
 
-		constructs.clear();
 		StartX = 0;
 		File currentDirectory = new File(System.getProperty("user.dir"));
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
 		levelloader.getLevelDetails(currentLevel);
-
+		mainSection = new Section(0, 0, Length, 500);
+		
+		LinkedList<Construct> constructs = new LinkedList<Construct>();
 		constructs.addAll(levelloader.getComponents(currentLevel));
 		constructs.addAll(levelloader.getObjectives(currentLevel));
 		constructs.addAll(levelloader.getEnemies(currentLevel));
+		
+		for(Construct con : constructs){
+			mainSection.addConstruct(con);
+		}
 	}
 
 	/**
 	 * Checks if a specified <code>Construct</code> has collided with another
-	 * <code>Construct</code> in the level of type
-	 * <code>Terrain</code>. If the <code>Construct</code> does not collide with
-	 * any elements of the terrain the function will return </code>null</code>.
-	 * Otherwise the function will return the <strong>first</strong> element in
-	 * the terrain that the specified <code>Construct</code> collides with.
+	 * <code>Construct</code> in the level of type <code>Terrain</code>. If the
+	 * <code>Construct</code> does not collide with any elements of the terrain
+	 * the function will return </code>null</code>. Otherwise the function will
+	 * return the <strong>first</strong> element in the terrain that the
+	 * specified <code>Construct</code> collides with.
 	 * 
 	 * @param otherConstruct
 	 *            A <code>Construct</code> that may collide with an element of
@@ -138,7 +141,7 @@ public class Level {
 	 */
 	public Construct getLevelCollision(Construct otherConstruct, Point finalPosition) {
 
-		for (Construct element : constructs) {
+		for (Construct element : mainSection.getSectionConstructs(otherConstruct)) {
 
 			if (element instanceof Terrain) {
 
@@ -155,11 +158,11 @@ public class Level {
 
 	/**
 	 * Checks if a specified <code>Construct</code> has collided with another
-	 * <code>Construct</code> in the level of type
-	 * <code>Enemy</code>. If the <code>Construct</code> does not collide with
-	 * any of the enemies in the level the function will return </code>null</code>.
-	 * Otherwise the function will return the <strong>first</strong> enemy in
-	 * the level that the specified <code>Construct</code> collides with.
+	 * <code>Construct</code> in the level of type <code>Enemy</code>. If the
+	 * <code>Construct</code> does not collide with any of the enemies in the
+	 * level the function will return </code>null</code>. Otherwise the function
+	 * will return the <strong>first</strong> enemy in the level that the
+	 * specified <code>Construct</code> collides with.
 	 * 
 	 * @param otherConstruct
 	 *            A <code>Construct</code> that may collide with a
@@ -177,7 +180,7 @@ public class Level {
 	 */
 	public Construct checkForEnemyCollision(Construct otherConstruct, Point finalPosition) {
 
-		for (Construct element : constructs) {
+		for (Construct element : mainSection.getSectionConstructs(otherConstruct)) {
 
 			if (element instanceof Enemy) {
 
@@ -195,10 +198,11 @@ public class Level {
 	/**
 	 * Checks if a specified <code>Construct</code> has collided with another
 	 * <code>Construct</code> in the <code>Level</code> of type
-	 * <code>Objective</code>. If the <code>Construct</code> does not collide with
-	 * any of the objectives in the level the function will return </code>null</code>.
-	 * Otherwise the function will return the <strong>first</strong> enemy in
-	 * the level that the specified <code>Construct</code> collides with.
+	 * <code>Objective</code>. If the <code>Construct</code> does not collide
+	 * with any of the objectives in the level the function will return
+	 * </code>null</code>. Otherwise the function will return the
+	 * <strong>first</strong> enemy in the level that the specified
+	 * <code>Construct</code> collides with.
 	 * 
 	 * @param otherConstruct
 	 *            A <code>Construct</code> that may collide with a
@@ -216,7 +220,7 @@ public class Level {
 	 */
 	public Construct checkForObjectiveCollision(Construct otherConstruct, Point finalPosition) {
 
-		for (Construct element : constructs) {
+		for (Construct element : mainSection.getSectionConstructs(otherConstruct)) {
 
 			if (element instanceof Objective) {
 
@@ -244,4 +248,27 @@ public class Level {
 		}
 		return false;
 	}
+/*
+	private LinkedList<Construct> getSections(Construct otherConstruct, Point finalPosition){
+		
+		int intialX = otherConstruct.getX();
+		int intialY = otherConstruct.getY();
+		
+		LinkedList<Construct> sect1 = mainSection.getSectionConstructs(otherConstruct);
+		otherConstruct.setX(finalPosition.x);
+		otherConstruct.setY(finalPosition.y);
+		LinkedList<Construct> sect2 = mainSection.getSectionConstructs(otherConstruct);
+		otherConstruct.setX(intialX);
+		otherConstruct.setY(intialY);
+		
+		if(sect1.equals(sect2)){
+			return sect1;
+		}else{
+			sect1.addAll(sect2);
+			return sect1;
+		}
+		
+		
+	}
+	*/
 }
