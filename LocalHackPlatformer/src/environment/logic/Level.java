@@ -1,145 +1,274 @@
 package environment.logic;
 
 import java.io.File;
-import java.util.ArrayList;
 
+import java.util.LinkedList;
 import environment.Constants;
+import environment.logic.constructs.Construct;
 import environment.logic.constructs.enemies.Enemy;
 import environment.logic.constructs.objectives.Objective;
+import environment.logic.constructs.terrains.Terrain;
 import environment.logic.entities.Entity;
 import resources.LevelLoader;
 
 /**
  * Stores all the objects and details associated with a level.
+ * 
  * @author Joshua_Eddy
  *
  */
 public class Level {
-	
+
 	/**
 	 * Stores the maximum length of the current level.
 	 */
 	public static int Length;
-	
+
 	/**
-	 * Stores the X position of the start of the current level in relation to the left side of the screen.
+	 * Stores the X position of the start of the current level in relation to
+	 * the left side of the screen.
 	 */
 	public static int StartX;
-	
+
 	/**
 	 * Stores the position the player will start at when the level is played.
 	 */
 	public static Point StartPosition;
 
-	private ArrayList<Entity> components;
+	/**
+	 * Stores the current level number.
+	 */
+	public static int currentLevel = 1;
 
-	private ArrayList<Enemy> enemies;
-	
-	private ArrayList<Objective> objectives;
-	
+	private Section mainSection;
+
 	/**
 	 * Constructs a new Level object.
-	 * @param levelNumber The number of the level that is to be loaded from computer memory.
+	 * 
+	 * @param levelNumber
+	 *            The number of the level that is to be loaded from computer
+	 *            memory.
 	 */
-	public Level(int levelNumber){
-		
-		components = new ArrayList<Entity>();
-		enemies = new ArrayList<Enemy>();
-		objectives = new ArrayList<Objective>();
-		StartX = 0;
+	public Level() {
+
 		StartPosition = Constants.DEFAULT_POSITION;
-		loadLevel(levelNumber);
-		
+		loadLevel();
+
 	}
-	
+
 	/**
-	 * Moves the level by a specified to give the illusion of the level scrolling.
-	 * @param changeInX The amount the level should scroll in pixels.
+	 * Moves the level by a specified to give the illusion of the level
+	 * scrolling.
+	 * 
+	 * @param changeInX
+	 *            The amount the level should scroll in pixels.
 	 */
-	public void moveLevel(int changeInX){
-		
-		moveComponents(changeInX);
-		moveEnemies(changeInX);
-		moveObjectives(changeInX);
+	public void moveLevel(int changeInX) {
+
+		mainSection.move(changeInX, 0);
 		StartX += changeInX;
-		
+
 	}
-	
+
+	public void changeLevel(int newLevelNumber) {
+		currentLevel = newLevelNumber;
+		loadLevel();
+	}
+
 	/**
 	 * Returns an ArrayList of all the Entities in the Level.
+	 * 
 	 * @return ArrayList of all the Entities in the Level.
 	 */
-	public ArrayList<Entity> getAll(){
+	public LinkedList<Entity> getEntities() {
+
+		LinkedList<Entity> entities = new LinkedList<Entity>();
 		
-		ArrayList<Entity> entities = new ArrayList<Entity>();
-		for(Entity entity: components){
-			entities.add(entity);
+		for(Construct con : mainSection.getAllConstructs()){
+			entities.add(con.getSprite().getEntity());
 		}
-		for(Objective objective: objectives){
-			entities.add(objective.getEntity());
-		}
-		for(Enemy enemy: enemies){
-			entities.add(enemy.getEntity());
-		}
-		
-		
+
 		return entities;
 	}
-	
+
 	/**
 	 * Returns an ArrayList of all the Enemy Entities in the Level.
+	 * 
 	 * @return ArrayList of all the Enemy Entities in the Level.
 	 */
-	public ArrayList<Enemy> getEnemies(){
-		return enemies;
+	public LinkedList<Construct> getConstructs() {
+		return mainSection.getAllConstructs();
 	}
-	
-	/**
-	 * Returns an ArrayList of all the Component Entities in the Level.
-	 * @return ArrayList of all the Component Entities in the Level.
-	 */
-	public ArrayList<Entity> getComponents(){
-		return components;
-	}
-	
-	/**
-	 * Returns an ArrayList of all the Objectives in the Level.
-	 * @return ArrayList of all the Objectives in the Level.
-	 */
-	public ArrayList<Objective> getObjectives(){
-		return objectives;
-	}
-	
-	private void loadLevel(int levelNumber) {
 
+	public void loadLevel() {
+
+		StartX = 0;
 		File currentDirectory = new File(System.getProperty("user.dir"));
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
-		levelloader.getLevelDetails(levelNumber);
-		components.addAll(levelloader.getComponents(levelNumber));
-		enemies.addAll(levelloader.getEnemies(levelNumber));
-		objectives.addAll(levelloader.getObjectives(levelNumber));
+		levelloader.getLevelDetails(currentLevel);
+		mainSection = new Section(0, 0, Length, 500);
+		
+		LinkedList<Construct> constructs = new LinkedList<Construct>();
+		constructs.addAll(levelloader.getComponents(currentLevel));
+		constructs.addAll(levelloader.getObjectives(currentLevel));
+		constructs.addAll(levelloader.getEnemies(currentLevel));
+		
+		for(Construct con : constructs){
+			mainSection.addConstruct(con);
+		}
+	}
 
+	/**
+	 * Checks if a specified <code>Construct</code> has collided with another
+	 * <code>Construct</code> in the level of type <code>Terrain</code>. If the
+	 * <code>Construct</code> does not collide with any elements of the terrain
+	 * the function will return </code>null</code>. Otherwise the function will
+	 * return the <strong>first</strong> element in the terrain that the
+	 * specified <code>Construct</code> collides with.
+	 * 
+	 * @param otherConstruct
+	 *            A <code>Construct</code> that may collide with an element of
+	 *            the terrain.
+	 * @param finalPosition
+	 *            The <code>Point</code> that denotes the final position that
+	 *            <code>Construct</code> will have.
+	 * @return The <strong>first</strong> element from the terrain that the
+	 *         specified specified <code>Construct</code> collided with, if any.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.terrains.Terrain
+	 * @see environment.logic.Point
+	 */
+	public Construct getLevelCollision(Construct otherConstruct, Point finalPosition) {
+
+		for (Construct element : mainSection.getSectionConstructs(otherConstruct)) {
+
+			if (element instanceof Terrain) {
+
+				if (checkHit(element, otherConstruct, finalPosition)) {
+
+					return element;
+
+				}
+			}
+
+		}
+		return null;
 	}
-	
-	private void moveComponents(int changeInX){
+
+	/**
+	 * Checks if a specified <code>Construct</code> has collided with another
+	 * <code>Construct</code> in the level of type <code>Enemy</code>. If the
+	 * <code>Construct</code> does not collide with any of the enemies in the
+	 * level the function will return </code>null</code>. Otherwise the function
+	 * will return the <strong>first</strong> enemy in the level that the
+	 * specified <code>Construct</code> collides with.
+	 * 
+	 * @param otherConstruct
+	 *            A <code>Construct</code> that may collide with a
+	 *            <code>Enemy</code> in the level.
+	 * @param finalPosition
+	 *            The <code>Point</code> that denotes the final position that
+	 *            <code>Construct</code> will have.
+	 * @return The <strong>first</strong> element from the set of enemies in the
+	 *         level that the specified specified <code>Construct</code>
+	 *         collided with, if any.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.enemies.Enemy
+	 * @see environment.logic.Point
+	 */
+	public Construct checkForEnemyCollision(Construct otherConstruct, Point finalPosition) {
+
+		for (Construct element : mainSection.getSectionConstructs(otherConstruct)) {
+
+			if (element instanceof Enemy) {
+
+				if (checkHit(element, otherConstruct, finalPosition)) {
+
+					return element;
+				}
+
+			}
+
+		}
+		return null;
+	}
+
+	/**
+	 * Checks if a specified <code>Construct</code> has collided with another
+	 * <code>Construct</code> in the <code>Level</code> of type
+	 * <code>Objective</code>. If the <code>Construct</code> does not collide
+	 * with any of the objectives in the level the function will return
+	 * </code>null</code>. Otherwise the function will return the
+	 * <strong>first</strong> enemy in the level that the specified
+	 * <code>Construct</code> collides with.
+	 * 
+	 * @param otherConstruct
+	 *            A <code>Construct</code> that may collide with a
+	 *            <code>Enemy</code> in the level.
+	 * @param finalPosition
+	 *            The <code>Point</code> that denotes the final position that
+	 *            <code>Construct</code> will have.
+	 * @return The <strong>first</strong> element from the set of enemies in the
+	 *         level that the specified specified <code>Construct</code>
+	 *         collided with, if any.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.objectives.Objective
+	 * @see environment.logic.Point
+	 */
+	public Construct checkForObjectiveCollision(Construct otherConstruct, Point finalPosition) {
+
+		for (Construct element : mainSection.getSectionConstructs(otherConstruct)) {
+
+			if (element instanceof Objective) {
+
+				if (checkHit(element, otherConstruct, finalPosition)) {
+
+					return element;
+
+				}
+			}
+
+		}
+		return null;
+	}
+
+	private boolean checkHit(Construct element, Construct otherConstruct, Point finalPosition) {
+
+		if (!(element.equals(otherConstruct))) {
+			if (Entity.detectHit(otherConstruct.getSprite().getEntity(), finalPosition,
+					element.getSprite().getEntity())) {
+
+				return true;
+
+			}
+
+		}
+		return false;
+	}
+/*
+	private LinkedList<Construct> getSections(Construct otherConstruct, Point finalPosition){
 		
-		for(Entity entity : components){
-			entity.setX(entity.getX() + changeInX);;
+		int intialX = otherConstruct.getX();
+		int intialY = otherConstruct.getY();
+		
+		LinkedList<Construct> sect1 = mainSection.getSectionConstructs(otherConstruct);
+		otherConstruct.setX(finalPosition.x);
+		otherConstruct.setY(finalPosition.y);
+		LinkedList<Construct> sect2 = mainSection.getSectionConstructs(otherConstruct);
+		otherConstruct.setX(intialX);
+		otherConstruct.setY(intialY);
+		
+		if(sect1.equals(sect2)){
+			return sect1;
+		}else{
+			sect1.addAll(sect2);
+			return sect1;
 		}
 		
-	}
-	
-	private void moveEnemies(int changeInX){
-		for(Enemy enemy : enemies){
-			enemy.setX(enemy.getEntity().getX() + changeInX);
-		}
-	}
-	
-	private void moveObjectives(int changeInX){
 		
-		for(Objective objective : objectives){
-			objective.getEntity().setX(objective.getEntity().getX() + changeInX);;
-		}
 	}
-	
+	*/
 }

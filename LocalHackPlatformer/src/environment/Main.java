@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 import environment.graphics.*;
 import environment.logic.*;
-import environment.logic.constructs.Player;
+import environment.logic.constructs.Construct;
 import environment.logic.constructs.TransitionScreen;
 import environment.logic.constructs.enemies.Enemy;
+import environment.logic.constructs.players.DefaultPlayer;
+import environment.logic.constructs.players.Player;
 import environment.logic.entities.*;
 
 /**
@@ -31,11 +33,6 @@ public class Main {
 	 * Stores the current DeathScreen object.
 	 */
 	public static TransitionScreen transitionScreen;
-	
-	/**
-	 * The level that will be loaded upon Screen transition.
-	 */
-	public static int levelNumber;
 
 	// Private
 	private static ThreadHandler threadHandler;
@@ -57,7 +54,7 @@ public class Main {
 			display.render(screen);
 		}
 
-		levelNumber = 1;
+		level = new Level();
 		transitionScreen = new TransitionScreen(Color.RED.getRGB());
 		start();
 
@@ -73,8 +70,8 @@ public class Main {
 	 */
 	public static void start() {
 	
-		level = new Level(levelNumber);
-		player = new Player(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
+		level.loadLevel();
+		player = new DefaultPlayer(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
 		
 	}
 
@@ -84,7 +81,7 @@ public class Main {
 			display.handleKeys();
 			player.gravity();
 			player.checkForDeath();
-			player.checkObjectves();
+			player.checkObjectives();
 		}
 
 	}
@@ -93,7 +90,7 @@ public class Main {
 
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
-		entities.addAll(level.getAll());
+		entities.addAll(level.getEntities());
 		entities.add(player.getEntity());
 
 		for (Entity entity : entities) {
@@ -127,8 +124,11 @@ public class Main {
 	}
 	
 	private static void moveEnemies(){
-		for(Enemy enemy : level.getEnemies()){
-			enemy.move();
+		for(Construct construct : level.getConstructs()){
+			if(construct instanceof Enemy){
+				((Enemy) construct).getMove();
+			}
+							
 		}
 	}
 	

@@ -64,9 +64,9 @@ public final class SpriteSheetReader {
 			for (int x = 0; x < width; ++x) {
 
 				int currentPixel = image.getRGB(x + x_Offset, y + y_Offset);
-				if( currentPixel == Constants.TRANSPARENT_COLOR.intValue()){
+				if (currentPixel == Constants.TRANSPARENT_COLOR.intValue()) {
 					sprite[x][y] = null;
-				}else{
+				} else {
 					sprite[x][y] = currentPixel;
 				}
 			}

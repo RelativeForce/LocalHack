@@ -3,7 +3,9 @@ package environment.logic.entities;
 import environment.graphics.objects.GraphicalObject;
 
 /**
- * Denotes the outer boundaries of the region of pixels given by a <code>GraphicalObject<code>.
+ * Denotes the outer boundaries of the region of pixels given by a
+ * <code>GraphicalObject<code>. This class also handles the implementation for
+ * detecting a collision between two entities.
  * 
  * @author Joshua_Eddy
  *
@@ -13,13 +15,16 @@ import environment.graphics.objects.GraphicalObject;
  */
 public class HitBox {
 
+	
 	private Integer[][] verticalBoundaries;
 	private Integer[][] horizontalBoundaries;
 
 	/**
 	 * Constructs a new <code>HitBox<code> object.
 	 * 
-	 * @param object The <code>GraphicalObject<code> from which the <code>HitBox<code> is derived.
+	 * @param object
+	 *            The <code>GraphicalObject<code> from which the
+	 *            <code>HitBox<code> is derived.
 	 * 
 	 * @see environment.graphics.objects.GraphicalObject
 	 */
@@ -30,6 +35,44 @@ public class HitBox {
 
 	}
 
+	/**
+	 * Retrieves the right and left boundary for each row of pixels.</br>
+	 * The row on which the boundaries lie is indexed by
+	 * <code>Integer<strong>[]</strong>[]</code>.</br>
+	 * The left boundary is given by
+	 * <code>Integer[]<strong>[0]</strong></code>.</br>
+	 * The right boundary is given by
+	 * <code>Integer[]<strong>[1]</strong></code>.</br>
+	 * 
+	 * @return The
+	 *         <code>Integer[][]<code> denoting the horizontal boundaries of the <code>HitBox</code>.
+	 * 
+	 * @see environment.graphics.objects.GraphicalObject
+	 * @see Entity
+	 */
+	public Integer[][] getHorizontalBoundaries() {
+		return horizontalBoundaries;
+	}
+
+	/**
+	 * Retrieves the upper and lower boundary for each column of pixels.</br>
+	 * The column on which the boundaries lie is indexed by
+	 * <code>Integer<strong>[]</strong>[]</code>.</br>
+	 * The upper boundary is given by
+	 * <code>Integer[]<strong>[0]</strong></code>.</br>
+	 * The lower boundary is given by
+	 * <code>Integer[]<strong>[1]</strong></code>.</br>
+	 * 
+	 * @return The
+	 *         <code>Integer[][]<code> denoting the vertical boundaries of the <code>HitBox</code>.
+	 * 
+	 * @see environment.graphics.objects.GraphicalObject
+	 * @see Entity
+	 */
+	public Integer[][] getVerticalBoundaries() {
+		return verticalBoundaries;
+	}
+	
 	private void setHorizontalBoundaries(GraphicalObject object) {
 
 		horizontalBoundaries = new Integer[object.getHeight()][2];
@@ -111,33 +154,54 @@ public class HitBox {
 	}
 
 	/**
-	 * Retrieves the right and left boundary for each row of pixels.</br>
-	 * The row on which the boundaries lie is indexed by <code>Integer<strong>[]</strong>[]</code>.</br>
-	 * The left boundary is given by <code>Integer[]<strong>[0]</strong></code>.</br>
-	 * The right boundary is given by <code>Integer[]<strong>[1]</strong></code>.</br>
-	 * 
-	 * @return The <code>Integer[][]<code> denoting the horizontal boundaries of the <code>HitBox</code>.
-	 * 
-	 * @see environment.graphics.objects.GraphicalObject
+	 * @see HitBox
 	 * @see Entity
 	 */
-	public Integer[][] getHorizontalBoundaries() {
-		return horizontalBoundaries;
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof HitBox) {
+
+			HitBox otherHitBox = (HitBox) o;
+			if (otherHitBox.horizontalBoundaries.length == this.horizontalBoundaries.length
+					&& otherHitBox.verticalBoundaries.length == this.verticalBoundaries.length) {
+
+				if (checkEquality(otherHitBox.horizontalBoundaries, this.horizontalBoundaries)
+						&& checkEquality(otherHitBox.verticalBoundaries, this.verticalBoundaries)) {
+					return true;
+				}
+
+			}
+
+		}
+
+		return false;
 	}
 
 	/**
-	 * Retrieves the upper and lower boundary for each column of pixels.</br>
-	 * The column on which the boundaries lie is indexed by <code>Integer<strong>[]</strong>[]</code>.</br>
-	 * The upper boundary is given by <code>Integer[]<strong>[0]</strong></code>.</br>
-	 * The lower boundary is given by <code>Integer[]<strong>[1]</strong></code>.</br>
+	 * Checks if two HitBox parameter arrays are identical.
 	 * 
-	 * @return The <code>Integer[][]<code> denoting the vertical boundaries of the <code>HitBox</code>.
-	 * 
-	 * @see environment.graphics.objects.GraphicalObject
-	 * @see Entity
+	 * @param array1
+	 *            <code>int[][]</code>
+	 * @param array2
+	 *            <code>int[][]</code>
+	 * @return <code>boolean</code>
 	 */
-	public Integer[][] getVerticalBoundaries() {
-		return verticalBoundaries;
+	private boolean checkEquality(Integer[][] array1, Integer[][] array2) {
+
+		for (int d2 = 0; d2 < 2; d2++) {
+
+			for (int d1 = 0; d1 < array1.length; d1++) {
+
+				if (array1[d1][d2] != array2[d1][d2]) {
+					return false;
+				}
+
+			}
+
+		}
+
+		return true;
 	}
 
 }

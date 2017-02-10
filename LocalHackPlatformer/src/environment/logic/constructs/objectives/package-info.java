@@ -1,7 +1,6 @@
-
 /**
  * <h3>Function:</h3>
- * Encapsulates the behaviours of an objective the player will intercept.
+ * Encapsulates the behaviours of an objective types the player will intercept.
  * 
  * <h3>Super-Module:</h3> constructs
  * 

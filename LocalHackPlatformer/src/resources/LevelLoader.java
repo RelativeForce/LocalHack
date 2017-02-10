@@ -1,14 +1,14 @@
 package resources;
 
 import java.util.Scanner;
-
 import environment.logic.Level;
 import environment.logic.Point;
-import environment.logic.constructs.enemies.Enemy;
+import environment.logic.constructs.Construct;
 import environment.logic.constructs.enemies.Grunt;
 import environment.logic.constructs.objectives.LevelChange;
-import environment.logic.constructs.objectives.Objective;
+import environment.logic.constructs.terrains.DefaultTerrain;
 import environment.logic.entities.Entity;
+import environment.logic.entities.Sprite;
 
 import java.awt.Color;
 import java.io.File;
@@ -71,9 +71,9 @@ public class LevelLoader {
 	 *            The number of the level to be loaded.
 	 * @return ArrayList of entities that have been read from the level file.
 	 */
-	public ArrayList<Entity> getComponents(int levelNum) {
+	public ArrayList<Construct> getComponents(int levelNum) {
 
-		ArrayList<Entity> entities = new ArrayList<Entity>();
+		ArrayList<Construct> entities = new ArrayList<Construct>();
 
 		Scanner scnr = TextFileReader.getScannedFile("LH_Level" + levelNum, directory);
 
@@ -110,9 +110,9 @@ public class LevelLoader {
 	 *            The number of the level to be loaded.
 	 * @return An ArrayList of all the objectives in the level file.
 	 */
-	public ArrayList<Objective> getObjectives(int levelNum) {
+	public ArrayList<Construct> getObjectives(int levelNum) {
 
-		ArrayList<Objective> objectives = new ArrayList<Objective>();
+		ArrayList<Construct> objectives = new ArrayList<Construct>();
 
 		Scanner scnr = TextFileReader.getScannedFile("LH_Level" + levelNum, directory);
 
@@ -147,9 +147,9 @@ public class LevelLoader {
 	 *            The number of the level to be loaded.
 	 * @return An ArrayList of all the enemies in the level file.
 	 */
-	public ArrayList<Enemy> getEnemies(int levelNum) {
+	public ArrayList<Construct> getEnemies(int levelNum) {
 
-		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+		ArrayList<Construct> enemies = new ArrayList<Construct>();
 
 		Scanner scnr = TextFileReader.getScannedFile("LH_Level" + levelNum, directory);
 
@@ -178,7 +178,7 @@ public class LevelLoader {
 
 	}
 
-	private Objective addDoor(String[] details, int firstDetail) {
+	private Construct addDoor(String[] details, int firstDetail) {
 
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
@@ -187,13 +187,13 @@ public class LevelLoader {
 		Color color = getColor(details[firstDetail + 4]);
 		int levelLink = Integer.parseInt(details[firstDetail + 5]);
 
-		Entity door = Entity.Door(x, y, width, height, color.getRGB());
-		LevelChange levelChange = new LevelChange(door, levelLink);
+		Entity door = Entity.newDoor(x, y, width, height, color.getRGB());
+		LevelChange levelChange = new LevelChange(x, y, door, levelLink);
 
 		return levelChange;
 	}
 
-	private Enemy addGrunt(String[] details, int firstDetail) {
+	private Construct addGrunt(String[] details, int firstDetail) {
 
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
@@ -203,7 +203,7 @@ public class LevelLoader {
 		return grunt;
 	}
 
-	private Entity addRectangle(String[] details, int firstDetail) {
+	private Construct addRectangle(String[] details, int firstDetail) {
 
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
@@ -211,11 +211,11 @@ public class LevelLoader {
 		int height = Integer.parseInt(details[firstDetail + 3]);
 		Color color = getColor(details[firstDetail + 4]);
 
-		Entity rect = Entity.Rectangle(x, y, width, height, color.getRGB());
+		Construct rect = new DefaultTerrain(x, y, new Sprite(Entity.newRectangle(x, y, width, height, color.getRGB()), x, y));
 		return rect;
 	}
 
-	private Entity addFloor(String[] details, int firstDetail) {
+	private Construct addFloor(String[] details, int firstDetail) {
 
 		int x = Integer.parseInt(details[firstDetail]);
 		int y = Integer.parseInt(details[firstDetail + 1]);
@@ -226,8 +226,8 @@ public class LevelLoader {
 		int boxWidth = Integer.parseInt(details[firstDetail + 6]);
 		int boxHeight = Integer.parseInt(details[firstDetail + 7]);
 
-		Entity floor = Entity.Floor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB());
-
+		Construct floor = new DefaultTerrain(x, y, new Sprite(
+				Entity.newFloor(x, y, width, height, borderColor.getRGB(), boxWidth, boxHeight, boxColor.getRGB()), x, y));
 		return floor;
 	}
 
