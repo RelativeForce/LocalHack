@@ -84,7 +84,7 @@ public class Level {
 
 		LinkedList<Entity> entities = new LinkedList<Entity>();
 		
-		for(Construct con : mainSection.getAllConstructs()){
+		for(Construct con : mainSection.getConstructs()){
 			entities.add(con.getSprite().getEntity());
 		}
 
@@ -97,7 +97,7 @@ public class Level {
 	 * @return ArrayList of all the Enemy Entities in the Level.
 	 */
 	public LinkedList<Construct> getConstructs() {
-		return mainSection.getAllConstructs();
+		return mainSection.getConstructs();
 	}
 
 	public void loadLevel() {
