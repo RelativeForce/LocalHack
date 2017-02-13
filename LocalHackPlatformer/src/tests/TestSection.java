@@ -19,7 +19,7 @@ public class TestSection {
 
 		mainSection = new Section(0, 0, 5000, 500);
 
-		assertTrue(mainSection.getAllConstructs().isEmpty());
+		assertTrue(mainSection.getConstructs().isEmpty());
 
 		int x = 10;
 		int y = 10;
