@@ -12,7 +12,7 @@ public class Constants {
 	/**
 	 * The value of gravity used in the game.
 	 */
-	public static final double GRAVITY = 0.5;
+	public static final double GRAVITY = 0.4;
 	
 	/**
 	 * The value of friction in the horizontal direction in the game.
@@ -37,7 +37,7 @@ public class Constants {
 	/**
 	 * The distance from each side of the screen that when the player passes will cause the screen to scroll.
 	 */
-	public static final int WINDOW_PADDING = 200;
+	public static final int WINDOW_PADDING = 300;
 	
 	/**
 	 * The distance the player moves when either of the right or left arrow keys is pressed. 

@@ -421,7 +421,7 @@ public class Section {
 
 		} else {
 
-			moveConstructs(changeInY, changeInY);
+			moveConstructs(changeInX, changeInY);
 
 		}
 	}
