@@ -4,12 +4,12 @@ import java.util.Scanner;
 import environment.logic.Level;
 import environment.logic.Point;
 import environment.logic.constructs.Construct;
+import environment.logic.constructs.enemies.Arganok;
 import environment.logic.constructs.enemies.Grunt;
 import environment.logic.constructs.objectives.LevelChange;
 import environment.logic.constructs.terrains.DefaultTerrain;
 import environment.logic.entities.Entity;
 import environment.logic.entities.Sprite;
-
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -170,12 +170,25 @@ public class LevelLoader {
 				if (detail1.equals("grunt")) {
 					enemies.add(addGrunt(details, 2));
 				}
+				else if(detail1.equals("arganok")){
+					enemies.add(addArganok(details, 2));
+				}
 			}
 
 		}
 
 		return enemies;
 
+	}
+
+	private Construct addArganok(String[] details, int firstDetail) {
+		
+		int x = Integer.parseInt(details[firstDetail]);
+		int y = Integer.parseInt(details[firstDetail + 1]);
+		int trackingRadius = Integer.parseInt(details[firstDetail + 2]);
+		Point inital = new Point(x, y);
+		
+		return new Arganok(inital, trackingRadius);
 	}
 
 	private Construct addDoor(String[] details, int firstDetail) {

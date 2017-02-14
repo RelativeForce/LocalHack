@@ -70,6 +70,11 @@ public class Constants {
 	public static final String PLAYER_FILENAME = "Mario.png";
 	
 	/**
+	 * The filename of the image containing the Arganok sprite frames.
+	 */
+	public static final String ARGANOK_FILENAME = "Bird.png";
+	
+	/**
 	 * In RGB the value is equivalent to 0xFF00FF.
 	 */
 	public static final Integer TRANSPARENT_COLOR = -0xFF01; 
