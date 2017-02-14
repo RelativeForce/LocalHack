@@ -35,6 +35,7 @@ public class Grunt extends Construct implements Enemy {
 				new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.GRUNT_FILENAME, 20, 25,
 						inital.x, inital.y));
 
+		
 		direction = Direction.LEFT;
 		xSpeed = 1;
 		movesMade = 0;

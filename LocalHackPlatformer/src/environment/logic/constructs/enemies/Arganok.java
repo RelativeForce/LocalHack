@@ -1,7 +1,6 @@
 package environment.logic.constructs.enemies;
 
 import java.io.File;
-
 import environment.Constants;
 import environment.Main;
 import environment.logic.Direction;
@@ -27,19 +26,19 @@ public class Arganok extends Construct implements Enemy {
 				new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.ARGANOK_FILENAME, 35,
 						27, inital.x, inital.y));
 		this.trackingRadius = trackingRadius;
-		this.movesMade = 0;
+		movesMade = 0;
 		setHoverBounds();
-		this.hoverDirection = Direction.RIGHT;
+		hoverDirection = Direction.RIGHT;
 	}
 
 	@Override
 	public void getMove() {
 
-		int x = getX() + (getSprite().getEntity().getGraphicalObject().getWidth() / 2);
-		int y = getY() + (getSprite().getEntity().getGraphicalObject().getHeight() / 2);
+		int x = getX() - (getSprite().getEntity().getGraphicalObject().getWidth() / 2);
+		int y = getY() - (getSprite().getEntity().getGraphicalObject().getHeight() / 2);
 
-		int playerX = Main.player.getEntity().getX() + (Main.player.getEntity().getGraphicalObject().getWidth() / 2);
-		int playerY = Main.player.getEntity().getY() + (Main.player.getEntity().getGraphicalObject().getHeight() / 2);
+		int playerX = Main.player.getEntity().getX() - (Main.player.getEntity().getGraphicalObject().getWidth() / 2);
+		int playerY = Main.player.getEntity().getY() - (Main.player.getEntity().getGraphicalObject().getHeight() / 2);
 
 		Point playerPosition = new Point(playerX, playerY);
 		Point arganokPosition = new Point(x, y);
@@ -50,7 +49,7 @@ public class Arganok extends Construct implements Enemy {
 			hover();
 		}
 
-		if (movesMade % 5 == 0) {
+		if (movesMade % 3 == 0) {
 			getSprite().nextFrame();
 		}
 
@@ -60,31 +59,39 @@ public class Arganok extends Construct implements Enemy {
 	private void hover() {
 
 		int nextX = getNextX();
-		
-		if(nextX >= endHover.x || nextX <= startHover.x){
+
+		if (nextX >= endHover.x || nextX <= startHover.x) {
 			hoverDirection = hoverDirection.getOppositeDirection();
+
 		}
-		
+		changeSpriteDirection(hoverDirection);
 		setX(getNextX());
 
 	}
-	
-	private int getNextX(){
-		return getX() + ((hoverDirection == Direction.RIGHT) ? 1 : 0)
-				+ ((hoverDirection == Direction.LEFT) ? (-1) : 0);
+
+	private int getNextX() {
+		return getX() + ((hoverDirection == Direction.RIGHT) ? 1 : 0) + ((hoverDirection == Direction.LEFT) ? (-1) : 0);
 	}
 
 	private void setHoverBounds() {
 
-		this.startHover = new Point(getX(), getY());
-		this.endHover = new Point(getX() + 50, getY());
+		startHover = new Point(getX(), getY());
+		endHover = new Point(getX() + 200, getY());
 
+	}
+
+	private void changeSpriteDirection(Direction direction) {
+		if (direction == Direction.LEFT) {
+			getSprite().invert();
+		} else if (direction == Direction.RIGHT) {
+			getSprite().revert();
+		}
 	}
 
 	private void seek(Point playerPosition, Point arganokPosition) {
 
-		seekInX(arganokPosition, arganokPosition);
-		seekInY(arganokPosition, arganokPosition);
+		seekInX(playerPosition, arganokPosition);
+		seekInY(playerPosition, arganokPosition);
 
 		setHoverBounds();
 
@@ -92,9 +99,12 @@ public class Arganok extends Construct implements Enemy {
 
 	private void seekInX(Point playerPosition, Point arganokPosition) {
 
-		double changeInX = ((Math.abs(playerPosition.x - arganokPosition.x)) / 100);
+		double changeInX = (((double)(Math.abs(playerPosition.x - arganokPosition.x)))/ 50);
+		
 		if (changeInX > 0 && changeInX < 1) {
+			
 			changeInX = 1;
+			
 		} else {
 			changeInX = ((int) changeInX);
 		}
@@ -111,7 +121,7 @@ public class Arganok extends Construct implements Enemy {
 
 	private void seekInY(Point playerPosition, Point arganokPosition) {
 
-		double changeInY = ((Math.abs(playerPosition.y - arganokPosition.y)) / 100);
+		double changeInY = (((double)(Math.abs(playerPosition.y - arganokPosition.y))) / 50);
 		if (changeInY > 0 && changeInY < 1) {
 			changeInY = 1;
 		} else {
@@ -135,5 +145,20 @@ public class Arganok extends Construct implements Enemy {
 
 		return resultantDistance;
 	}
-
+	
+	/*
+	 * @Test 
+	 * public void testSeekInX() {
+	 * 
+	 * int x = 100; int y = 100; Point TestArganokPosition = new Point(x, y);
+	 * 
+	 * Arganok arg = new Arganok(TestArganokPosition, 50);
+	 * 
+	 * Point testPlayerPosition = new Point(101, 100);
+	 * arg.seekInX(testPlayerPosition, TestArganokPosition);
+	 * 
+	 * assertTrue(arg.getX() == 101);
+	 * 
+	 * }
+	 */
 }
