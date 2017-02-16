@@ -2,6 +2,7 @@ package environment.logic;
 
 import java.util.LinkedList;
 import environment.logic.constructs.Construct;
+import environment.logic.constructs.enemies.Enemy;
 
 /**
  * A self defining data structure used to store a level in the game. The client
@@ -15,7 +16,10 @@ import environment.logic.constructs.Construct;
  * @see environment.logic.constructs.Construct
  * @see environment.logic.Level
  */
-public class Section {
+public  class Section {
+
+	// Static Fields
+	// -------------------------------------------------------------------------------------
 
 	/**
 	 * Stores the maximum <code>int</code> width of a leaf <code>Section</code>
@@ -27,6 +31,7 @@ public class Section {
 	 * Stores the maximum <code>int</code> height of a leaf <code>Section</code>
 	 * of the <code>Section</code> binary tree.
 	 */
+	@SuppressWarnings("unused")
 	private final static int maxHeight = 500;
 
 	/**
@@ -38,7 +43,17 @@ public class Section {
 	 * @see #move(int, int)
 	 */
 	private static LinkedList<Construct> moved;
-	
+
+	/**
+	 * Temporarily stores the <code>Construct</code>s that need to moved into a
+	 * new <code>Section</code> of the level. This exists because enemies may
+	 * move between sections of the level.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see #relocateEmemies()
+	 */
+	private static LinkedList<Construct> toRelocate;
+
 	// Instance Fields
 	// -------------------------------------------------------------------------------------
 
@@ -76,7 +91,7 @@ public class Section {
 	 * @see environment.logic.constructs.Construct
 	 * @see java.util.LinkedList
 	 */
-	private LinkedList<Construct> constructs;
+	private volatile LinkedList<Construct> constructs;
 
 	/**
 	 * The <code>int</code> x coordinate of this <code>Section</code>. This is
@@ -208,10 +223,11 @@ public class Section {
 
 	/**
 	 * Adds a specified <code>Construct</code> to the level by evaluating which
-	 * leaf <code>Section<code> the construct should be stored in and then
+	 * leaf <code>Section</code> the construct should be stored in and then
 	 * storing it there.
 	 * 
-	 * @param construct <code>Construct</code> to be added.
+	 * @param construct
+	 *            <code>Construct</code> to be added.
 	 * 
 	 * @see #addToChildren(Construct)
 	 * @see #addToConstructList(Construct)
@@ -361,9 +377,106 @@ public class Section {
 
 		return false;
 	}
-	
+
+	/**
+	 * Causes all enemies in the level to be reallocated into the correct
+	 * section according to their position and dimensions. This is due to the
+	 * fact an enemy may move outside of its original section based on its
+	 * action as an enemy.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.enemies.Enemy
+	 */
+	public void relocateEmemies() {
+
+		toRelocate = new LinkedList<Construct>();
+
+		// Find all enemies that need moving and store them in toRelocate list.
+		findEnemiesToRelocate();
+
+		// pass each construct back into the level to the section tree to be
+		// re-stored.
+
+		for (Construct enemy : toRelocate) {
+
+			addConstruct(enemy);
+
+		}
+
+	}
+
 	// Private Methods
 	// --------------------------------------------------------------------------------------
+
+	/**
+	 * Finds the <code>Construct</code>s of type <code>Enemy</code> in the
+	 * <code>this</code> section and its child sections and add them to the list
+	 * of enemies to be relocated.
+	 * 
+	 * @see #relocateEmemies()
+	 * @see #toRelocate
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.enemies.Enemy
+	 */
+	private void findEnemiesToRelocate() {
+
+		if (isLeafNode()) {
+
+			addToRedistributeList();
+
+		} else {
+
+			// if this is not a leaf node, search its children.
+			leftChild.findEnemiesToRelocate();
+			rightChild.findEnemiesToRelocate();
+
+		}
+
+	}
+
+	/**
+	 * Iterates through the list of <code>Construct</code>s in this
+	 * <code>Section</code> and adds any that don't overlap with
+	 * <code>this</code> section to the list to be relocated. This will only be
+	 * executed on a leaf node of the section tree.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see environment.logic.constructs.enemies.Enemy
+	 * @see #findEnemiesToRelocate()
+	 */
+	private void addToRedistributeList() {
+
+		for (Construct construct : constructs) {
+
+			if (construct instanceof Enemy) {
+
+				// Assigns the fundamental details of the specified construct to
+				// local variables to increase ease of reading.
+				int constructX = construct.getX();
+				int constructY = construct.getY();
+				int constructWidth = construct.getSprite().getEntity().getGraphicalObject().getWidth();
+				int constructHeight = construct.getSprite().getEntity().getGraphicalObject().getHeight();
+
+				// Checks if the specified construct overlaps with this section
+				// at any point.
+				boolean insideThisSection = constructX + constructWidth >= this.x && constructX <= this.x + this.width
+						&& constructY + constructHeight >= this.y && constructY <= this.y + this.height;
+
+				// If the current construct doesn't overlap with this section
+				// then is must be moved to the section that it belongs in.
+				if (!insideThisSection) {
+					toRelocate.add(construct);
+
+					// The current construct is removed from this section which
+					// it no longer resides in.
+					constructs.remove(construct);
+				}
+
+			}
+
+		}
+
+	}
 
 	/**
 	 * Collects all the constructs from this section's child sections.
@@ -604,7 +717,7 @@ public class Section {
 		LinkedList<Construct> childConstructs = new LinkedList<Construct>();
 
 		if (insideLeftChild) {
-			
+
 			// If the specified construct overlaps with the left child section
 			// the constructs from the left child section are retrieved.
 			childConstructs.addAll(leftChild.getSectionConstructs(construct));

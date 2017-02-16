@@ -21,6 +21,11 @@ public class Arganok extends Construct implements Enemy {
 	private int trackingRadius;
 	private int movesMade;
 
+	/**
+	 * 
+	 * @param inital
+	 * @param trackingRadius
+	 */
 	public Arganok(Point inital, int trackingRadius) {
 		super(inital.x, inital.y,
 				new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.ARGANOK_FILENAME, 35,
@@ -49,11 +54,32 @@ public class Arganok extends Construct implements Enemy {
 			hover();
 		}
 
-		if (movesMade % 3 == 0) {
+		if (movesMade == 0) {
 			getSprite().nextFrame();
 		}
 
-		movesMade++;
+		movesMade = (movesMade++) % 6;
+
+	}
+
+	@Override
+	public void setX(int x) {
+
+		int changeInX = getX() - x;
+		
+		if (this.endHover != null) {
+			int endHoverX = endHover.x;
+			int endHoverY = endHover.y;
+			endHover = new Point(endHoverX + changeInX, endHoverY);
+		}
+
+		if (this.startHover != null) {
+			int startHoverX = startHover.x;
+			int startHoverY = startHover.y;
+			startHover = new Point(startHoverX + changeInX, startHoverY);
+		}
+
+		super.setX(x);
 	}
 
 	private void hover() {
@@ -99,12 +125,12 @@ public class Arganok extends Construct implements Enemy {
 
 	private void seekInX(Point playerPosition, Point arganokPosition) {
 
-		double changeInX = (((double)(Math.abs(playerPosition.x - arganokPosition.x)))/ 50);
-		
+		double changeInX = (((double) (Math.abs(playerPosition.x - arganokPosition.x))) / 50);
+
 		if (changeInX > 0 && changeInX < 1) {
-			
+
 			changeInX = 1;
-			
+
 		} else {
 			changeInX = ((int) changeInX);
 		}
@@ -121,7 +147,7 @@ public class Arganok extends Construct implements Enemy {
 
 	private void seekInY(Point playerPosition, Point arganokPosition) {
 
-		double changeInY = (((double)(Math.abs(playerPosition.y - arganokPosition.y))) / 50);
+		double changeInY = (((double) (Math.abs(playerPosition.y - arganokPosition.y))) / 50);
 		if (changeInY > 0 && changeInY < 1) {
 			changeInY = 1;
 		} else {
@@ -145,20 +171,5 @@ public class Arganok extends Construct implements Enemy {
 
 		return resultantDistance;
 	}
-	
-	/*
-	 * @Test 
-	 * public void testSeekInX() {
-	 * 
-	 * int x = 100; int y = 100; Point TestArganokPosition = new Point(x, y);
-	 * 
-	 * Arganok arg = new Arganok(TestArganokPosition, 50);
-	 * 
-	 * Point testPlayerPosition = new Point(101, 100);
-	 * arg.seekInX(testPlayerPosition, TestArganokPosition);
-	 * 
-	 * assertTrue(arg.getX() == 101);
-	 * 
-	 * }
-	 */
+
 }

@@ -119,6 +119,7 @@ public class Main {
 	protected static void enemyThread(){
 		if(!transitionScreen.isActive){
 			moveEnemies();
+			
 		}
 		
 	}

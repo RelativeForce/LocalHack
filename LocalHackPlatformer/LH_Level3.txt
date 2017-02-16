@@ -1,4 +1,4 @@
 levelDetails,2000,50,250
-component,floor,0,2000,300,50,black,brown,25,25
-enemy,arganok,300,200,100
-enemy,arganok,700,200,100
+component,floor,0,450,2000,50,black,brown,25,25
+enemy,arganok,300,200,200
+enemy,arganok,700,200,200
