@@ -83,8 +83,8 @@ public class Level {
 	public LinkedList<Entity> getEntities() {
 
 		LinkedList<Entity> entities = new LinkedList<Entity>();
-		
-		for(Construct con : mainSection.getConstructs()){
+
+		for (Construct con : getConstructs()) {
 			entities.add(con.getSprite().getEntity());
 		}
 
@@ -100,6 +100,10 @@ public class Level {
 		return mainSection.getConstructs();
 	}
 
+	public void refreshLevel(){
+		mainSection.refresh();
+	}
+	
 	public void loadLevel() {
 
 		StartX = 0;
@@ -107,13 +111,13 @@ public class Level {
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
 		levelloader.getLevelDetails(currentLevel);
 		mainSection = new Section(0, 0, Length, 500);
-		
+
 		LinkedList<Construct> constructs = new LinkedList<Construct>();
 		constructs.addAll(levelloader.getComponents(currentLevel));
 		constructs.addAll(levelloader.getObjectives(currentLevel));
 		constructs.addAll(levelloader.getEnemies(currentLevel));
-		
-		for(Construct con : constructs){
+
+		for (Construct con : constructs) {
 			mainSection.addConstruct(con);
 		}
 	}
@@ -248,27 +252,5 @@ public class Level {
 		}
 		return false;
 	}
-/*
-	private LinkedList<Construct> getSections(Construct otherConstruct, Point finalPosition){
-		
-		int intialX = otherConstruct.getX();
-		int intialY = otherConstruct.getY();
-		
-		LinkedList<Construct> sect1 = mainSection.getSectionConstructs(otherConstruct);
-		otherConstruct.setX(finalPosition.x);
-		otherConstruct.setY(finalPosition.y);
-		LinkedList<Construct> sect2 = mainSection.getSectionConstructs(otherConstruct);
-		otherConstruct.setX(intialX);
-		otherConstruct.setY(intialY);
-		
-		if(sect1.equals(sect2)){
-			return sect1;
-		}else{
-			sect1.addAll(sect2);
-			return sect1;
-		}
-		
-		
-	}
-	*/
+
 }

@@ -66,6 +66,7 @@ public class ThreadHandler {
 				}
 			}
 		};
+		playerThread.setName("playerThread");
 	}
 
 	private void startDisplayThread() {
@@ -86,6 +87,7 @@ public class ThreadHandler {
 				}
 			}
 		};
+		displayThread.setName("displayThread");
 	}
 
 	private void startEnemyThread() {
@@ -106,6 +108,7 @@ public class ThreadHandler {
 				}
 			}
 		};
+		enemyThread.setName("enemyThread");
 
 	}
 

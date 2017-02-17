@@ -1,6 +1,5 @@
 package environment.logic.constructs.enemies;
 
-import java.io.File;
 import environment.Constants;
 import environment.Main;
 import environment.logic.Direction;
@@ -31,9 +30,7 @@ public class Grunt extends Construct implements Enemy {
 	 */
 	public Grunt(Point inital) {
 
-		super(inital.x, inital.y,
-				new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.GRUNT_FILENAME, 20, 25,
-						inital.x, inital.y));
+		super(inital.x, inital.y, new Sprite(Constants.GRUNT_SPRITE_DETAILS, inital.x, inital.y));
 
 		direction = Direction.LEFT;
 		xSpeed = 1;

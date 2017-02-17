@@ -17,6 +17,9 @@ import environment.logic.constructs.Construct;
  */
 public class Section {
 
+	// Static Fields
+	// -------------------------------------------------------------------------------------
+
 	/**
 	 * Stores the maximum <code>int</code> width of a leaf <code>Section</code>
 	 * of the <code>Section</code> binary tree.
@@ -27,6 +30,7 @@ public class Section {
 	 * Stores the maximum <code>int</code> height of a leaf <code>Section</code>
 	 * of the <code>Section</code> binary tree.
 	 */
+	@SuppressWarnings("unused")
 	private final static int maxHeight = 500;
 
 	/**
@@ -38,7 +42,16 @@ public class Section {
 	 * @see #move(int, int)
 	 */
 	private static LinkedList<Construct> moved;
-	
+
+	/**
+	 * This denotes whether the current section requires its parent section to
+	 * adjust the locations of the enemies of the enemies in the level.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see #getConstructs()
+	 */
+	private static boolean requiresRefresh = false;;
+
 	// Instance Fields
 	// -------------------------------------------------------------------------------------
 
@@ -208,10 +221,11 @@ public class Section {
 
 	/**
 	 * Adds a specified <code>Construct</code> to the level by evaluating which
-	 * leaf <code>Section<code> the construct should be stored in and then
+	 * leaf <code>Section</code> the construct should be stored in and then
 	 * storing it there.
 	 * 
-	 * @param construct <code>Construct</code> to be added.
+	 * @param construct
+	 *            <code>Construct</code> to be added.
 	 * 
 	 * @see #addToChildren(Construct)
 	 * @see #addToConstructList(Construct)
@@ -220,7 +234,8 @@ public class Section {
 	public void addConstruct(Construct construct) {
 
 		// if this section is a leaf node then add the construct to the
-		// constructs list in this otherwise add the construct to this section's
+		// constructs list in this otherwise add the construct to this
+		// section's
 		// child sections.
 		if (isLeafNode()) {
 
@@ -267,21 +282,29 @@ public class Section {
 	}
 
 	/**
-	 * Retrieves all the constructs stored in this section and all of its child
+	 * Retrieves all the constructs stored in the current section and its child
 	 * sections.
 	 * 
 	 * @return <code>LinkedList</code> of type <code>Construct</code> that
-	 *         contains all the constructs in this section and its child
-	 *         sections.
+	 *         contains all the constructs in the level.
 	 *
 	 * @see environment.logic.constructs.Construct
-	 * @see #getAllFromChildren()
+	 * @see #getTreeConstructs()
 	 * @see java.util.LinkedList
 	 */
 	public LinkedList<Construct> getConstructs() {
 
 		if (isLeafNode()) {
 
+			// Check if any of the constructs have moved outside of this
+			// section.
+			for (Construct con : this.constructs) {
+				if (!isContainedBy(con, this)) {
+					requiresRefresh = true;
+				}
+			}
+
+			// returns the constructs of the current section.
 			return constructs;
 
 		} else {
@@ -361,9 +384,183 @@ public class Section {
 
 		return false;
 	}
-	
+
+	/**
+	 * Refreshes all the sections where the enemies are stored in to ensure that
+	 * all the enemies are stored in the correct sections.
+	 * 
+	 * @see environment.logic.constructs.Consturct
+	 * @see environment.logic.constructs.enemies.Enemy
+	 * @see #getMisplacedInChildren()
+	 */
+	public void refresh() {
+
+		if (requiresRefresh() && !getMisplacedInChildren().isEmpty()) {
+			System.out.println("Enemies have moved outside of the playable space and have been lost.");
+		}
+
+		requiresRefresh = false;
+
+	}
+
+	/**
+	 * Retrieves whether this sections enemies have moved outside of this
+	 * sections boundaries.
+	 * 
+	 * @return <code>boolean</code> of the state of the enemies locations in
+	 *         this section.
+	 */
+	public boolean requiresRefresh() {
+
+		return requiresRefresh;
+
+	}
+
 	// Private Methods
 	// --------------------------------------------------------------------------------------
+
+	/**
+	 * Retrieves all the misplaced constructs in this section and its child
+	 * sections. In addition to that, this method also attempts to find the
+	 * correct section for the misplaced constructs to be stored in.
+	 * 
+	 * @return <code>LinkedList</code> of type <code>Construct</code> that
+	 *         contains all the misplaced constructs of this section and its
+	 *         child sections.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see #refresh()
+	 * @see #getMisplaced(Section)
+	 * @see #getMisplacedInChildren()
+	 */
+	private LinkedList<Construct> getMisplacedInChildren() {
+
+		// Creates a linked list to store all of the misplaced constructs in the
+		// current section.
+		LinkedList<Construct> misplaced = new LinkedList<Construct>();
+
+		// If this section is the parent of two leaf nodes of the section tree.
+		if (leftChild.isLeafNode() && rightChild.isLeafNode()) {
+
+			// Check if both of the child section require a refresh and if so
+			// inspect all of their construct list to find the misplaced
+			// constructs
+			if (leftChild.requiresRefresh()) {
+				misplaced.addAll(getMisplaced(leftChild));
+			}
+
+			if (rightChild.requiresRefresh()) {
+				misplaced.addAll(getMisplaced(rightChild));
+			}
+
+			// Attempt to store move misplaced constructs into the correct
+			// children of this section.
+			addMisplacedToChildren(misplaced);
+
+		} else {
+
+			// Retrieve all the misplaced constructs from this sections children
+			// and add them to the LinkedList of misplaced constructs.
+			misplaced.addAll(leftChild.getMisplacedInChildren());
+			misplaced.addAll(rightChild.getMisplacedInChildren());
+
+			// Attempt to store move misplaced constructs into the correct
+			// children of this section.
+			addMisplacedToChildren(misplaced);
+
+		}
+
+		// There will only be constructs returned if they could not be contained
+		// by this section and therefore must be returned to this sections
+		// parent section.
+		return misplaced;
+	}
+
+	/**
+	 * Adds the <code>Construct</code>s that are contained in this section to
+	 * this section's children.
+	 * 
+	 * @param misplaced
+	 *            The <code>LinkedList</code> of type <code>Construct</code>
+	 *            that contains all the constructs that are misplaced.
+	 * 
+	 * @see environment.logic.constructs.Consruct
+	 * @see #getMisplacedInChildren()
+	 */
+	private void addMisplacedToChildren(LinkedList<Construct> misplaced) {
+
+		// Iterate through all of the misplaced constructs.
+		for (Construct con : misplaced) {
+
+			// If the current construct is encapsulated by this current section
+			// then it is added to this sections children and then removed from
+			// the list of misplaced constructs.
+			if (isContainedBy(con, this)) {
+				addConstruct(con);
+				misplaced.remove(con);
+			}
+		}
+
+	}
+
+	/**
+	 * Retrieves all the <code>Construct</code>s in the specified
+	 * <code>section</code> that don't overlap with the section and removes them
+	 * from the specified section.
+	 * 
+	 * @param section
+	 *            <code>Section</code> that the misplaced constructs will be
+	 *            removed from and returned.
+	 * @return <code>LinkedList</code> of type <code>Construct</code> that
+	 *         contains all the misplaced constructs in the specified section.
+	 * 
+	 * @see environment.logic.constructs.Construct
+	 * @see Section
+	 * @see #getMisplacedInChildren()
+	 */
+	private LinkedList<Construct> getMisplaced(Section section) {
+
+		// Create a list to store the constructs that should not be in the
+		// parameter section.
+		LinkedList<Construct> misplaced = new LinkedList<Construct>();
+
+		// Iterates through the list of constructs in the parameter section.
+		for (Construct con : section.constructs) {
+
+			// If the construct (con) is not contained by the parameter section
+			// then it is added to the list and removed from that sections list.
+			if (!isContainedBy(con, section)) {
+				misplaced.add(con);
+				section.constructs.remove(con);
+			}
+
+		}
+
+		return misplaced;
+	}
+
+	/**
+	 * This check is a specified <code>Construct</code> is contained with in a
+	 * specified <code>Section</code>.
+	 * 
+	 * @param construct
+	 *            <code>Construct</code> the may be contained by the specified
+	 *            section.
+	 * @param section
+	 *            <code>Section</code>
+	 * @return Whether the specified construct is in the specified section.
+	 */
+	private boolean isContainedBy(Construct construct, Section section) {
+
+		// Checks if the construct parameter is inside the parameter section
+		boolean isContained = construct.getX()
+				+ construct.getSprite().getEntity().getGraphicalObject().getWidth() >= section.x
+				&& construct.getX() <= section.x + section.width
+				&& construct.getY() + construct.getSprite().getEntity().getGraphicalObject().getHeight() >= section.y
+				&& construct.getY() <= section.y + section.height;
+
+		return isContained;
+	}
 
 	/**
 	 * Collects all the constructs from this section's child sections.
@@ -421,7 +618,7 @@ public class Section {
 
 		} else {
 
-			moveConstructs(changeInY, changeInY);
+			moveConstructs(changeInX, changeInY);
 
 		}
 	}
@@ -456,7 +653,6 @@ public class Section {
 				moved.add(con);
 
 			}
-
 		}
 	}
 
@@ -505,25 +701,14 @@ public class Section {
 	 */
 	private void addToChildren(Construct construct) {
 
-		// Assigns the fundamental details of the parameter construct.
-		int constructX = construct.getX();
-		int constructY = construct.getY();
-		int constructWidth = construct.getSprite().getEntity().getGraphicalObject().getWidth();
-		int constructHeight = construct.getSprite().getEntity().getGraphicalObject().getHeight();
+		// Checks if the parameter construct is inside or at any point enters
+		// the left child section.
+
+		boolean insideLeftChild = isContainedBy(construct, leftChild);
 
 		// Checks if the parameter construct is inside or at any point enters
-		// the
-		// left child section.
-		boolean insideLeftChild = constructX + constructWidth >= leftChild.x
-				&& constructX <= leftChild.x + leftChild.width && constructY + constructHeight >= leftChild.y
-				&& constructY <= leftChild.y + leftChild.height;
-
-		// Checks if the parameter construct is inside or at any point enters
-		// the
-		// right child section.
-		boolean insideRightChild = constructX + constructWidth >= rightChild.x
-				&& constructX <= rightChild.x + rightChild.width && constructY + constructHeight >= rightChild.y
-				&& constructY <= rightChild.y + rightChild.height;
+		// the right child section.
+		boolean insideRightChild = isContainedBy(construct, rightChild);
 
 		if (insideLeftChild) {
 			leftChild.addConstruct(construct);
@@ -580,31 +765,20 @@ public class Section {
 	 */
 	private LinkedList<Construct> getFromChildren(Construct construct) {
 
-		// Assigns the fundamental details of the specified construct to local
-		// variables to increase ease of reading.
-		int constructX = construct.getX();
-		int constructY = construct.getY();
-		int constructWidth = construct.getSprite().getEntity().getGraphicalObject().getWidth();
-		int constructHeight = construct.getSprite().getEntity().getGraphicalObject().getHeight();
-
 		// Checks if the specified construct overlaps with the left child
 		// section at any point.
-		boolean insideLeftChild = constructX + constructWidth >= leftChild.x
-				&& constructX <= leftChild.x + leftChild.width && constructY + constructHeight >= leftChild.y
-				&& constructY <= leftChild.y + leftChild.height;
+		boolean insideLeftChild = isContainedBy(construct, leftChild);
 
 		// Checks if the specified construct overlaps with the right child
 		// section at any point.
-		boolean insideRightChild = constructX + constructWidth >= rightChild.x
-				&& constructX <= rightChild.x + rightChild.width && constructY + constructHeight >= rightChild.y
-				&& constructY <= rightChild.y + rightChild.height;
+		boolean insideRightChild = isContainedBy(construct, rightChild);
 
 		// Initialises a linked list that will store the constructs that are
 		// returned from the child sections.
 		LinkedList<Construct> childConstructs = new LinkedList<Construct>();
 
 		if (insideLeftChild) {
-			
+
 			// If the specified construct overlaps with the left child section
 			// the constructs from the left child section are retrieved.
 			childConstructs.addAll(leftChild.getSectionConstructs(construct));
