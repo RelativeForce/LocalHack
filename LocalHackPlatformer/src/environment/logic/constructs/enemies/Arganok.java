@@ -1,6 +1,5 @@
 package environment.logic.constructs.enemies;
 
-import java.io.File;
 import environment.Constants;
 import environment.Main;
 import environment.logic.Direction;
@@ -9,12 +8,12 @@ import environment.logic.constructs.Construct;
 import environment.logic.entities.Sprite;
 
 /**
- * 
+ * @version 1.0
  * @author Joshua_Eddy
  *
  */
 public class Arganok extends Construct implements Enemy {
-
+	
 	private Point startHover;
 	private Point endHover;
 	private Direction hoverDirection;
@@ -28,8 +27,7 @@ public class Arganok extends Construct implements Enemy {
 	 */
 	public Arganok(Point inital, int trackingRadius) {
 		super(inital.x, inital.y,
-				new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.ARGANOK_FILENAME, 35,
-						27, inital.x, inital.y));
+				new Sprite(Constants.ARGANOK_SPRITE_DETAILS, inital.x, inital.y));
 		this.trackingRadius = trackingRadius;
 		movesMade = 0;
 		setHoverBounds();
@@ -38,6 +36,10 @@ public class Arganok extends Construct implements Enemy {
 
 	@Override
 	public void getMove() {
+		
+		if(getX() > endHover.x || getX() < startHover.x){
+			setHoverBounds();
+		}
 
 		int x = getX() - (getSprite().getEntity().getGraphicalObject().getWidth() / 2);
 		int y = getY() - (getSprite().getEntity().getGraphicalObject().getHeight() / 2);

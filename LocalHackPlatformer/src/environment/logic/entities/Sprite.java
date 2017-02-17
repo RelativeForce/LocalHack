@@ -1,8 +1,8 @@
 package environment.logic.entities;
 
 import java.util.ArrayList;
-
 import environment.graphics.objects.SpriteFrame;
+import environment.logic.SpriteDetails;
 import resources.SpriteSheetReader;
 
 /**
@@ -47,7 +47,7 @@ public class Sprite {
 	 * @see environment.graphics.objects.GraphicalObject
 	 * @see environment.graphics.objects.SpriteFrame
 	 */
-	public Sprite(String path, int width, int height, int x, int y) {
+	public Sprite(SpriteDetails details, int x, int y) {
 
 		setX(x);
 		setY(y);
@@ -55,7 +55,7 @@ public class Sprite {
 
 		frames = new ArrayList<Entity>();
 
-		for (SpriteFrame frameSprite : SpriteSheetReader.getSprites(path, width, height)) {
+		for (SpriteFrame frameSprite : SpriteSheetReader.getSprites(details.getPath(), details.getWidth(), details.getHeight())) {
 
 			frames.add(Entity.newSpriteFrame(x, y, frameSprite.getPixels()));
 

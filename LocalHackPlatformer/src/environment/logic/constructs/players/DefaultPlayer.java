@@ -37,8 +37,7 @@ public class DefaultPlayer extends Construct implements Player {
 	 */
 	public DefaultPlayer(int x, int y, int width, int height) {
 
-		super(x, y, new Sprite(new File(System.getProperty("user.dir")).getPath() + "\\" + Constants.PLAYER_FILENAME,
-				16, 32, x, y));
+		super(x, y, new Sprite(Constants.PLAYER_SPRITE_DETAILS, x, y));
 
 		movesMade = 0;
 		ySpeed = 0;

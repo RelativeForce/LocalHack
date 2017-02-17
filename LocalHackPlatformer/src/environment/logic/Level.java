@@ -83,8 +83,8 @@ public class Level {
 	public LinkedList<Entity> getEntities() {
 
 		LinkedList<Entity> entities = new LinkedList<Entity>();
-		
-		for(Construct con : getConstructs()){
+
+		for (Construct con : getConstructs()) {
 			entities.add(con.getSprite().getEntity());
 		}
 
@@ -97,10 +97,13 @@ public class Level {
 	 * @return ArrayList of all the Enemy Entities in the Level.
 	 */
 	public LinkedList<Construct> getConstructs() {
-		mainSection.relocateEmemies();
 		return mainSection.getConstructs();
 	}
 
+	public void refreshLevel(){
+		mainSection.refresh();
+	}
+	
 	public void loadLevel() {
 
 		StartX = 0;
@@ -108,13 +111,13 @@ public class Level {
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
 		levelloader.getLevelDetails(currentLevel);
 		mainSection = new Section(0, 0, Length, 500);
-		
+
 		LinkedList<Construct> constructs = new LinkedList<Construct>();
 		constructs.addAll(levelloader.getComponents(currentLevel));
 		constructs.addAll(levelloader.getObjectives(currentLevel));
 		constructs.addAll(levelloader.getEnemies(currentLevel));
-		
-		for(Construct con : constructs){
+
+		for (Construct con : constructs) {
 			mainSection.addConstruct(con);
 		}
 	}
