@@ -1,7 +1,6 @@
 package environment.logic.constructs.players;
 
 import java.awt.Color;
-import java.io.File;
 import environment.Constants;
 import environment.Main;
 import environment.logic.Level;

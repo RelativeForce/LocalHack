@@ -11,7 +11,7 @@ import environment.logic.constructs.Construct;
  * <code>{@link #addConstruct(Construct)}</code>.
  * 
  * @author Joshua_Eddy
- * @version 1.2
+ * @version 1.3
  * @see environment.logic.constructs.Construct
  * @see environment.logic.Level
  */
