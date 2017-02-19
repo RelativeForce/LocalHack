@@ -27,7 +27,7 @@ public class LevelLoader {
 	/**
 	 * Constructs a new LevelLoader object.
 	 * 
-	 * @param directory
+	 * @param directoryPath
 	 *            The path of the parent directory which contains the levels
 	 */
 	public LevelLoader(String directoryPath) {

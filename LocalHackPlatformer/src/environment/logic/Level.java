@@ -44,10 +44,6 @@ public class Level {
 
 	/**
 	 * Constructs a new Level object.
-	 * 
-	 * @param levelNumber
-	 *            The number of the level that is to be loaded from computer
-	 *            memory.
 	 */
 	public Level() {
 
@@ -126,7 +122,7 @@ public class Level {
 	 * Checks if a specified <code>Construct</code> has collided with another
 	 * <code>Construct</code> in the level of type <code>Terrain</code>. If the
 	 * <code>Construct</code> does not collide with any elements of the terrain
-	 * the function will return </code>null</code>. Otherwise the function will
+	 * the function will return <code>null</code>. Otherwise the function will
 	 * return the <strong>first</strong> element in the terrain that the
 	 * specified <code>Construct</code> collides with.
 	 * 
@@ -164,7 +160,7 @@ public class Level {
 	 * Checks if a specified <code>Construct</code> has collided with another
 	 * <code>Construct</code> in the level of type <code>Enemy</code>. If the
 	 * <code>Construct</code> does not collide with any of the enemies in the
-	 * level the function will return </code>null</code>. Otherwise the function
+	 * level the function will return <code>null</code>. Otherwise the function
 	 * will return the <strong>first</strong> enemy in the level that the
 	 * specified <code>Construct</code> collides with.
 	 * 
@@ -204,7 +200,7 @@ public class Level {
 	 * <code>Construct</code> in the <code>Level</code> of type
 	 * <code>Objective</code>. If the <code>Construct</code> does not collide
 	 * with any of the objectives in the level the function will return
-	 * </code>null</code>. Otherwise the function will return the
+	 * <code>null</code>. Otherwise the function will return the
 	 * <strong>first</strong> enemy in the level that the specified
 	 * <code>Construct</code> collides with.
 	 * 

@@ -1,6 +1,7 @@
 package environment.logic;
 
 import java.util.LinkedList;
+
 import environment.logic.constructs.Construct;
 
 /**
@@ -11,7 +12,7 @@ import environment.logic.constructs.Construct;
  * <code>{@link #addConstruct(Construct)}</code>.
  * 
  * @author Joshua_Eddy
- * @version 1.2
+ * @version 1.4
  * @see environment.logic.constructs.Construct
  * @see environment.logic.Level
  */
@@ -35,8 +36,9 @@ public class Section {
 
 	/**
 	 * Temporarily stores the <code>Construct</code>s that have been moved when
-	 * the section tree is moved in a specified direction. This exists because a
-	 * single <code>Construct</code> may be stored in multiple sections.
+	 * the <code>Section</code> tree is moved in a specified direction. This
+	 * exists because a single <code>Construct</code> may be stored in multiple
+	 * sections.
 	 * 
 	 * @see environment.logic.constructs.Construct
 	 * @see #move(int, int)
@@ -44,8 +46,8 @@ public class Section {
 	private static LinkedList<Construct> moved;
 
 	/**
-	 * This denotes whether the current section requires its parent section to
-	 * adjust the locations of the enemies of the enemies in the level.
+	 * This denotes whether the current <code>Section</code> requires its parent
+	 * <code>Section</code> to adjust the locations of the enemies in the level.
 	 * 
 	 * @see environment.logic.constructs.Construct
 	 * @see #getConstructs()
@@ -56,11 +58,11 @@ public class Section {
 	// -------------------------------------------------------------------------------------
 
 	/**
-	 * This denotes the child <code>Section</code> that encompasses the left
-	 * half of the parent section giving rise to the binary tree structure. If
-	 * this is a leaf node of <code>Section</code> tree it will store the list
-	 * of <code>Construct</code>s otherwise this <code>Section</code> will
-	 * contain its own child <code>Section</code>s.
+	 * This denotes the child <code>Section</code> that encompasses the
+	 * <strong>left</strong> half of the parent section giving rise to the
+	 * binary tree structure. If this is a leaf node of <code>Section</code>
+	 * tree it will store the list of <code>Construct</code>s otherwise this
+	 * <code>Section</code> will contain its own child <code>Section</code>s.
 	 * 
 	 * @see Section
 	 * @see environment.logic.constructs.Construct
@@ -68,11 +70,11 @@ public class Section {
 	private Section leftChild;
 
 	/**
-	 * This denotes the child <code>Section</code> that encompasses the right
-	 * half of the parent section giving rise to the binary tree structure. If
-	 * this is a leaf node of <code>Section</code> tree it will store the list
-	 * of <code>Construct</code>s otherwise this <code>Section</code> will
-	 * contain its own child <code>Section</code>s.
+	 * This denotes the child <code>Section</code> that encompasses the
+	 * <strong>right</strong> half of the parent section giving rise to the
+	 * binary tree structure. If this is a leaf node of <code>Section</code>
+	 * tree it will store the list of <code>Construct</code>s otherwise this
+	 * <code>Section</code> will contain its own child <code>Section</code>s.
 	 * 
 	 * @see Section
 	 * @see environment.logic.constructs.Construct
@@ -81,9 +83,10 @@ public class Section {
 
 	/**
 	 * Contains the list of <code>Construct</code>s that denote a specific
-	 * section of the level. This filed will be initialised as <code>null</code>
+	 * region in the level. This filed will be initialised as <code>null</code>
 	 * if this <code>Section</code> is not a leaf node of the
-	 * <code>Section</code> binary tree.
+	 * <code>Section</code> binary tree. <code>Construct</code>s that overlap
+	 * from <code>Section</code>s ill also be stored in this list.
 	 * 
 	 * @see Section
 	 * @see environment.logic.constructs.Construct
@@ -94,7 +97,7 @@ public class Section {
 	/**
 	 * The <code>int</code> x coordinate of this <code>Section</code>. This is
 	 * used to asses if a <code>Construct</code> will be contained within this
-	 * section of the level.
+	 * <code>Section<code>.
 	 * 
 	 * @see environment.logic.constructs.Construct
 	 * @see #addConstruct(Construct)
@@ -104,7 +107,7 @@ public class Section {
 	/**
 	 * The <code>int</code> y coordinate of this <code>Section</code>. This is
 	 * used to asses if a <code>Construct</code> will be contained within this
-	 * section of the level.
+	 * <code>Section</code>.
 	 * 
 	 * @see environment.logic.constructs.Construct
 	 * @see #addConstruct(Construct)
@@ -113,8 +116,8 @@ public class Section {
 
 	/**
 	 * The <code>int</code> width of this <code>Section</code>. This is used to
-	 * asses if a <code>Construct</code> will be contained within this section
-	 * of the level.
+	 * asses if a <code>Construct</code> will be contained within this
+	 * <code>Section</code>.
 	 * 
 	 * @see environment.logic.constructs.Construct
 	 * @see #addConstruct(Construct)
@@ -123,8 +126,8 @@ public class Section {
 
 	/**
 	 * The <code>int</code> height of this <code>Section</code>. This is used to
-	 * asses if a <code>Construct</code> will be contained within this section
-	 * of the level.
+	 * asses if a <code>Construct</code> will be contained within this
+	 * <code>Section</code>.
 	 * 
 	 * @see environment.logic.constructs.Construct
 	 * @see #addConstruct(Construct)
@@ -135,11 +138,12 @@ public class Section {
 	// --------------------------------------------------------------------------------------
 
 	/**
-	 * Constructs a new Section while also generating its corresponding
-	 * sub-sections based on the pre-defined maximum width and height of a
-	 * section. Each section has a fixed size which is immutable. The root
-	 * <code>Section</code> is constructed by the client and using the root
-	 * nodes details all child <code>Section</code>s are constructed.
+	 * Constructs a new <code>Section</code> while also generating its
+	 * corresponding child <code>Section</code>s based on the predefined maximum
+	 * width and height of a section. Each section has a fixed size which is
+	 * immutable. The root <code>Section</code> is constructed by the client and
+	 * using the root nodes details all child <code>Section</code>s are
+	 * constructed.
 	 * 
 	 * @param x
 	 *            The <code>int</code> x coordinate of the <code>Section</code>.
@@ -221,7 +225,8 @@ public class Section {
 
 	/**
 	 * Adds a specified <code>Construct</code> to the level by evaluating which
-	 * leaf <code>Section</code> the construct should be stored in and then
+	 * leaf <code>Section</code> the
+	 * <code>Construct</code> should be stored in and then
 	 * storing it there.
 	 * 
 	 * @param construct
@@ -289,7 +294,7 @@ public class Section {
 	 *         contains all the constructs in the level.
 	 *
 	 * @see environment.logic.constructs.Construct
-	 * @see #getTreeConstructs()
+	 * @see #getAllFromChildren()
 	 * @see java.util.LinkedList
 	 */
 	public LinkedList<Construct> getConstructs() {
@@ -299,7 +304,7 @@ public class Section {
 			// Check if any of the constructs have moved outside of this
 			// section.
 			for (Construct con : this.constructs) {
-				if (!isContainedBy(con, this)) {
+				if (!this.contains(con)) {
 					requiresRefresh = true;
 				}
 			}
@@ -389,7 +394,7 @@ public class Section {
 	 * Refreshes all the sections where the enemies are stored in to ensure that
 	 * all the enemies are stored in the correct sections.
 	 * 
-	 * @see environment.logic.constructs.Consturct
+	 * @see environment.logic.constructs.Construct
 	 * @see environment.logic.constructs.enemies.Enemy
 	 * @see #getMisplacedInChildren()
 	 */
@@ -425,8 +430,8 @@ public class Section {
 	 * correct section for the misplaced constructs to be stored in.
 	 * 
 	 * @return <code>LinkedList</code> of type <code>Construct</code> that
-	 *         contains all the misplaced constructs of this section and its
-	 *         child sections.
+	 *         contains all the misplaced constructs that could no be correctly
+	 *         placed in this section and its child sections.
 	 * 
 	 * @see environment.logic.constructs.Construct
 	 * @see #refresh()
@@ -442,16 +447,10 @@ public class Section {
 		// If this section is the parent of two leaf nodes of the section tree.
 		if (leftChild.isLeafNode() && rightChild.isLeafNode()) {
 
-			// Check if both of the child section require a refresh and if so
-			// inspect all of their construct list to find the misplaced
-			// constructs
-			if (leftChild.requiresRefresh()) {
-				misplaced.addAll(getMisplaced(leftChild));
-			}
-
-			if (rightChild.requiresRefresh()) {
-				misplaced.addAll(getMisplaced(rightChild));
-			}
+			// inspect all of the constructs in the leaf nodes to find the
+			// misplaced constructs
+			misplaced.addAll(getMisplaced(leftChild));
+			misplaced.addAll(getMisplaced(rightChild));
 
 			// Attempt to store move misplaced constructs into the correct
 			// children of this section.
@@ -477,12 +476,13 @@ public class Section {
 	}
 
 	/**
-	 * Adds the <code>Construct</code>s that are contained in this section to
-	 * this section's children.
+	 * Adds the <code>Construct</code>s that are contained in this
+	 * <code>Section</code> to this <code>Section</code>'s children.
 	 * 
 	 * @param misplaced
 	 *            The <code>LinkedList</code> of type <code>Construct</code>
-	 *            that contains all the constructs that are misplaced.
+	 *            that contains all the <code>Construct</code>s that are
+	 *            misplaced.
 	 * 
 	 * @see environment.logic.constructs.Consruct
 	 * @see #getMisplacedInChildren()
@@ -495,7 +495,7 @@ public class Section {
 			// If the current construct is encapsulated by this current section
 			// then it is added to this sections children and then removed from
 			// the list of misplaced constructs.
-			if (isContainedBy(con, this)) {
+			if (this.contains(con)) {
 				addConstruct(con);
 				misplaced.remove(con);
 			}
@@ -529,7 +529,7 @@ public class Section {
 
 			// If the construct (con) is not contained by the parameter section
 			// then it is added to the list and removed from that sections list.
-			if (!isContainedBy(con, section)) {
+			if (!section.contains(con)) {
 				misplaced.add(con);
 				section.constructs.remove(con);
 			}
@@ -540,24 +540,22 @@ public class Section {
 	}
 
 	/**
-	 * This check is a specified <code>Construct</code> is contained with in a
-	 * specified <code>Section</code>.
+	 * This check is a specified <code>Construct</code> is contained with in the
+	 * <code>Section</code> that called this function.
 	 * 
 	 * @param construct
-	 *            <code>Construct</code> the may be contained by the specified
-	 *            section.
-	 * @param section
-	 *            <code>Section</code>
+	 *            <code>Construct</code> the may be contained by
+	 *            <code>this</code>.
 	 * @return Whether the specified construct is in the specified section.
 	 */
-	private boolean isContainedBy(Construct construct, Section section) {
+	private boolean contains(Construct construct) {
 
 		// Checks if the construct parameter is inside the parameter section
 		boolean isContained = construct.getX()
-				+ construct.getSprite().getEntity().getGraphicalObject().getWidth() >= section.x
-				&& construct.getX() <= section.x + section.width
-				&& construct.getY() + construct.getSprite().getEntity().getGraphicalObject().getHeight() >= section.y
-				&& construct.getY() <= section.y + section.height;
+				+ construct.getSprite().getEntity().getGraphicalObject().getWidth() >= this.x
+				&& construct.getX() <= this.x + this.width
+				&& construct.getY() + construct.getSprite().getEntity().getGraphicalObject().getHeight() >= this.y
+				&& construct.getY() <= this.y + this.height;
 
 		return isContained;
 	}
@@ -702,19 +700,14 @@ public class Section {
 	private void addToChildren(Construct construct) {
 
 		// Checks if the parameter construct is inside or at any point enters
-		// the left child section.
-
-		boolean insideLeftChild = isContainedBy(construct, leftChild);
-
-		// Checks if the parameter construct is inside or at any point enters
-		// the right child section.
-		boolean insideRightChild = isContainedBy(construct, rightChild);
-
-		if (insideLeftChild) {
+		// the left child section. If that is true it is added to that section.
+		if (leftChild.contains(construct)) {
 			leftChild.addConstruct(construct);
 		}
 
-		if (insideRightChild) {
+		// Checks if the parameter construct is inside or at any point enters
+		// the right child section. If that is true it is added to that section.
+		if (rightChild.contains(construct)) {
 			rightChild.addConstruct(construct);
 		}
 	}
@@ -739,11 +732,8 @@ public class Section {
 			// Checks if the construct to be added in already in the list or
 			// not, if not the specified construct is added to the list of
 			// constructs.
-
 			if (!constructs.contains(constructToAdd)) {
-
 				constructs.add(constructToAdd);
-
 			}
 		}
 	}
@@ -765,26 +755,22 @@ public class Section {
 	 */
 	private LinkedList<Construct> getFromChildren(Construct construct) {
 
-		// Checks if the specified construct overlaps with the left child
-		// section at any point.
-		boolean insideLeftChild = isContainedBy(construct, leftChild);
-
-		// Checks if the specified construct overlaps with the right child
-		// section at any point.
-		boolean insideRightChild = isContainedBy(construct, rightChild);
-
 		// Initialises a linked list that will store the constructs that are
 		// returned from the child sections.
 		LinkedList<Construct> childConstructs = new LinkedList<Construct>();
 
-		if (insideLeftChild) {
+		// Checks if the specified construct overlaps with the left child
+		// section at any point.
+		if (leftChild.contains(construct)) {
 
 			// If the specified construct overlaps with the left child section
 			// the constructs from the left child section are retrieved.
 			childConstructs.addAll(leftChild.getSectionConstructs(construct));
 		}
 
-		if (insideRightChild) {
+		// Checks if the specified construct overlaps with the right child
+		// section at any point.
+		if (rightChild.contains(construct)) {
 
 			// If the specified construct overlaps with the right child section
 			// the constructs from the left child section are retrieved.
