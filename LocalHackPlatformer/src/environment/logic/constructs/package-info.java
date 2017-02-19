@@ -14,7 +14,7 @@
  *
  *@see environment.logic
  *@see environment.logic.constructs.enemies
- *@see environment.logic.constructs.objctives
+ *@see environment.logic.constructs.objectives
  *
  */
 package environment.logic.constructs;

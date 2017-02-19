@@ -4,14 +4,14 @@ import environment.graphics.objects.*;
 import environment.logic.Point;
 
 /**
- * Encapsulates the behaviour of a <code>GraphicalObject<code> that will be
- * displayed on the <code>Screen<code>.
+ * Encapsulates the behaviour of a <code>GraphicalObject</code> that will be
+ * displayed on the <code>Screen</code>.
  * 
  * @author Joshua_Eddy
- * @see GraphicalObject
- * @see Screen
- * @see HitBox
- * @see Point
+ * @see environment.graphics.objects.GraphicalObject
+ * @see environment.graphics.Screen
+ * @see environment.logic.entities.HitBox
+ * @see environment.logic.Point
  */
 public class Entity {
 
@@ -137,18 +137,18 @@ public class Entity {
 	}
 
 	/**
-	 * Sets the x coordinate value of the <code>Entity<code>.
+	 * Sets the x coordinate value of the <code>Entity</code>.
 	 * 
-	 * @param x The <code>int</code> x value for the <code>Entity<code>.
+	 * @param x The <code>int</code> x value for the <code>Entity</code>.
 	 */
 	public void setX(int x) {
 		position.x = x;
 	}
 
 	/**
-	 * Sets the y coordinate value of the <code>Entity<code>.
+	 * Sets the y coordinate value of the <code>Entity</code>.
 	 * 
-	 * @param y The <code>int</code> y value for the <code>Entity<code>.
+	 * @param y The <code>int</code> y value for the <code>Entity</code>.
 	 */
 	public void setY(int y) {
 		position.y = y;
@@ -165,20 +165,20 @@ public class Entity {
 	}
 
 	/**
-	 * Retrieves the y coordinate of the <code>Entity<code>.
+	 * Retrieves the y coordinate of the <code>Entity</code>.
 	 * 
-	 * @return The current <code>int<code> y coordinate of the
-	 *         <code>Entity<code>.
+	 * @return The current <code>int</code> y coordinate of the
+	 *         <code>Entity</code>.
 	 */
 	public int getY() {
 		return position.y;
 	}
 
 	/**
-	 * Retrieves the <code>GraphicalObject<code> that denotes the
-	 * <code>Entity<code>.
+	 * Retrieves the <code>GraphicalObject</code> that denotes the
+	 * <code>Entity</code>.
 	 * 
-	 * @return The <code>GraphicalObject<code> of the <code>Entity<code>.
+	 * @return The <code>GraphicalObject</code> of the <code>Entity</code>.
 	 * 
 	 * @see GraphicalObject
 	 */
@@ -187,9 +187,9 @@ public class Entity {
 	}
 
 	/**
-	 * Retrieves the <code>HitBox<code> of the <code>Entity<code>.
+	 * Retrieves the <code>HitBox</code> of the <code>Entity</code>.
 	 * 
-	 * @return The <code>HitBox<code> of the <code>Entity<code>.
+	 * @return The <code>HitBox</code> of the <code>Entity</code>.
 	 * 
 	 * @see HitBox
 	 */
@@ -202,7 +202,7 @@ public class Entity {
 	 * 
 	 * @param o
 	 *            The
-	 *            <code>Object<code> that is to be checked against <code>this</code>.
+	 *            <code>Object</code> that is to be checked against <code>this</code>.
 	 * @return <code>boolean</code> of if the the object is identical to
 	 *         <code>this</code>.
 	 * 
