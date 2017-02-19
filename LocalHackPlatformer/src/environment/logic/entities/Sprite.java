@@ -1,8 +1,8 @@
 package environment.logic.entities;
 
 import java.util.ArrayList;
-
 import environment.graphics.objects.SpriteFrame;
+import environment.logic.SpriteDetails;
 import resources.SpriteSheetReader;
 
 /**
@@ -25,17 +25,12 @@ public class Sprite {
 	private int y;
 
 	/**
-	 * Constructs a new <code>Sprite</code>.</br>
+	 * Constructs a new <code>Sprite</code>.<br>
 	 * If the <code>path</code> is invalid an IOException will be thrown.
 	 * 
-	 * @param path
-	 *            The <code>String</code> file path of the sprite image file.
-	 * @param width
-	 *            The <code>int</code> width of the sprites in the image file in
-	 *            pixels.
-	 * @param height
-	 *            The <code>int</code> height of the sprites in the image file
-	 *            in pixels.
+	 * @param details
+	 *            <code>SpriteDetails</code> All of the information required to
+	 *            find and read the sprite sheet.
 	 * @param x
 	 *            The <code>int</code> x of the sprite on the
 	 *            <code>Screen</code>.
@@ -47,7 +42,7 @@ public class Sprite {
 	 * @see environment.graphics.objects.GraphicalObject
 	 * @see environment.graphics.objects.SpriteFrame
 	 */
-	public Sprite(String path, int width, int height, int x, int y) {
+	public Sprite(SpriteDetails details, int x, int y) {
 
 		setX(x);
 		setY(y);
@@ -55,7 +50,8 @@ public class Sprite {
 
 		frames = new ArrayList<Entity>();
 
-		for (SpriteFrame frameSprite : SpriteSheetReader.getSprites(path, width, height)) {
+		for (SpriteFrame frameSprite : SpriteSheetReader.getSprites(details.getPath(), details.getWidth(),
+				details.getHeight())) {
 
 			frames.add(Entity.newSpriteFrame(x, y, frameSprite.getPixels()));
 
@@ -66,7 +62,7 @@ public class Sprite {
 	}
 
 	/**
-	 * Constructs a new <code>Sprite</code>.</br>
+	 * Constructs a new <code>Sprite</code>.<br>
 	 * 
 	 * @param frames
 	 *            The collection of <code>Entity</code>s that denote the
@@ -94,7 +90,7 @@ public class Sprite {
 	}
 
 	/**
-	 * Constructs a new <code>Sprite</code>.</br>
+	 * Constructs a new <code>Sprite</code>.<br>
 	 * 
 	 * @param frame
 	 *            The single <code>Entity</code> that denotes the sprite.

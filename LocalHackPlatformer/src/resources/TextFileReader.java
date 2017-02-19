@@ -5,15 +5,20 @@ import java.util.Scanner;
 
 /**
  * Contains the basic file IO processes used by the resource managers.
+ * 
  * @author Joshua_Eddy
  *
  */
 public class TextFileReader {
 
 	/**
-	 * Gets a scanner which contains each line of the file specified in the file name located in the directory.
-	 * @param fileName The filename of the file.
-	 * @param directory The path of the parent directory to the file.
+	 * Gets a scanner which contains each line of the file specified in the file
+	 * name located in the directory.
+	 * 
+	 * @param fileName
+	 *            The filename of the file.
+	 * @param directory
+	 *            The path of the parent directory to the file.
 	 * @return A Scanner of the file.
 	 */
 	public static Scanner getScannedFile(String fileName, File[] directory) {
@@ -31,8 +36,11 @@ public class TextFileReader {
 
 	/**
 	 * Retrieves a file from a directory.
-	 * @param fileName The filename of the file.
-	 * @param directory The path of the parent directory to the file.
+	 * 
+	 * @param fileName
+	 *            The filename of the file.
+	 * @param directory
+	 *            The path of the parent directory to the file.
 	 * @return A raw File.
 	 */
 	public static File getFile(String fileName, File[] directory) {
@@ -53,8 +61,11 @@ public class TextFileReader {
 
 	/**
 	 * Gets the files in a specified directory.
-	 * @param directoryPath The specified directory.
-	 * @return
+	 * 
+	 * @param directoryPath
+	 *            The specified directory.
+	 * @return <code>File[]</code> that contains all the files in the specified
+	 *         directory directory.
 	 */
 	public static File[] getDirectory(String directoryPath) {
 		File[] directory = null;

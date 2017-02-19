@@ -17,9 +17,10 @@ public class LevelChange extends Construct implements Objective{
 	
 	private int levelLink;
 	
-
 	/**
 	 * Constructs a LevelChange that when intercepted by the player will change the current level.
+	 * @param x <code>int</code> X coordinate of the level change.
+	 * @param y <code>int</code> Y coordinate of the level change.
 	 * @param door The door that will change the level when intercepted by the player.
 	 * @param levelLink The level that this door links to.
 	 */

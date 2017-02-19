@@ -2,6 +2,7 @@ package environment;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import environment.graphics.*;
 import environment.logic.*;
@@ -38,12 +39,12 @@ public class Main {
 	private static ThreadHandler threadHandler;
 	private static Display display;
 	private static Screen screen;
-	
 
 	/**
 	 * Starts the game.
 	 * 
-	 * @param args Unused.
+	 * @param args
+	 *            Unused.
 	 */
 	public static void main(String[] args) {
 
@@ -61,7 +62,7 @@ public class Main {
 		// Thread initialisation
 		threadHandler = new ThreadHandler();
 		threadHandler.startThreads();
-		
+
 	}
 
 	/**
@@ -69,15 +70,16 @@ public class Main {
 	 * 
 	 */
 	public static void start() {
-	
+
 		level.loadLevel();
 		player = new DefaultPlayer(Level.StartPosition.x, Level.StartPosition.y, 20, 20);
-		
+
 	}
 
 	protected static void playerThread() {
 
-		if(!transitionScreen.isActive){
+		if (!transitionScreen.isActive) {
+			level.refreshLevel();
 			display.handleKeys();
 			player.gravity();
 			player.checkForDeath();
@@ -100,10 +102,10 @@ public class Main {
 		if (transitionScreen.isActive) {
 			if (!transitionScreen.isFullScreen && transitionScreen.willIncrement) {
 				transitionScreen.increment();
-			} else if(!transitionScreen.willIncrement) {
+			} else if (!transitionScreen.willIncrement) {
 				transitionScreen.decrement();
 			}
-			
+
 			if (transitionScreen.isFullScreen) {
 				start();
 			}
@@ -116,20 +118,20 @@ public class Main {
 		screen.clear();
 	}
 
-	protected static void enemyThread(){
-		if(!transitionScreen.isActive){
+	protected static void enemyThread() {
+		if (!transitionScreen.isActive) {
 			moveEnemies();
 		}
-		
 	}
-	
-	private static void moveEnemies(){
-		for(Construct construct : level.getConstructs()){
-			if(construct instanceof Enemy){
+
+	private static void moveEnemies() {
+		LinkedList<Construct> moved = new LinkedList<Construct>();
+
+		for (Construct construct : level.getConstructs()) {
+			if (construct instanceof Enemy && !(moved.contains(construct))) {
 				((Enemy) construct).getMove();
+				moved.add(construct);
 			}
-							
 		}
 	}
-	
 }
