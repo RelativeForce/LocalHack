@@ -76,17 +76,18 @@ public final class SpriteSheetReader {
 	}
 
 	/**
-	 * Read a spritesheet from a given path where each sprite is a fixed width
-	 * and height. Each sprite in the spritesheet must be of equal size.
+	 * Read a sprite sheet from a given path where each sprite is a fixed width
+	 * and height. Each sprite in the sprite sheet must be of equal size.
 	 * 
 	 * @param path
-	 *            The path to the spritesheet.
+	 *            The path to the sprite sheet.
 	 * @param width
 	 *            Sprite width.
 	 * @param height
 	 *            Sprite height.
-	 * @return The sprites contained within the target spritesheet.
-	 * @See SpriteFrame
+	 * @return The sprites contained within the target sprite sheet.
+	 * 
+	 * @see environment.graphics.objects.SpriteFrame
 	 */
 	public static final SpriteFrame[] getSprites(final String path, final int width, final int height) {
 

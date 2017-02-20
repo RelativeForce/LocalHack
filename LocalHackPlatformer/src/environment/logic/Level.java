@@ -44,10 +44,6 @@ public class Level {
 
 	/**
 	 * Constructs a new Level object.
-	 * 
-	 * @param levelNumber
-	 *            The number of the level that is to be loaded from computer
-	 *            memory.
 	 */
 	public Level() {
 
@@ -83,8 +79,8 @@ public class Level {
 	public LinkedList<Entity> getEntities() {
 
 		LinkedList<Entity> entities = new LinkedList<Entity>();
-		
-		for(Construct con : mainSection.getConstructs()){
+
+		for (Construct con : getConstructs()) {
 			entities.add(con.getSprite().getEntity());
 		}
 
@@ -100,6 +96,10 @@ public class Level {
 		return mainSection.getConstructs();
 	}
 
+	public void refreshLevel(){
+		mainSection.refresh();
+	}
+	
 	public void loadLevel() {
 
 		StartX = 0;
@@ -107,13 +107,13 @@ public class Level {
 		LevelLoader levelloader = new LevelLoader(currentDirectory.getPath());
 		levelloader.getLevelDetails(currentLevel);
 		mainSection = new Section(0, 0, Length, 500);
-		
+
 		LinkedList<Construct> constructs = new LinkedList<Construct>();
 		constructs.addAll(levelloader.getComponents(currentLevel));
 		constructs.addAll(levelloader.getObjectives(currentLevel));
 		constructs.addAll(levelloader.getEnemies(currentLevel));
-		
-		for(Construct con : constructs){
+
+		for (Construct con : constructs) {
 			mainSection.addConstruct(con);
 		}
 	}
@@ -122,7 +122,7 @@ public class Level {
 	 * Checks if a specified <code>Construct</code> has collided with another
 	 * <code>Construct</code> in the level of type <code>Terrain</code>. If the
 	 * <code>Construct</code> does not collide with any elements of the terrain
-	 * the function will return </code>null</code>. Otherwise the function will
+	 * the function will return <code>null</code>. Otherwise the function will
 	 * return the <strong>first</strong> element in the terrain that the
 	 * specified <code>Construct</code> collides with.
 	 * 
@@ -160,7 +160,7 @@ public class Level {
 	 * Checks if a specified <code>Construct</code> has collided with another
 	 * <code>Construct</code> in the level of type <code>Enemy</code>. If the
 	 * <code>Construct</code> does not collide with any of the enemies in the
-	 * level the function will return </code>null</code>. Otherwise the function
+	 * level the function will return <code>null</code>. Otherwise the function
 	 * will return the <strong>first</strong> enemy in the level that the
 	 * specified <code>Construct</code> collides with.
 	 * 
@@ -200,7 +200,7 @@ public class Level {
 	 * <code>Construct</code> in the <code>Level</code> of type
 	 * <code>Objective</code>. If the <code>Construct</code> does not collide
 	 * with any of the objectives in the level the function will return
-	 * </code>null</code>. Otherwise the function will return the
+	 * <code>null</code>. Otherwise the function will return the
 	 * <strong>first</strong> enemy in the level that the specified
 	 * <code>Construct</code> collides with.
 	 * 
@@ -248,27 +248,5 @@ public class Level {
 		}
 		return false;
 	}
-/*
-	private LinkedList<Construct> getSections(Construct otherConstruct, Point finalPosition){
-		
-		int intialX = otherConstruct.getX();
-		int intialY = otherConstruct.getY();
-		
-		LinkedList<Construct> sect1 = mainSection.getSectionConstructs(otherConstruct);
-		otherConstruct.setX(finalPosition.x);
-		otherConstruct.setY(finalPosition.y);
-		LinkedList<Construct> sect2 = mainSection.getSectionConstructs(otherConstruct);
-		otherConstruct.setX(intialX);
-		otherConstruct.setY(intialY);
-		
-		if(sect1.equals(sect2)){
-			return sect1;
-		}else{
-			sect1.addAll(sect2);
-			return sect1;
-		}
-		
-		
-	}
-	*/
+
 }

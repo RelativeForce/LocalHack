@@ -4,7 +4,7 @@ import environment.graphics.objects.GraphicalObject;
 
 /**
  * Denotes the outer boundaries of the region of pixels given by a
- * <code>GraphicalObject<code>. This class also handles the implementation for
+ * <code>GraphicalObject</code>. This class also handles the implementation for
  * detecting a collision between two entities.
  * 
  * @author Joshua_Eddy
@@ -20,11 +20,11 @@ public class HitBox {
 	private Integer[][] horizontalBoundaries;
 
 	/**
-	 * Constructs a new <code>HitBox<code> object.
+	 * Constructs a new <code>HitBox</code> object.
 	 * 
 	 * @param object
-	 *            The <code>GraphicalObject<code> from which the
-	 *            <code>HitBox<code> is derived.
+	 *            The <code>GraphicalObject</code> from which the
+	 *            <code>HitBox</code> is derived.
 	 * 
 	 * @see environment.graphics.objects.GraphicalObject
 	 */
@@ -36,16 +36,16 @@ public class HitBox {
 	}
 
 	/**
-	 * Retrieves the right and left boundary for each row of pixels.</br>
+	 * Retrieves the right and left boundary for each row of pixels.<br>
 	 * The row on which the boundaries lie is indexed by
-	 * <code>Integer<strong>[]</strong>[]</code>.</br>
+	 * <code>Integer<strong>[]</strong>[]</code>.<br>
 	 * The left boundary is given by
-	 * <code>Integer[]<strong>[0]</strong></code>.</br>
+	 * <code>Integer[]<strong>[0]</strong></code>.<br>
 	 * The right boundary is given by
-	 * <code>Integer[]<strong>[1]</strong></code>.</br>
+	 * <code>Integer[]<strong>[1]</strong></code>.<br>
 	 * 
 	 * @return The
-	 *         <code>Integer[][]<code> denoting the horizontal boundaries of the <code>HitBox</code>.
+	 *         <code>Integer[][]</code> denoting the horizontal boundaries of the <code>HitBox</code>.
 	 * 
 	 * @see environment.graphics.objects.GraphicalObject
 	 * @see Entity
@@ -55,16 +55,16 @@ public class HitBox {
 	}
 
 	/**
-	 * Retrieves the upper and lower boundary for each column of pixels.</br>
+	 * Retrieves the upper and lower boundary for each column of pixels.<br>
 	 * The column on which the boundaries lie is indexed by
-	 * <code>Integer<strong>[]</strong>[]</code>.</br>
+	 * <code>Integer<strong>[]</strong>[]</code>.<br>
 	 * The upper boundary is given by
-	 * <code>Integer[]<strong>[0]</strong></code>.</br>
+	 * <code>Integer[]<strong>[0]</strong></code>.<br>
 	 * The lower boundary is given by
-	 * <code>Integer[]<strong>[1]</strong></code>.</br>
+	 * <code>Integer[]<strong>[1]</strong></code>.<br>
 	 * 
 	 * @return The
-	 *         <code>Integer[][]<code> denoting the vertical boundaries of the <code>HitBox</code>.
+	 *         <code>Integer[][]</code> denoting the vertical boundaries of the <code>HitBox</code>.
 	 * 
 	 * @see environment.graphics.objects.GraphicalObject
 	 * @see Entity
