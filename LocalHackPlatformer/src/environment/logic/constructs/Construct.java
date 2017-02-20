@@ -11,8 +11,8 @@ import environment.logic.entities.Sprite;
  */
 public abstract class Construct {
 
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	private Sprite sprite;
 
 	/**

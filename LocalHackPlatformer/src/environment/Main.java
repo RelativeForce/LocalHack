@@ -11,6 +11,7 @@ import environment.logic.constructs.TransitionScreen;
 import environment.logic.constructs.enemies.Enemy;
 import environment.logic.constructs.players.DefaultPlayer;
 import environment.logic.constructs.players.Player;
+import environment.logic.constructs.weapons.Projectile;
 import environment.logic.entities.*;
 
 /**
@@ -94,9 +95,10 @@ public class Main {
 
 		entities.addAll(level.getEntities());
 		entities.add(player.getEntity());
-
+		entities.add((new Projectile(50, 10)).getSprite().getEntity());
 		for (Entity entity : entities) {
 			screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
+			
 		}
 
 		if (transitionScreen.isActive) {
