@@ -58,7 +58,7 @@ public class Arganok extends Construct implements Enemy {
 	 * This denotes the <code>int</code> radius around the Arganok that it will
 	 * begin to move towards the player.
 	 * 
-	 * @see #getMove()
+	 * @see #act()
 	 */
 	private int trackingRadius;
 
@@ -104,7 +104,7 @@ public class Arganok extends Construct implements Enemy {
 	// -------------------------------------------------------------------------------------
 
 	@Override
-	public void getMove() {
+	public void act() {
 
 		// If the Arganok has moved outside its hover bounds then the bounds
 		// must be reset.
@@ -180,7 +180,7 @@ public class Arganok extends Construct implements Enemy {
 	 * hover points respectively. This gives the appearance of the Arganok
 	 * hovering on screen.
 	 * 
-	 * @see #getMove()
+	 * @see #act()
 	 * @see #startHover
 	 * @see #endHover
 	 * @see #hoverDirection

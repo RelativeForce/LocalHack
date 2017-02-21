@@ -24,7 +24,7 @@ public class Marine extends Grunt implements Enemy {
 	}
 	
 	@Override
-	public void getMove(){
+	public void act(){
 		
 		
 		

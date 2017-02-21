@@ -129,7 +129,7 @@ public class Main {
 
 		for (Construct construct : level.getConstructs()) {
 			if (construct instanceof Enemy && !(moved.contains(construct))) {
-				((Enemy) construct).getMove();
+				((Enemy) construct).act();
 				moved.add(construct);
 			}
 		}
