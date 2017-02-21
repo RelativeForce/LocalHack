@@ -8,8 +8,8 @@ package environment.logic.constructs.enemies;
 public interface Enemy {
 	
 	/**
-	 * Moves the enemy to its next location.
+	 * Causes the enemy to act in its predetermined way.
 	 */
-	public void getMove();
+	public void act();
 	
 }

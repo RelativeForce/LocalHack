@@ -15,7 +15,7 @@ import environment.logic.entities.Sprite;
  * <code>Arganok.png</code>. This is also a concrete subclass of
  * <code>Construct</code>.
  * 
- * @version 1.1
+ * @version 1.2
  * @author Joshua_Eddy
  * 
  * @see environment.logic.constructs.Construct
@@ -58,7 +58,7 @@ public class Arganok extends Construct implements Enemy {
 	 * This denotes the <code>int</code> radius around the Arganok that it will
 	 * begin to move towards the player.
 	 * 
-	 * @see #getMove()
+	 * @see #act()
 	 */
 	private int trackingRadius;
 
@@ -104,7 +104,7 @@ public class Arganok extends Construct implements Enemy {
 	// -------------------------------------------------------------------------------------
 
 	@Override
-	public void getMove() {
+	public void act() {
 
 		// If the Arganok has moved outside its hover bounds then the bounds
 		// must be reset.
@@ -180,7 +180,7 @@ public class Arganok extends Construct implements Enemy {
 	 * hover points respectively. This gives the appearance of the Arganok
 	 * hovering on screen.
 	 * 
-	 * @see #getMove()
+	 * @see #act()
 	 * @see #startHover
 	 * @see #endHover
 	 * @see #hoverDirection
@@ -365,11 +365,19 @@ public class Arganok extends Construct implements Enemy {
 		}
 	}
 
+	/**
+	 * Calculates the distance between two specified points.
+	 * @param playerPosition <code>Point</code>  that denotes the position of the player.
+	 * @param arganokPosition <code>Point</code> that denotes the position of the Arganok.
+	 * @return <code>double</code> The distance between the two points.
+	 */
 	private double distanceToPlayer(Point playerPosition, Point arganokPosition) {
 
+		// The difference in x and y between the two points.
 		int xDistance = Math.abs(playerPosition.x - arganokPosition.x);
 		int yDistance = Math.abs(playerPosition.y - arganokPosition.y);
 
+		// using A^2 + B^2 = C^2 the resultant distance C is calculated.
 		double resultantDistance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
 
 		return resultantDistance;
