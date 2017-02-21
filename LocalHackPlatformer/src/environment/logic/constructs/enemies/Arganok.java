@@ -15,7 +15,7 @@ import environment.logic.entities.Sprite;
  * <code>Arganok.png</code>. This is also a concrete subclass of
  * <code>Construct</code>.
  * 
- * @version 1.1
+ * @version 1.2
  * @author Joshua_Eddy
  * 
  * @see environment.logic.constructs.Construct
@@ -365,11 +365,19 @@ public class Arganok extends Construct implements Enemy {
 		}
 	}
 
+	/**
+	 * Calculates the distance between two specified points.
+	 * @param playerPosition <code>Point</code>  that denotes the position of the player.
+	 * @param arganokPosition <code>Point</code> that denotes the position of the Arganok.
+	 * @return <code>double</code> The distance between the two points.
+	 */
 	private double distanceToPlayer(Point playerPosition, Point arganokPosition) {
 
+		// The difference in x and y between the two points.
 		int xDistance = Math.abs(playerPosition.x - arganokPosition.x);
 		int yDistance = Math.abs(playerPosition.y - arganokPosition.y);
 
+		// using A^2 + B^2 = C^2 the resultant distance C is calculated.
 		double resultantDistance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
 
 		return resultantDistance;
