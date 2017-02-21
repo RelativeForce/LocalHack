@@ -38,7 +38,7 @@ public class Grunt extends Construct implements Enemy {
 	}
 
 	@Override
-	public void getMove() {
+	public void act() {
 
 		int width = getSprite().getEntity().getGraphicalObject().getWidth();
 		int height = getSprite().getEntity().getGraphicalObject().getHeight();
