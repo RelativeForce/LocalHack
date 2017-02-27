@@ -1,7 +1,6 @@
 package environment;
 
 import environment.logic.Point;
-import environment.logic.SpriteDetails;
 
 /**
  * Stores the various constant values that are used throughout the Game modules.
@@ -65,21 +64,7 @@ public class Constants {
 	 */
 	public static final int KEYBOARD_ROLLOVER = 5;
 
-	/**
-	 * The filename of the image containing the grunt sprite frames.
-	 */
-	public static final SpriteDetails GRUNT_SPRITE_DETAILS = new SpriteDetails("Grunt.png", 20, 25);;
-
-	/**
-	 * The filename of the image containing the player sprite frames.
-	 */
-	public static final SpriteDetails PLAYER_SPRITE_DETAILS = new SpriteDetails("Mario.png", 16, 32);
-
-	/**
-	 * The filename of the image containing the Arganok sprite frames.
-	 */
-	public static final SpriteDetails ARGANOK_SPRITE_DETAILS = new SpriteDetails("Arganok.png", 42, 42);
-
+	
 	/**
 	 * In RGB the value is equivalent to 0xFF00FF.
 	 */

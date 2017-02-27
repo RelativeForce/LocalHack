@@ -3,15 +3,14 @@ package environment;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import environment.graphics.*;
 import environment.logic.*;
 import environment.logic.constructs.Construct;
-import environment.logic.constructs.TransitionScreen;
 import environment.logic.constructs.enemies.Enemy;
 import environment.logic.constructs.players.DefaultPlayer;
 import environment.logic.constructs.players.Player;
-import environment.logic.entities.*;
+import environment.logic.overlays.TransitionScreen;
+import resources.SpriteSheetReader;
 
 /**
  * Initialises game play state.
@@ -47,6 +46,8 @@ public class Main {
 	 *            Unused.
 	 */
 	public static void main(String[] args) {
+		
+		SpriteSheetReader.initaliseSpriteDetails();
 
 		display = new Display(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, "Platformer");
 		screen = new Screen(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
@@ -90,16 +91,17 @@ public class Main {
 
 	protected static void displayThread() {
 
-		ArrayList<Entity> entities = new ArrayList<Entity>();
+		ArrayList<Drawable> screenObjects = new ArrayList<Drawable>();
 
-		entities.addAll(level.getEntities());
-		entities.add(player.getEntity());
+		screenObjects.addAll(level.getScreenObjects());
+		screenObjects.add(player);
 
-		for (Entity entity : entities) {
-			screen.addGraphicalObject(entity.getGraphicalObject(), entity.getX(), entity.getY());
+		for (Drawable obejct : screenObjects) {
+			screen.addObject(obejct);
 		}
 
 		if (transitionScreen.isActive) {
+			
 			if (!transitionScreen.isFullScreen && transitionScreen.willIncrement) {
 				transitionScreen.increment();
 			} else if (!transitionScreen.willIncrement) {
@@ -110,8 +112,7 @@ public class Main {
 				start();
 			}
 
-			screen.addGraphicalObject(transitionScreen.getEntity().getGraphicalObject(),
-					transitionScreen.getEntity().getX(), transitionScreen.getEntity().getY());
+			screen.addObject(transitionScreen);
 		}
 
 		display.render(screen);

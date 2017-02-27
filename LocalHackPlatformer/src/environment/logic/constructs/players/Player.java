@@ -1,5 +1,6 @@
 package environment.logic.constructs.players;
 
+import environment.logic.Drawable;
 import environment.logic.entities.Entity;
 
 /**
@@ -7,7 +8,7 @@ import environment.logic.entities.Entity;
  * @author Joshua_Eddy
  *
  */
-public interface Player {
+public interface Player extends Drawable{
 
 	/**
 	 * The player's state.

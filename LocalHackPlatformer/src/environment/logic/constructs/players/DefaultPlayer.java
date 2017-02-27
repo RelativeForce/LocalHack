@@ -8,7 +8,7 @@ import environment.logic.Point;
 import environment.logic.constructs.Construct;
 import environment.logic.constructs.objectives.Objective;
 import environment.logic.entities.Entity;
-import environment.logic.entities.Sprite;
+import environment.logic.sprites.Sprite;
 
 /**
  * A default player.
@@ -36,7 +36,7 @@ public class DefaultPlayer extends Construct implements Player {
 	 */
 	public DefaultPlayer(int x, int y, int width, int height) {
 
-		super(x, y, new Sprite(Constants.PLAYER_SPRITE_DETAILS, x, y));
+		super(x, y, new Sprite(DefaultPlayer.class, x, y));
 
 		movesMade = 0;
 		ySpeed = 0;

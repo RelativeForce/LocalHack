@@ -8,7 +8,7 @@ import environment.logic.Section;
 import environment.logic.constructs.Construct;
 import environment.logic.constructs.terrains.DefaultTerrain;
 import environment.logic.entities.Entity;
-import environment.logic.entities.Sprite;
+import environment.logic.sprites.Sprite;
 
 public class TestSection {
 

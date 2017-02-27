@@ -6,7 +6,7 @@ import environment.Main;
 import environment.logic.Level;
 import environment.logic.constructs.Construct;
 import environment.logic.entities.Entity;
-import environment.logic.entities.Sprite;
+import environment.logic.sprites.Sprite;
 
 /**
  * When this object is intercepted by the player, the game will change level.

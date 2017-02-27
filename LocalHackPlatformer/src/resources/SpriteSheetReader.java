@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-
+import java.util.HashMap;
 import environment.Constants;
 import environment.graphics.objects.SpriteFrame;
+import environment.logic.constructs.enemies.Arganok;
+import environment.logic.constructs.enemies.Grunt;
+import environment.logic.constructs.players.DefaultPlayer;
 
 /**
  * The SpriteSheetReader class is intended for extracting sprite sheets from
@@ -18,6 +21,8 @@ import environment.graphics.objects.SpriteFrame;
  *
  */
 public final class SpriteSheetReader {
+
+	private static HashMap<Class<?>, SpriteDetails> SPRITE_DETAILS;
 
 	private final int width;
 	private final int height;
@@ -89,8 +94,12 @@ public final class SpriteSheetReader {
 	 * 
 	 * @see environment.graphics.objects.SpriteFrame
 	 */
-	public static final SpriteFrame[] getSprites(final String path, final int width, final int height) {
-
+	public static final SpriteFrame[] getSprites(Class<?> type) {
+	
+		String path = SPRITE_DETAILS.get(type).getPath();
+		int width = SPRITE_DETAILS.get(type).getWidth();
+		int height = SPRITE_DETAILS.get(type).getHeight();
+		
 		final SpriteSheetReader spriteSheet = new SpriteSheetReader(path, width, height);
 		final LinkedList<SpriteFrame> sprites = new LinkedList<SpriteFrame>();
 
@@ -103,5 +112,57 @@ public final class SpriteSheetReader {
 		}
 
 		return sprites.toArray(new SpriteFrame[sprites.size()]);
+	}
+
+	/**
+	 * Initialises the details of each sprite type.
+	 */
+	public static void initaliseSpriteDetails() {
+		
+		SPRITE_DETAILS = new HashMap<Class<?>, SpriteDetails>();
+
+		// The filename of the image containing the grunt sprite frames.
+
+		SpriteDetails grunt = new SpriteDetails("Grunt.png", 20, 25);
+
+		// The filename of the image containing the player sprite frames.
+
+		SpriteDetails defaultPlayer = new SpriteDetails("Mario.png", 16, 32);
+
+		// The filename of the image containing the Arganok sprite frames.
+
+		SpriteDetails arganok = new SpriteDetails("Arganok.png", 42, 42);
+
+		SPRITE_DETAILS.put(Grunt.class, grunt);
+		SPRITE_DETAILS.put(Arganok.class, arganok);
+		SPRITE_DETAILS.put(DefaultPlayer.class, defaultPlayer);
+
+	}
+
+	private static class SpriteDetails {
+
+		private String path;
+		private int width;
+		private int height;
+
+		public SpriteDetails(String relativePath, int width, int height) {
+
+			path = new File(System.getProperty("user.dir")).getPath() + File.separatorChar + relativePath;
+			this.height = height;
+			this.width = width;
+		}
+
+		public String getPath() {
+			return path;
+		}
+
+		public int getWidth() {
+			return width;
+		}
+
+		public int getHeight() {
+			return height;
+		}
+
 	}
 }

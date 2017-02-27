@@ -1,6 +1,8 @@
-package environment.logic.constructs;
+package environment.logic.overlays;
 
 import environment.Constants;
+import environment.graphics.objects.GraphicalObject;
+import environment.logic.Drawable;
 import environment.logic.entities.Entity;
 
 /**
@@ -8,7 +10,7 @@ import environment.logic.entities.Entity;
  * 
  * @author Joshua_Eddy
  */
-public class TransitionScreen {
+public class TransitionScreen implements Drawable{
 
 	private Entity screen;
 	private int height;
@@ -113,5 +115,20 @@ public class TransitionScreen {
 		this.color = color;
 		screen = Entity.newRectangle(0, 0, Constants.WINDOW_WIDTH, height, color);
 
+	}
+
+	@Override
+	public GraphicalObject getGraphicalObject() {
+		return screen.getGraphicalObject();
+	}
+
+	@Override
+	public int getX() {
+		return screen.getX();
+	}
+
+	@Override
+	public int getY() {
+		return screen.getY();
 	}
 }

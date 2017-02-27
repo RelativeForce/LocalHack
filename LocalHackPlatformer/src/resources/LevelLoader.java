@@ -9,7 +9,8 @@ import environment.logic.constructs.enemies.Grunt;
 import environment.logic.constructs.objectives.LevelChange;
 import environment.logic.constructs.terrains.DefaultTerrain;
 import environment.logic.entities.Entity;
-import environment.logic.entities.Sprite;
+import environment.logic.sprites.Sprite;
+
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package environment.logic.constructs.terrains;
 
 import environment.logic.constructs.Construct;
-import environment.logic.entities.Sprite;
+import environment.logic.sprites.Sprite;
 
 public class DefaultTerrain extends Construct implements Terrain {
 

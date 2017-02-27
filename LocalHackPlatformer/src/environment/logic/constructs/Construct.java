@@ -1,6 +1,8 @@
 package environment.logic.constructs;
 
-import environment.logic.entities.Sprite;
+import environment.graphics.objects.GraphicalObject;
+import environment.logic.Drawable;
+import environment.logic.sprites.Sprite;
 
 /**
  * An abstract class that denotes aggregates a sprite and stores its own
@@ -9,7 +11,7 @@ import environment.logic.entities.Sprite;
  * @author Joshua_Eddy
  *
  */
-public abstract class Construct {
+public abstract class Construct implements Drawable{
 
 	private int x;
 	private int y;
@@ -49,6 +51,7 @@ public abstract class Construct {
 	 * 
 	 * @return The <code>int</code> x coordinate of the construct.
 	 */
+	@Override
 	public int getX() {
 		return x;
 	}
@@ -58,6 +61,7 @@ public abstract class Construct {
 	 * 
 	 * @return The <code>int</code> y coordinate of the construct.
 	 */
+	@Override
 	public int getY() {
 		return y;
 	}
@@ -115,6 +119,11 @@ public abstract class Construct {
 		}
 
 		return false;
+	}
+	
+	@Override
+	public GraphicalObject getGraphicalObject(){
+		return sprite.getEntity().getGraphicalObject();
 	}
 
 }

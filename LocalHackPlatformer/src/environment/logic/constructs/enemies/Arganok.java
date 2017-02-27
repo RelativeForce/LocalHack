@@ -1,11 +1,10 @@
 package environment.logic.constructs.enemies;
 
-import environment.Constants;
 import environment.Main;
 import environment.logic.Direction;
 import environment.logic.Point;
 import environment.logic.constructs.Construct;
-import environment.logic.entities.Sprite;
+import environment.logic.sprites.Sprite;
 
 /**
  * 
@@ -82,7 +81,7 @@ public class Arganok extends Construct implements Enemy {
 	 *            <code>int</code> that denotes the radius around the Arganok
 	 *            that the Arganok will peruse the player.
 	 * 
-	 * @see environment.logic.entities.Sprite
+	 * @see environment.logic.sprites.Sprite
 	 * @see environment.logic.Point
 	 * @see environment.logic.constructs.Construct
 	 * @see environment.logic.Direction
@@ -90,7 +89,7 @@ public class Arganok extends Construct implements Enemy {
 	 */
 	public Arganok(Point inital, int trackingRadius) {
 		// Constructs the construct super class
-		super(inital.x, inital.y, new Sprite(Constants.ARGANOK_SPRITE_DETAILS, inital.x, inital.y));
+		super(inital.x, inital.y, new Sprite(Arganok.class, inital.x, inital.y));
 
 		this.trackingRadius = trackingRadius;
 		this.movesMade = 0;
@@ -243,7 +242,7 @@ public class Arganok extends Construct implements Enemy {
 	 *            <code>Direction</code> That the Arganok should be facing.
 	 * 
 	 * @see environment.logic.Direction
-	 * @see environment.logic.entities.Sprite
+	 * @see environment.logic.sprites.Sprite
 	 */
 	private void changeSpriteDirection(Direction direction) {
 

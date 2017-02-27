@@ -1,8 +1,7 @@
 package environment.graphics;
 
 import java.awt.Color;
-
-import environment.graphics.objects.GraphicalObject;
+import environment.logic.Drawable;
 
 /**
  * An object that denotes the array of pixels that are displayed on the JFrame.
@@ -37,7 +36,8 @@ public class Screen {
 	/**
 	 * Returns the pixel array to be Displayed.
 	 * 
-	 * @return The <code>int[]</code> pixel array to be Displayed by <code>Display</code>.
+	 * @return The <code>int[]</code> pixel array to be Displayed by
+	 *         <code>Display</code>.
 	 * 
 	 * @see Display
 	 */
@@ -60,22 +60,24 @@ public class Screen {
 	/**
 	 * Adds a <code>GraphicalObject</code> to the <code>Screen</code>.
 	 * 
-	 * @param graphicalObject The <code>GraphicalObject</code> to be added to the <code>Screen</code>.
-	 * @param x The <code>int</code> x coordinate of the <code>GraphicalObject</code>.
-	 * @param y The <code>int</code> y coordinate of the <code>GraphicalObject</code>.
+	 * @param object
+	 *            <code>Drawable</code> object to be added to the screen.
 	 */
-	public void addGraphicalObject(GraphicalObject graphicalObject, int x, int y) {
+	public void addObject(Drawable object) {
 
-		for (int i = 0; i < graphicalObject.getHeight(); i++) {
+		int x = object.getX();
+		int y = object.getY();
+
+		for (int i = 0; i < object.getGraphicalObject().getHeight(); i++) {
 
 			if (0 <= y + i && y + i < height) {
 
-				for (int j = 0; j < graphicalObject.getWidth(); j++) {
+				for (int j = 0; j < object.getGraphicalObject().getWidth(); j++) {
 
 					if (0 <= x + j && x + j < width) {
 
-						pixels[j + x][i + y] = graphicalObject.getPixels()[j][i] != null ? graphicalObject.getPixels()[j][i]
-								: pixels[j + x][i + y];
+						pixels[j + x][i + y] = object.getGraphicalObject().getPixels()[j][i] != null
+								? object.getGraphicalObject().getPixels()[j][i] : pixels[j + x][i + y];
 
 					}
 				}
@@ -86,7 +88,9 @@ public class Screen {
 	/**
 	 * Fills the screen with a set colour.
 	 * 
-	 * @param color  The <code>int</code> RGB colour that the pixel array will be filled with.
+	 * @param color
+	 *            The <code>int</code> RGB colour that the pixel array will be
+	 *            filled with.
 	 */
 	public void setColor(int color) {
 
@@ -108,7 +112,7 @@ public class Screen {
 
 			for (int j = 0; j < width; j++) {
 
-				pixels[j][i] = 	Color.BLACK.getRGB();
+				pixels[j][i] = Color.BLACK.getRGB();
 			}
 		}
 	}

@@ -76,15 +76,15 @@ public class Level {
 	 * 
 	 * @return ArrayList of all the Entities in the Level.
 	 */
-	public LinkedList<Entity> getEntities() {
+	public LinkedList<Drawable> getScreenObjects() {
 
-		LinkedList<Entity> entities = new LinkedList<Entity>();
+		LinkedList<Drawable> screen = new LinkedList<Drawable>();
 
 		for (Construct con : getConstructs()) {
-			entities.add(con.getSprite().getEntity());
+			screen.add(con);
 		}
 
-		return entities;
+		return screen;
 	}
 
 	/**

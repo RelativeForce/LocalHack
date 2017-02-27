@@ -1,13 +1,12 @@
 package environment.logic.constructs.enemies;
 
-import environment.Constants;
 import environment.Main;
 import environment.logic.Direction;
 import environment.logic.Level;
 import environment.logic.Point;
 import environment.logic.constructs.Construct;
 import environment.logic.entities.Entity;
-import environment.logic.entities.Sprite;
+import environment.logic.sprites.Sprite;
 
 /**
  * A Grunt is a type of Enemy that moves along the floor until it hits reaches
@@ -30,7 +29,7 @@ public class Grunt extends Construct implements Enemy {
 	 */
 	public Grunt(Point inital) {
 
-		super(inital.x, inital.y, new Sprite(Constants.GRUNT_SPRITE_DETAILS, inital.x, inital.y));
+		super(inital.x, inital.y, new Sprite(Grunt.class, inital.x, inital.y));
 
 		direction = Direction.LEFT;
 		xSpeed = 1;
