@@ -67,17 +67,20 @@ public class Screen {
 
 		int x = object.getX();
 		int y = object.getY();
+		int objectWidth = object.getGraphicalObject().getWidth();
+		int objectHeight = object.getGraphicalObject().getHeight();
+		Integer[][] objectPixels = object.getGraphicalObject().getPixels();
 
-		for (int i = 0; i < object.getGraphicalObject().getHeight(); i++) {
+		for (int i = 0; i < objectHeight; i++) {
 
 			if (0 <= y + i && y + i < height) {
 
-				for (int j = 0; j < object.getGraphicalObject().getWidth(); j++) {
+				for (int j = 0; j < objectWidth; j++) {
 
 					if (0 <= x + j && x + j < width) {
 
-						pixels[j + x][i + y] = object.getGraphicalObject().getPixels()[j][i] != null
-								? object.getGraphicalObject().getPixels()[j][i] : pixels[j + x][i + y];
+						pixels[j + x][i + y] = objectPixels[j][i] != null
+								? objectPixels[j][i] : pixels[j + x][i + y];
 
 					}
 				}

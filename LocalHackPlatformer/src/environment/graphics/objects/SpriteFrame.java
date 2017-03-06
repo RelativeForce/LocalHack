@@ -19,9 +19,8 @@ public class SpriteFrame extends GraphicalObject {
 	 */
 	public SpriteFrame(Integer[][] pixels) {
 
+		super(pixels.length, pixels[0].length);
 		this.pixels = pixels;
-		this.width = pixels.length;
-		this.height = pixels[0].length;
 
 	}
 
